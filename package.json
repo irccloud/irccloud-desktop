@@ -1,0 +1,13 @@
+{
+  "name": "irccloud-electron",
+  "version": "1.0.0",
+  "description": "IRCCloud desktop app",
+  "scripts": {},
+  "author": "IRCCloud Ltd.",
+  "license": "TBC",
+  "dependencies": {
+    "grunt": "0.4.5",
+    "grunt-cli": "0.1.13",
+    "grunt-build-atom-shell": "2.1.1"
+  }
+}
