@@ -37,6 +37,18 @@ app.on('ready', function() {
     fs.writeFile(windowConfigFile, JSON.stringify(state), 'utf8');
   })
 
+  mainWindow.on('page-title-updated', function(event) {
+      var title = mainWindow.getTitle();
+      if (title) {
+          var unread = "";
+          var matches = title.match(/^\((\d+)\)/);
+          if (matches) {
+            unread = matches[1];
+          }
+          app.dock.setBadge(unread);
+      }
+  });
+
   mainWindow.webContents.on('new-window', function(event, url, frameName, disposition) {
       event.preventDefault();
       Shell.openExternal(url);
