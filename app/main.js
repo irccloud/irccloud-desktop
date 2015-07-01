@@ -3,6 +3,7 @@ var BrowserWindow = require('browser-window');
 var Menu = require('menu');
 var MenuItem = require('menu-item');
 var Shell = require('shell');
+var fs = require('fs');
 
 var mainWindow = null;
 app.on('window-all-closed', function() {
@@ -11,20 +12,36 @@ app.on('window-all-closed', function() {
   }
 });
 
+windowConfigFile = app.getPath('appData') + '/IRCCloudWindowState'
+
 app.on('ready', function() {
-  mainWindow = new BrowserWindow({width: 1366, height: 768});
+  var state = {width: 1024, height: 768};
+
+  try {
+    data = fs.readFileSync(windowConfigFile, 'utf8');
+    state = JSON.parse(data);
+  } catch (e) {
+    console.log(e);
+  }
+
+  mainWindow = new BrowserWindow(state);
   mainWindow.loadUrl('https://www.irccloud.com');
 
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
 
+  mainWindow.on('resize', function() {
+    size = mainWindow.getSize();
+    state = {width: size[0], height: size[1]};
+    fs.writeFile(windowConfigFile, JSON.stringify(state), 'utf8');
+  })
+
   mainWindow.webContents.on('new-window', function(event, url, frameName, disposition) {
       event.preventDefault();
       Shell.openExternal(url);
   });
 
-  // Create the Application's main menu
   var template = [{
     label: 'IRCCloud',
     submenu: [
