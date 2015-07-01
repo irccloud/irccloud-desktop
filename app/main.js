@@ -2,6 +2,7 @@ var app = require('app');
 var BrowserWindow = require('browser-window');
 var Menu = require('menu');
 var MenuItem = require('menu-item');
+var Shell = require('shell');
 
 var mainWindow = null;
 app.on('window-all-closed', function() {
@@ -18,10 +19,36 @@ app.on('ready', function() {
     mainWindow = null;
   });
 
+  mainWindow.webContents.on('new-window', function(event, url, frameName, disposition) {
+      event.preventDefault();
+      Shell.openExternal(url);
+  });
+
   // Create the Application's main menu
   var template = [{
     label: 'IRCCloud',
     submenu: [
+      {
+        label: 'About IRCCloud',
+        click: function() {
+            var win = new BrowserWindow({ width: 800, height: 600, show: false });
+            win.on('closed', function() {
+              win = null;
+            });
+            win.loadUrl('https://www.irccloud.com/about');
+            win.show();
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Services',
+        submenu: []
+      },
+      {
+        type: 'separator'
+      },
       {
         label: 'Hide IRCCloud',
         accelerator: 'Command+H',
