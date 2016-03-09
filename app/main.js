@@ -24,7 +24,7 @@ function openMainWindow() {
   mainWindow.on('resize', function() {
     size = mainWindow.getSize();
     config.set({'width': size[0],
-                'height': size[1]})
+                'height': size[1]});
   });
 
   mainWindow.on('page-title-updated', function(event) {
@@ -68,7 +68,7 @@ app.once('ready', function() {
                 e.preventDefault();
                 Shell.openExternal(url);
             });
-            win.loadUrl('https://www.irccloud.com/about');
+            win.loadURL('https://www.irccloud.com/about');
             win.show();
         }
       },
@@ -150,7 +150,7 @@ app.once('ready', function() {
       {
         label: 'Reload',
         accelerator: 'Command+R',
-        click: function() { BrowserWindow.getFocusedWindow().reloadIgnoringCache(); }
+        click: function() { BrowserWindow.getFocusedWindow().webContents.reloadIgnoringCache(); }
       },
       {
         label: 'Toggle DevTools',
