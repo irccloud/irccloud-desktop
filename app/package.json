@@ -9,5 +9,8 @@
   "build": {
     "app-bundle-id": "com.irccloud.desktop",
     "app-category-type": "public.app-category.productivity"
+  },
+  "dependencies": {
+    "configstore": "^2.0.0"
   }
 }

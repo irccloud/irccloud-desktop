@@ -3,23 +3,18 @@ var BrowserWindow = require('browser-window');
 var Menu = require('menu');
 var MenuItem = require('menu-item');
 var Shell = require('shell');
-var fs = require('fs');
+var ConfigStore = require('configstore');
 
 var mainWindow = null;
 
-windowConfigFile = app.getPath('appData') + '/IRCCloudWindowState';
+const config = new ConfigStore('IRCCloud', {
+                                            'width': 1024,
+                                            'height': 768
+                                            });
 
 function openMainWindow() {
-  var state = {width: 1024, height: 768};
-
-  try {
-    data = fs.readFileSync(windowConfigFile, 'utf8');
-    state = JSON.parse(data);
-  } catch (e) {
-    console.log(e);
-  }
-
-  mainWindow = new BrowserWindow(state);
+  mainWindow = new BrowserWindow({'width': config.get('width'),
+                                  'height': config.get('height')});
   mainWindow.loadURL('https://www.irccloud.com');
 
   mainWindow.on('closed', function() {
@@ -28,8 +23,8 @@ function openMainWindow() {
 
   mainWindow.on('resize', function() {
     size = mainWindow.getSize();
-    state = {width: size[0], height: size[1]};
-    fs.writeFile(windowConfigFile, JSON.stringify(state), 'utf8');
+    config.set({'width': size[0],
+                'height': size[1]})
   });
 
   mainWindow.on('page-title-updated', function(event) {

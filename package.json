@@ -20,6 +20,7 @@
     "electron-prebuilt": "^0.36.9",
     "rimraf": "^2.5.2",
     "tsconfig-glob": "^0.4.1",
-    "typescript": "^1.8.2"
+    "typescript": "^1.8.2",
+    "configstore": "^2.0.0"
   }
 }
