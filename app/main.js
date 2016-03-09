@@ -64,6 +64,10 @@ app.once('ready', function() {
             win.on('closed', function() {
               win = null;
             });
+            win.webContents.on('will-navigate', function (e, url) {
+                e.preventDefault();
+                Shell.openExternal(url);
+            });
             win.loadUrl('https://www.irccloud.com/about');
             win.show();
         }
