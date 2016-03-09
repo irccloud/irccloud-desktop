@@ -1,13 +1,24 @@
 {
   "name": "irccloud-electron",
-  "version": "1.0.0",
-  "description": "IRCCloud desktop app",
-  "scripts": {},
+  "version": "0.1.0",
+  "description": "IRCCloud",
   "author": "IRCCloud Ltd.",
-  "license": "TBC",
-  "dependencies": {
-    "grunt": "0.4.5",
-    "grunt-cli": "0.1.13",
-    "grunt-build-atom-shell": "2.1.1"
+  "license": "Apache",
+  "scripts": {
+      "postinstall": "install-app-deps",
+      "pack": "build",
+      "dist": "build"
+  },
+  "builder": {
+    "osx": {
+        "title": "IRCCloud"
+    }
+  },
+  "devDependencies": {
+    "electron-builder": "^2.8.3",
+    "electron-prebuilt": "^0.36.9",
+    "rimraf": "^2.5.2",
+    "tsconfig-glob": "^0.4.1",
+    "typescript": "^1.8.2"
   }
 }

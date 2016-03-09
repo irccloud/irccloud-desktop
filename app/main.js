@@ -25,7 +25,7 @@ app.on('ready', function() {
   }
 
   mainWindow = new BrowserWindow(state);
-  mainWindow.loadUrl('https://www.irccloud.com');
+  mainWindow.loadURL('https://www.irccloud.com');
 
   mainWindow.on('closed', function() {
     mainWindow = null;

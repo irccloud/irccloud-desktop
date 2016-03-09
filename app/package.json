@@ -1,5 +1,12 @@
 {
-  "name"    : "irccloud",
+  "name"    : "IRCCloud",
+  "description": "IRCCloud",
+  "author": "IRCCloud",
+  "license": "Apache 2"
   "version" : "0.1.0",
-  "main"    : "main.js"
+  "main"    : "main.js",
+  "build": {
+    "app-bundle-id": "com.irccloud.desktop",
+    "app-category-type": "public.app-category.productivity"
+  }
 }
