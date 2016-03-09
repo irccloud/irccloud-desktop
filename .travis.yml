@@ -1,0 +1,23 @@
+os:
+- osx
+language:
+- c
+env:
+  global:
+  - NODE_VERSION=5
+cache:
+  directories:
+  - node_modules
+  - app/node_modules
+  - $HOME/.electron
+  - $HOME/.npm
+before_install:
+  - git clone https://github.com/creationix/nvm.git ~/.nvm
+  - source ~/.nvm/nvm.sh
+  - nvm install $NODE_VERSION
+  - nvm use --delete-prefix $NODE_VERSION
+install:
+- npm prune
+- npm install
+script:
+- npm run dist
