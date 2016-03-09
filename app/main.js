@@ -12,7 +12,7 @@ app.on('window-all-closed', function() {
   }
 });
 
-windowConfigFile = app.getPath('appData') + '/IRCCloudWindowState'
+windowConfigFile = app.getPath('appData') + '/IRCCloudWindowState';
 
 app.on('ready', function() {
   var state = {width: 1024, height: 768};
@@ -35,7 +35,7 @@ app.on('ready', function() {
     size = mainWindow.getSize();
     state = {width: size[0], height: size[1]};
     fs.writeFile(windowConfigFile, JSON.stringify(state), 'utf8');
-  })
+  });
 
   mainWindow.on('page-title-updated', function(event) {
       var title = mainWindow.getTitle();
@@ -60,7 +60,7 @@ app.on('ready', function() {
       {
         label: 'About IRCCloud',
         click: function() {
-            var win = new BrowserWindow({ width: 800, height: 600, show: false });
+            var win = new BrowserWindow({ width: 915, height: 600, show: false });
             win.on('closed', function() {
               win = null;
             });
