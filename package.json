@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "IRCCloud",
   "author": "IRCCloud Ltd.",
-  "license": "Apache 2",
+  "repository": "https://github.com/irccloud/irccloud-desktop",
+  "license": "Apache-2.0",
   "scripts": {
       "postinstall": "install-app-deps",
       "pack": "build",
