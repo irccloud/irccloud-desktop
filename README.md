@@ -1,7 +1,8 @@
-Electron Cloud: IRCCloud Native Wrapper
+IRCCloud Desktop Wrapper
 ==============
 
-[![Build Status](https://travis-ci.org/irccloud/electron-cloud.svg?branch=master)](https://travis-ci.org/irccloud/electron-cloud)
+[![Build
+Status](https://travis-ci.org/irccloud/irccloud-desktop.svg?branch=master)](https://travis-ci.org/irccloud/irccloud-desktop)
 
 This is an experimental prototype of an IRCCloud native wrapper app
 using the Electron framework. Pull requests are welcome.

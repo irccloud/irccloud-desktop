@@ -1,9 +1,9 @@
 {
-  "name": "irccloud-electron",
+  "name": "irccloud-desktop",
   "version": "0.1.0",
   "description": "IRCCloud",
   "author": "IRCCloud Ltd.",
-  "license": "Apache",
+  "license": "Apache 2",
   "scripts": {
       "postinstall": "install-app-deps",
       "pack": "build",
