@@ -6,15 +6,10 @@ var Shell = require('shell');
 var fs = require('fs');
 
 var mainWindow = null;
-app.on('window-all-closed', function() {
-  if (process.platform != 'darwin') {
-    app.quit();
-  }
-});
 
 windowConfigFile = app.getPath('appData') + '/IRCCloudWindowState';
 
-app.on('ready', function() {
+function openMainWindow() {
   var state = {width: 1024, height: 768};
 
   try {
@@ -53,7 +48,17 @@ app.on('ready', function() {
       event.preventDefault();
       Shell.openExternal(url);
   });
+}
 
+app.on('ready', openMainWindow);
+app.on('activate-with-no-open-windows', openMainWindow);
+app.on('window-all-closed', function() {
+  if (process.platform != 'darwin') {
+    app.quit();
+  }
+});
+
+app.once('ready', function() {
   var template = [{
     label: 'IRCCloud',
     submenu: [
