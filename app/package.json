@@ -2,7 +2,7 @@
   "name"    : "IRCCloud",
   "description": "IRCCloud",
   "author": "IRCCloud",
-  "license": "Apache 2"
+  "license": "Apache 2",
   "version" : "0.1.0",
   "main"    : "main.js",
   "build": {
