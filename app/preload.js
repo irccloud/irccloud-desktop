@@ -6,7 +6,9 @@ var buildEditorContextMenu = remote.require('electron-editor-context-menu');
 
 /* Right-click context menu for textareas */
 window.addEventListener('contextmenu', function(e) {
-  if (!e.target.closest('textarea, input, [contenteditable="true"]')) return;
+  if (!e.target.closest('textarea, input, [contenteditable="true"]')) {
+      return;
+  }
   var menu = buildEditorContextMenu();
 
   // The 'contextmenu' event is emitted after 'selectionchange' has fired but possibly before the
