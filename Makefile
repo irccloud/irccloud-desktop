@@ -6,3 +6,6 @@ node_modules: package.json
 
 clean:
 	rm -Rf ./dist
+
+test:
+	./node_modules/.bin/jshint ./app

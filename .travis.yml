@@ -20,4 +20,5 @@ install:
 - npm prune
 - npm install
 script:
+- make test
 - npm run dist
