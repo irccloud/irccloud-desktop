@@ -3,25 +3,22 @@ os:
   - osx
 env:
   global:
-  - NODE_VERSION=5
+    - NODE_VERSION=5
 cache:
   directories:
-  - node_modules
-  - app/node_modules
-  - $HOME/.electron
-  - $HOME/.npm
-  - $HOME/.nvm
+    - node_modules
+    - app/node_modules
+    - .nvm
+    - $HOME/.electron
+    - $HOME/.npm
 before_install:
-  - if [ ! -d ~/.nvm ]; then git clone https://github.com/creationix/nvm.git ~/.nvm; fi
-  - source ~/.nvm/nvm.sh
+  - if [ ! ./.nvm ]; then git clone https://github.com/creationix/nvm.git ./.nvm; fi
+  - source ./.nvm/nvm.sh
   - nvm install $NODE_VERSION
   - nvm use --delete-prefix $NODE_VERSION
-  - brew install gnu-tar libicns
-  - gem install fpm
 install:
-- npm prune
-- npm install
+  - npm prune
+  - npm install
 script:
-- make test
-- npm run dist
-#- ./node_modules/.bin/build -d --platform=linux
+  - make test
+  - npm run dist
