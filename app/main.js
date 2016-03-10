@@ -14,7 +14,8 @@ const config = new ConfigStore('IRCCloud', {
 
 function openMainWindow() {
   mainWindow = new BrowserWindow({'width': config.get('width'),
-                                  'height': config.get('height')});
+                                  'height': config.get('height'),
+                                  'allowDisplayingInsecureContent': true});
   mainWindow.loadURL('https://www.irccloud.com');
 
   mainWindow.on('closed', function() {
