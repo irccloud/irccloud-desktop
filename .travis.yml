@@ -11,6 +11,7 @@ addons:
   apt:
     packages:
       - icnsutils
+      - fpm
 cache:
   directories:
     - node_modules
