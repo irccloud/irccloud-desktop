@@ -24,4 +24,4 @@ install:
 script:
 - make test
 - npm run dist
-- ./node_modules/.bin/build -d --arch=linux
+- ./node_modules/.bin/build -d --platform=linux
