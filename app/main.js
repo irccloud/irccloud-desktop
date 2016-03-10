@@ -6,6 +6,27 @@ var MenuItem = require('menu-item');
 var Shell = require('shell');
 var ConfigStore = require('configstore');
 
+var handleStartupEvent = function() {
+  // Handle Squirrel startup events, called by the Windows installer.
+  // https://github.com/electronjs/windows-installer#handling-squirrel-events
+  if (process.platform !== 'win32') {
+    return false;
+  }
+
+  switch (process.argv[1]) {
+    case '--squirrel-install':
+    case '--squirrel-updated':
+    case '--squirrel-uninstall':
+    case '--squirrel-obsolete':
+      app.quit();
+      return true;
+  }
+};
+
+if (handleStartupEvent()) {
+  return;
+}
+
 var mainWindow = null;
 
 const config = new ConfigStore('IRCCloud', {
