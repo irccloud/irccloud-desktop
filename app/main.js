@@ -17,7 +17,10 @@ function openMainWindow() {
   mainWindow = new BrowserWindow({'width': config.get('width'),
                                   'height': config.get('height'),
                                   'allowDisplayingInsecureContent': true,
-                                  'preload': path.join(__dirname, 'preload.js'),
+                                  'webPreferences': {
+                                    'preload': path.join(__dirname, 'preload.js'),
+                                    'nodeIntegration': false
+                                  },
                                   'title': 'IRCCloud'});
   mainWindow.loadURL('https://www.irccloud.com');
 
