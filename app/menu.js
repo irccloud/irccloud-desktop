@@ -12,6 +12,13 @@ module.exports = {
           role: 'about'
         },
         {
+          label: 'Open in Browser',
+          click: function(item, focusedWindow) {
+            var url = focusedWindow ? focusedWindow.webContents.getURL() : host;
+            require('electron').shell.openExternal(url);
+          }
+        },
+        {
           type: 'separator'
         },
         {
@@ -42,7 +49,9 @@ module.exports = {
         {
           label: 'Quit',
           accelerator: 'Command+Q',
-          click: function() { app.quit(); }
+          click: function(item, focusedWindow) {
+            app.quit();
+          }
         },
       ]
     },
@@ -91,7 +100,9 @@ module.exports = {
           label: 'Reload',
           accelerator: 'CmdOrCtrl+R',
           click: function(item, focusedWindow) {
-            focusedWindow.webContents.reloadIgnoringCache();
+            if (focusedWindow) {
+              focusedWindow.webContents.reloadIgnoringCache();
+            }
           }
         },
         {
@@ -136,7 +147,9 @@ module.exports = {
           enabled: false,
           id: 'backMenu',
           click: function (item, focusedWindow) {
-            focusedWindow.webContents.goBack();
+            if (focusedWindow) {
+              focusedWindow.webContents.goBack();
+            }
           }
         },
         {
@@ -145,7 +158,9 @@ module.exports = {
           enabled: false,
           id: 'fwdMenu',
           click: function (item, focusedWindow) {
-            focusedWindow.webContents.goForward();
+            if (focusedWindow) {
+              focusedWindow.webContents.goForward();
+            }
           }
         },
       ]
@@ -179,7 +194,7 @@ module.exports = {
       submenu: [
         {
           label: 'Github Repository',
-          click: function() {
+          click: function(item, focusedWindow) {
             require('electron').shell.openExternal('https://github.com/irccloud/irccloud-desktop');
           }
         },
