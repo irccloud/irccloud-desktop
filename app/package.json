@@ -1,18 +1,21 @@
 {
-  "name"    : "IRCCloud",
+  "name": "IRCCloud",
   "description": "IRCCloud Desktop Client",
-  "author": {"name": "IRCCloud",
-             "email": "team@irccloud.com",
-             "url": "https://www.irccloud.com"},
+  "author": {
+    "name": "IRCCloud",
+    "email": "team@irccloud.com",
+    "url": "https://www.irccloud.com"
+  },
   "repository": "https://github.com/irccloud/irccloud-desktop",
   "license": "Apache-2.0",
-  "version" : "0.1.0",
-  "main"    : "main.js",
+  "version": "0.1.0",
+  "main": "main.js",
   "build": {
     "app-bundle-id": "com.irccloud.desktop",
     "app-category-type": "public.app-category.productivity"
   },
   "dependencies": {
-    "configstore": "^2.0.0"
+    "configstore": "^2.0.0",
+    "electron-editor-context-menu": "^1.1.1"
   }
 }
