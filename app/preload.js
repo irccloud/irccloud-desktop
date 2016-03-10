@@ -1,7 +1,6 @@
 /* Javascript injected into the page on-load */
 var remote = require('electron').remote;
 var webFrame = require('electron').webFrame;
-var SpellCheckProvider = require('electron-spell-check-provider');
 var buildEditorContextMenu = remote.require('electron-editor-context-menu');
 
 /* Right-click context menu for textareas */
