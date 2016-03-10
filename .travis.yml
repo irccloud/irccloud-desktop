@@ -13,7 +13,7 @@ cache:
     - $HOME/.electron
     - $HOME/.npm
 before_install:
-  - if [ ! -d ./.nvm ]; then git clone https://github.com/creationix/nvm.git ./.nvm; fi
+  - if [ ! -f ./.nvm/nvm.sh ]; then git clone https://github.com/creationix/nvm.git ./.nvm; fi
   - source ./.nvm/nvm.sh
   - nvm install $NODE_VERSION
   - nvm use --delete-prefix $NODE_VERSION
