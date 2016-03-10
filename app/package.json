@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "configstore": "^2.0.0",
-    "electron-editor-context-menu": "^1.1.1"
+    "electron-editor-context-menu": "^1.1.1",
+    "electron-spell-check-provider": "^1.0.0"
   }
 }
