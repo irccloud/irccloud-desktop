@@ -1,7 +1,6 @@
 language: c
 os:
   - osx
-  - linux
 env:
   global:
   - NODE_VERSION=5
@@ -17,9 +16,12 @@ before_install:
   - source ~/.nvm/nvm.sh
   - nvm install $NODE_VERSION
   - nvm use --delete-prefix $NODE_VERSION
+  - brew install ruby gnu-tar libicns
+  - gem install fpm
 install:
 - npm prune
 - npm install
 script:
 - make test
 - npm run dist
+- ./node_modules/bin/build -d --arch=linux
