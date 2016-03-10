@@ -1,7 +1,9 @@
-language: c
+language: cpp
 os:
   - osx
   - linux
+compiler:
+  - clang
 env:
   global:
     - NODE_VERSION=5
