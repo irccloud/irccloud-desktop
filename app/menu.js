@@ -4,8 +4,8 @@ var MenuItem = require('menu-item');
 module.exports = {
   setup: function (app, host) {
     var name = app.getName();
-    var template = [{
-      label: name,
+
+    var app_menu = {
       submenu: [
         {
           label: 'About ' + name,
@@ -17,7 +17,13 @@ module.exports = {
             var url = focusedWindow ? focusedWindow.webContents.getURL() : host;
             require('electron').shell.openExternal(url);
           }
-        },
+        }
+      ]
+    };
+
+    if (process.platform == 'darwin') {
+        app_menu.label = name;
+        app_menu.submenu = app_menu.submenu.concat([
         {
           type: 'separator'
         },
@@ -52,10 +58,18 @@ module.exports = {
           click: function(item, focusedWindow) {
             app.quit();
           }
-        },
-      ]
-    },
-    {
+        }]);
+    } else {
+        app_menu.label = 'File';
+        app_menu.submenu.push({
+          label: 'Quit',
+          accelerator: 'Alt+F4',
+          click: function(item, focusedWindow) {
+            app.quit();
+          }});
+    }
+
+    var edit_menu = {
       label: 'Edit',
       submenu: [
         {
@@ -92,8 +106,9 @@ module.exports = {
           role: 'selectall'
         },
       ]
-    },
-    {
+    };
+
+    var view_menu = {
       label: 'View',
       submenu: [
         {
@@ -136,8 +151,9 @@ module.exports = {
           }
         },
       ]
-    },
-    {
+    };
+
+    var history_menu = {
       label: 'History',
       id: 'history',
       submenu: [
@@ -164,8 +180,9 @@ module.exports = {
           }
         },
       ]
-    },
-    {
+    };
+
+    var window_menu = {
       label: 'Window',
       role: 'window',
       submenu: [
@@ -187,8 +204,9 @@ module.exports = {
           role: 'front'
         },
       ]
-    },
-    {
+    };
+
+    var help_menu = {
       label: 'Help',
       role: 'help',
       submenu: [
@@ -199,9 +217,9 @@ module.exports = {
           }
         },
       ]
-    }];
+    };
 
-    var menu = Menu.buildFromTemplate(template);
+    var menu = Menu.buildFromTemplate([app_menu, edit_menu, view_menu, history_menu, help_menu]);
     Menu.setApplicationMenu(menu);
     return menu;
   }
