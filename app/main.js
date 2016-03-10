@@ -62,7 +62,7 @@ function openMainWindow() {
 
   mainWindow.on('page-title-updated', function(event) {
       var title = mainWindow.getTitle();
-      if (title) {
+      if (title && process.platform == 'darwin') {
           var unread = "";
           var matches = title.match(/^\((\d+)\)/);
           if (matches) {
