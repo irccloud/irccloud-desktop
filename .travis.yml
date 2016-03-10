@@ -11,7 +11,6 @@ addons:
   apt:
     packages:
       - icnsutils
-      - fpm
 cache:
   directories:
     - node_modules
@@ -20,6 +19,7 @@ cache:
     - $HOME/.electron
     - $HOME/.npm
 before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then gem install fpm; fi
   - if [ ! -f ./.nvm/nvm.sh ]; then git clone https://github.com/creationix/nvm.git ./.nvm; fi
   - source ./.nvm/nvm.sh
   - nvm install $NODE_VERSION
