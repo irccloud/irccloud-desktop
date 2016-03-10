@@ -1,4 +1,5 @@
 var app = require('app');
+var path = require('path');
 var BrowserWindow = require('browser-window');
 var Menu = require('menu');
 var MenuItem = require('menu-item');
@@ -16,7 +17,7 @@ function openMainWindow() {
   mainWindow = new BrowserWindow({'width': config.get('width'),
                                   'height': config.get('height'),
                                   'allowDisplayingInsecureContent': true,
-                                  'preload': __dirname + '/preload.js',
+                                  'preload': path.join(__dirname, 'preload.js'),
                                   'title': 'IRCCloud'});
   mainWindow.loadURL('https://www.irccloud.com');
 
