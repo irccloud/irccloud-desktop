@@ -7,6 +7,10 @@ compiler:
 env:
   global:
     - NODE_VERSION=5
+addons:
+  apt:
+    packages:
+      - icnsutils
 cache:
   directories:
     - node_modules
