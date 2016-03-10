@@ -39,8 +39,8 @@ function openMainWindow() {
   mainWindow = new BrowserWindow({
     'width': config.get('width'),
     'height': config.get('height'),
-    'allowDisplayingInsecureContent': true,
     'webPreferences': {
+      'allowDisplayingInsecureContent': true,
       'preload': path.join(__dirname, 'preload.js'),
       'nodeIntegration': false
     },
