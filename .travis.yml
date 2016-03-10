@@ -1,6 +1,7 @@
 language: c
 os:
   - osx
+  - linux
 env:
   global:
     - NODE_VERSION=5
