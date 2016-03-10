@@ -9,19 +9,7 @@ module.exports = {
       submenu: [
         {
           label: 'About ' + name,
-          role: 'about',
-          click: function() {
-              var win = new BrowserWindow({ width: 915, height: 600, show: false });
-              win.on('closed', function() {
-                win = null;
-              });
-              win.webContents.on('will-navigate', function (e, url) {
-                  e.preventDefault();
-                  Shell.openExternal(url);
-              });
-              win.loadURL(host + '/about');
-              win.show();
-          }
+          role: 'about'
         },
         {
           type: 'separator'
