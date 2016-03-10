@@ -5,6 +5,8 @@ var MenuItem = require('menu-item');
 var Shell = require('shell');
 var ConfigStore = require('configstore');
 
+console.log(app.getLocale());
+
 var mainWindow = null;
 
 const config = new ConfigStore('IRCCloud', {
@@ -16,7 +18,8 @@ function openMainWindow() {
   mainWindow = new BrowserWindow({'width': config.get('width'),
                                   'height': config.get('height'),
                                   'allowDisplayingInsecureContent': true,
-                                  'preload': __dirname + '/preload.js'});
+                                  'preload': __dirname + '/preload.js',
+                                  'title': 'IRCCloud'});
   mainWindow.loadURL('https://www.irccloud.com');
 
   mainWindow.on('closed', function() {
