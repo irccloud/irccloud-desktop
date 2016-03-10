@@ -1,8 +1,8 @@
 {
-  "name": "IRCCloud",
+  "name": "irccloud",
   "description": "IRCCloud Desktop Client",
   "author": {
-    "name": "IRCCloud",
+    "name": "IRCCloud Ltd.",
     "email": "team@irccloud.com",
     "url": "https://www.irccloud.com"
   },
