@@ -5,8 +5,6 @@ var MenuItem = require('menu-item');
 var Shell = require('shell');
 var ConfigStore = require('configstore');
 
-console.log(app.getLocale());
-
 var mainWindow = null;
 
 const config = new ConfigStore('IRCCloud', {
