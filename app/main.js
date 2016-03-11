@@ -70,13 +70,13 @@ function openMainWindow() {
           app.dock.setBadge(unread);
       }
   });
-  
+
   mainWindow.on('app-command', function (e, cmd) {
     if (cmd === 'browser-backward' && mainWindow.webContents.canGoBack()) {
-      someWindow.webContents.goBack();
+      mainWindow.webContents.goBack();
     }
   });
-  
+
   mainWindow.webContents.on('did-navigate-in-page', function (e, url) {
     var historyMenu = menu.items.find(function (item) {
       return item.id == 'history';
