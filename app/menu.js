@@ -7,6 +7,12 @@ module.exports = {
 
     var app_menu = {
       submenu: [
+      ]
+    };
+
+    if (process.platform == 'darwin') {
+        app_menu.label = name;
+        app_menu.submenu = [
         {
           label: 'About ' + name,
           role: 'about'
@@ -17,13 +23,7 @@ module.exports = {
             var url = focusedWindow ? focusedWindow.webContents.getURL() : host;
             require('electron').shell.openExternal(url);
           }
-        }
-      ]
-    };
-
-    if (process.platform == 'darwin') {
-        app_menu.label = name;
-        app_menu.submenu = app_menu.submenu.concat([
+        },
         {
           type: 'separator'
         },
@@ -58,15 +58,24 @@ module.exports = {
           click: function(item, focusedWindow) {
             app.quit();
           }
-        }]);
+        }];
     } else {
         app_menu.label = 'File';
-        app_menu.submenu.push({
-          label: 'Quit',
-          accelerator: 'Alt+F4',
-          click: function(item, focusedWindow) {
-            app.quit();
-          }});
+        app_menu.submenu = [
+            {
+              label: 'Open in Browser',
+              click: function(item, focusedWindow) {
+                var url = focusedWindow ? focusedWindow.webContents.getURL() : host;
+                require('electron').shell.openExternal(url);
+              }
+            },
+            {
+              label: 'Quit',
+              accelerator: 'Alt+F4',
+              click: function(item, focusedWindow) {
+                app.quit();
+              }}
+        ];
     }
 
     var edit_menu = {
@@ -218,6 +227,13 @@ module.exports = {
         },
       ]
     };
+
+    if (process.platform == 'windows') {
+        help_menu.submenu.push({
+          label: 'About',
+          role: 'about'
+        });
+    }
 
     var menu = Menu.buildFromTemplate([app_menu, edit_menu, view_menu, history_menu, help_menu]);
     Menu.setApplicationMenu(menu);
