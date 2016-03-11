@@ -72,8 +72,19 @@ function openMainWindow() {
   });
 
   mainWindow.on('app-command', function (e, cmd) {
-    if (cmd === 'browser-backward' && mainWindow.webContents.canGoBack()) {
-      mainWindow.webContents.goBack();
+    switch (cmd) {
+    case 'browser-backward':
+      if (mainWindow.webContents.canGoBack()) {
+        mainWindow.webContents.goBack();
+      }
+      break;
+    case 'browser-forward':
+      if (mainWindow.webContents.canGoForward()) {
+        mainWindow.webContents.goForward();
+      }
+      break;
+    default:
+      break;
     }
   });
 
