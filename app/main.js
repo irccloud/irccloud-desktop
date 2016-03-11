@@ -18,7 +18,7 @@ var handleStartupEvent = function() {
     child_process.spawn(updateExe, args, {detached: true}).on("close", done);
   }
 
-  const target = path.basename(process.execPath)
+  const target = path.basename(process.execPath);
   switch (process.argv[1]) {
     case '--squirrel-install':
     case '--squirrel-updated':
