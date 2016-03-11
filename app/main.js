@@ -1,5 +1,6 @@
 var app = require('app');
 var path = require('path');
+var child_process = require('child_process');
 var BrowserWindow = require('browser-window');
 var Shell = require('shell');
 var ConfigStore = require('configstore');
@@ -12,10 +13,20 @@ var handleStartupEvent = function() {
     return false;
   }
 
+  function squirrelUpdater(args, done) {
+    const updateExe = path.resolve(path.dirname(process.execPath), "..", "Update.exe");
+    child_process.spawn(updateExe, args, {detached: true}).on("close", done);
+  }
+
+  const target = path.basename(process.execPath)
   switch (process.argv[1]) {
     case '--squirrel-install':
     case '--squirrel-updated':
+      squirrelUpdater(['--createShortcut=' + target + ''], app.quit);
+      return true;
     case '--squirrel-uninstall':
+      squirrelUpdater(['--removeShortcut=' + target + ''], app.quit);
+      return true;
     case '--squirrel-obsolete':
       app.quit();
       return true;
