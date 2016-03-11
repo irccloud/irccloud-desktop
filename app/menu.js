@@ -228,7 +228,7 @@ module.exports = {
       ]
     };
 
-    if (process.platform == 'windows') {
+    if (process.platform != 'darwin') {
         help_menu.submenu.push({
           label: 'About',
           role: 'about'
