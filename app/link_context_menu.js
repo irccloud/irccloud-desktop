@@ -1,4 +1,5 @@
 const remote = require('electron').remote;
+const clipboard = require('electron').clipboard;
 const Menu = remote.Menu;
 const MenuItem = remote.MenuItem;
 
@@ -7,7 +8,9 @@ module.exports = {
         var template = [
             {
                 label: 'Copy Link Address',
-                role: 'copy'
+                click: function (e, focusedWindow) {
+                  clipboard.writeText(target.href);
+                }
             }
         ];
 
