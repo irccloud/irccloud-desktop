@@ -228,13 +228,6 @@ module.exports = {
       ]
     };
 
-    if (process.platform != 'darwin') {
-        help_menu.submenu.push({
-          label: 'About',
-          role: 'about'
-        });
-    }
-
     var menu = Menu.buildFromTemplate([app_menu, edit_menu, view_menu, history_menu, help_menu]);
     Menu.setApplicationMenu(menu);
     return menu;
