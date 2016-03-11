@@ -11,13 +11,28 @@ if (SquirrelWindows.handleStartupEvent()) {
 }
 
 var mainWindow = null;
-
+var menu = null;
 const host = 'https://www.irccloud.com';
 const config = new ConfigStore(app.getName(), {
   'width': 1024,
   'height': 768
 });
-var menu = null;
+
+var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
+  // Someone tried to run a second instance, we should focus our window
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) {
+        mainWindow.restore();
+    }
+    mainWindow.focus();
+  }
+  return true;
+});
+
+if (shouldQuit) {
+  app.quit();
+  return;
+}
 
 function openMainWindow() {
   mainWindow = new BrowserWindow({
