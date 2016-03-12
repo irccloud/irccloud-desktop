@@ -6,23 +6,11 @@ module.exports = {
     var name = app.getName();
 
     var app_menu = {
+      label: name,
       submenu: [
-      ]
-    };
-
-    if (process.platform == 'darwin') {
-        app_menu.label = name;
-        app_menu.submenu = [
         {
           label: 'About ' + name,
           role: 'about'
-        },
-        {
-          label: 'Open in Browser',
-          click: function(item, focusedWindow) {
-            var url = focusedWindow ? focusedWindow.webContents.getURL() : host;
-            require('electron').shell.openExternal(url);
-          }
         },
         {
           type: 'separator'
@@ -58,10 +46,12 @@ module.exports = {
           click: function(item, focusedWindow) {
             app.quit();
           }
-        }];
-    } else {
-        app_menu.label = 'File';
-        app_menu.submenu = [
+        }
+      ]
+    };
+    var file_menu = {
+        label: 'File',
+        submenu: [
             {
               label: 'Open in Browser',
               click: function(item, focusedWindow) {
@@ -70,12 +60,23 @@ module.exports = {
               }
             },
             {
-              label: 'Quit',
-              accelerator: 'Alt+F4',
-              click: function(item, focusedWindow) {
-                app.quit();
-              }}
-        ];
+              type: 'separator'
+            },
+            {
+              label: 'Close',
+              accelerator: 'CmdOrCtrl+W',
+              role: 'close'
+            }
+        ]
+    };
+    if (process.platform != 'darwin') {
+      file_menu.submenu.push({
+        label: 'Quit',
+        accelerator: 'Alt+F4',
+        click: function(item, focusedWindow) {
+          app.quit();
+        }
+      });
     }
 
     var edit_menu = {
@@ -201,11 +202,6 @@ module.exports = {
           role: 'minimize'
         },
         {
-          label: 'Close',
-          accelerator: 'CmdOrCtrl+W',
-          role: 'close'
-        },
-        {
           type: 'separator'
         },
         {
@@ -228,7 +224,12 @@ module.exports = {
       ]
     };
 
-    var menu = Menu.buildFromTemplate([app_menu, edit_menu, view_menu, history_menu, help_menu]);
+    var menu;
+    if (process.platform == 'darwin') {
+      menu = Menu.buildFromTemplate([app_menu, file_menu, edit_menu, view_menu, history_menu, window_menu, help_menu]);
+    } else {
+      menu = Menu.buildFromTemplate([file_menu, edit_menu, view_menu, history_menu, help_menu]);
+    }
     Menu.setApplicationMenu(menu);
     return menu;
   }
