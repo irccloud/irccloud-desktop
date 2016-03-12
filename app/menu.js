@@ -134,18 +134,25 @@ module.exports = {
                   focusedWindow.webContents.executeJavaScript('if (cb()) cb().trigger("pastePrompt");');
                 }
               }
-            },
-            {
-              type: 'separator'
-            },
-            {
-              label: 'Close',
-              accelerator: 'CmdOrCtrl+W',
-              role: 'close'
             }
         ]
     };
     if (process.platform != 'darwin') {
+      file_menu.submenu.push({
+        type: 'separator'
+      });
+      file_menu.submenu.push({
+        label: 'Preferences…',
+        accelerator: 'Ctrl+,',
+        click: function (item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.webContents.executeJavaScript('SESSIONVIEW.openSettings()');
+          }
+        }
+      });
+      file_menu.submenu.push({
+        type: 'separator'
+      });
       file_menu.submenu.push({
         label: 'Quit',
         accelerator: 'Alt+F4',
