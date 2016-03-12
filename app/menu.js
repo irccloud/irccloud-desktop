@@ -216,9 +216,9 @@ module.exports = {
       role: 'help',
       submenu: [
         {
-          label: 'Github Repository',
+          label: 'Known Issues',
           click: function(item, focusedWindow) {
-            require('electron').shell.openExternal('https://github.com/irccloud/irccloud-desktop');
+            require('electron').shell.openExternal('https://github.com/irccloud/irccloud-desktop/issues');
           }
         },
       ]
