@@ -4,7 +4,7 @@ var webFrame = require('electron').webFrame;
 var buildEditorContextMenu = remote.require('electron-editor-context-menu');
 var SpellCheckProvider = require('electron-spell-check-provider');
 var config = remote.getGlobal('config');
-var linkContextMenu = require('./link_context_menu');
+var contextMenu = require('./context_menu');
 
 var selection;
 function resetSelection() {
@@ -34,15 +34,15 @@ window.addEventListener('contextmenu', function(e) {
 
   if (e.target.closest('textarea, input, [contenteditable="true"]')) {
       menu = buildEditorContextMenu(selection);
-
-      // The 'contextmenu' event is emitted after 'selectionchange' has fired but possibly before the
-      // visible selection has changed. Try to wait to show the menu until after that, otherwise the
-      // visible selection will update after the menu dismisses and look weird.
-      setTimeout(function() {
-        menu.popup(remote.getCurrentWindow());
-      }, 30);
-  } else if (e.target.closest('a')) {
-      menu = linkContextMenu.build(e.target);
+  } else {
+      menu = contextMenu.build(window, e.target);
+  }
+  // The 'contextmenu' event is emitted after 'selectionchange' has fired but possibly before the
+  // visible selection has changed. Try to wait to show the menu until after that, otherwise the
+  // visible selection will update after the menu dismisses and look weird.
+  if (menu) {
+    setTimeout(function() {
       menu.popup(remote.getCurrentWindow());
+    }, 30);
   }
 });
