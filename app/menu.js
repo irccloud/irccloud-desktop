@@ -16,7 +16,7 @@ module.exports = {
           type: 'separator'
         },
         {
-          label: 'Settings',
+          label: 'Preferences…',
           accelerator: 'Cmd+,',
           click: function (item, focusedWindow) {
             if (focusedWindow) {
@@ -75,8 +75,65 @@ module.exports = {
               type: 'separator'
             },
             {
-              label: 'Jump to Channel…',
+              label: 'Add a Network…',
+              click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.addNetwork()');
+                }
+              }
+            },
+            {
+              type: 'separator'
+            },
+            {
+              label: 'Jump to…',
               accelerator: 'CmdOrCtrl+K'
+            },
+            {
+              label: 'Select Next in List',
+              accelerator: 'Alt+Down'
+            },
+            {
+              label: 'Select Previous in List',
+              accelerator: 'Alt+Up'
+            },
+            {
+              label: 'Select Next Unread in List',
+              accelerator: 'Alt+Shift+Down'
+            },
+            {
+              label: 'Select Previous Unread in List',
+              accelerator: 'Alt+Shift+Up'
+            },
+            {
+              type: 'separator'
+            },
+            {
+              label: 'Mark Current as Read',
+              accelerator: 'Esc'
+            },
+            {
+              label: 'Mark All as Read',
+              accelerator: 'Shift+Esc'
+            },
+            {
+              type: 'separator'
+            },
+            {
+              label: 'Upload a File…',
+              click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                  focusedWindow.webContents.executeJavaScript('if (cb()) cb().trigger("uploadPrompt");');
+                }
+              }
+            },
+            {
+              label: 'Start a Pastebin…',
+              click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                  focusedWindow.webContents.executeJavaScript('if (cb()) cb().trigger("pastePrompt");');
+                }
+              }
             },
             {
               type: 'separator'
@@ -182,8 +239,8 @@ module.exports = {
       ]
     };
 
-    var history_menu = {
-      label: 'History',
+    var go_menu = {
+      label: 'Go',
       id: 'history',
       submenu: [
         {
@@ -208,6 +265,25 @@ module.exports = {
             }
           }
         },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'File Uploads',
+          click: function (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.files.show();');
+            }
+          }
+        },
+        {
+          label: 'Pastebins',
+          click: function (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.pastebins.show();');
+            }
+          }
+        }
       ]
     };
 
@@ -226,7 +302,7 @@ module.exports = {
         {
           label: 'Bring All to Front',
           role: 'front'
-        },
+        }
       ]
     };
 
@@ -252,9 +328,9 @@ module.exports = {
 
     var menu;
     if (process.platform == 'darwin') {
-      menu = Menu.buildFromTemplate([app_menu, file_menu, edit_menu, view_menu, history_menu, window_menu, help_menu]);
+      menu = Menu.buildFromTemplate([app_menu, file_menu, edit_menu, view_menu, go_menu, window_menu, help_menu]);
     } else {
-      menu = Menu.buildFromTemplate([file_menu, edit_menu, view_menu, history_menu, help_menu]);
+      menu = Menu.buildFromTemplate([file_menu, edit_menu, view_menu, go_menu, help_menu]);
     }
     Menu.setApplicationMenu(menu);
     return menu;
