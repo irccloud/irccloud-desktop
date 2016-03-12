@@ -18,9 +18,9 @@ resetSelection();
 window.addEventListener('mousedown', resetSelection);
 
 webFrame.setSpellCheckProvider(
-  'en-US',
+  remote.app.getLocale(),
   true,
-  new SpellCheckProvider('en-US').on('misspelling', function(suggestions) {
+  new SpellCheckProvider(remote.app.getLocale()).on('misspelling', function(suggestions) {
     if (window.getSelection().toString()) {
       selection.isMisspelled = true;
       selection.spellingSuggestions = suggestions.slice(0, 3);
