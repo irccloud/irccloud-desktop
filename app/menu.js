@@ -16,6 +16,18 @@ module.exports = {
           type: 'separator'
         },
         {
+          label: 'Settings',
+          accelerator: 'Cmd+,',
+          click: function (item, focusedWindow) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.openSettings()');
+            }
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
           label: 'Services',
           role: 'services',
           submenu: []
@@ -25,12 +37,12 @@ module.exports = {
         },
         {
           label: 'Hide ' + name,
-          accelerator: 'Command+H',
+          accelerator: 'Cmd+H',
           role: 'hide'
         },
         {
           label: 'Hide Others',
-          accelerator: 'Command+Alt+H',
+          accelerator: 'Cmd+Alt+H',
           role: 'hideothers'
         },
         {
@@ -42,7 +54,7 @@ module.exports = {
         },
         {
           label: 'Quit',
-          accelerator: 'Command+Q',
+          accelerator: 'Cmd+Q',
           click: function(item, focusedWindow) {
             app.quit();
           }
@@ -58,6 +70,13 @@ module.exports = {
                 var url = focusedWindow ? focusedWindow.webContents.getURL() : host;
                 require('electron').shell.openExternal(url);
               }
+            },
+            {
+              type: 'separator'
+            },
+            {
+              label: 'Jump to Channel…',
+              accelerator: 'CmdOrCtrl+K'
             },
             {
               type: 'separator'
@@ -134,7 +153,7 @@ module.exports = {
           label: 'Toggle Full Screen',
           accelerator: (function() {
             if (process.platform == 'darwin') {
-              return 'Ctrl+Command+F';
+              return 'Ctrl+Cmd+F';
             } else {
               return 'F11';
             }
@@ -149,7 +168,7 @@ module.exports = {
           label: 'Toggle Developer Tools',
           accelerator: (function() {
             if (process.platform == 'darwin') {
-              return 'Command+Alt+I';
+              return 'Cmd+Alt+I';
             } else {
               return 'Ctrl+Shift+I';
             }
@@ -215,6 +234,13 @@ module.exports = {
       label: 'Help',
       role: 'help',
       submenu: [
+        {
+          label: 'Keyboard Shortcuts',
+          accelerator: 'CmdOrCtrl+/'
+        },
+        {
+          type: 'separator'
+        },
         {
           label: 'Known Issues',
           click: function(item, focusedWindow) {
