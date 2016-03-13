@@ -5,11 +5,6 @@
       "pack": "build",
       "dist": "build"
   },
-  "builder": {
-    "osx": {
-        "title": "IRCCloud"
-    }
-  },
   "devDependencies": {
     "electron-builder": "^2.8.3",
     "electron-prebuilt": "^0.36.9",
