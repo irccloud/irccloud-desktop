@@ -20,7 +20,7 @@ module.exports = {
           accelerator: 'Cmd+,',
           click: function (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.openSettings()');
+              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.openSettings()', true);
             }
           }
         },
@@ -78,7 +78,7 @@ module.exports = {
               label: 'Add a Network…',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.addNetwork()');
+                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.addNetwork()', true);
                 }
               }
             },
@@ -123,7 +123,7 @@ module.exports = {
               label: 'Upload a File…',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (cb()) cb().trigger("uploadPrompt");');
+                  focusedWindow.webContents.executeJavaScript('if (cb()) cb().trigger("uploadPrompt");', true);
                 }
               }
             },
@@ -131,7 +131,7 @@ module.exports = {
               label: 'Start a Pastebin…',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (cb()) cb().trigger("pastePrompt");');
+                  focusedWindow.webContents.executeJavaScript('if (cb()) cb().trigger("pastePrompt");', true);
                 }
               }
             }
@@ -146,7 +146,7 @@ module.exports = {
         accelerator: 'Ctrl+,',
         click: function (item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.webContents.executeJavaScript('SESSIONVIEW.openSettings()');
+            focusedWindow.webContents.executeJavaScript('SESSIONVIEW.openSettings()', true);
           }
         }
       });
@@ -279,7 +279,7 @@ module.exports = {
           label: 'File Uploads',
           click: function (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.files.show();');
+              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.files.show();', true);
             }
           }
         },
@@ -287,7 +287,7 @@ module.exports = {
           label: 'Pastebins',
           click: function (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.pastebins.show();');
+              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.pastebins.show();', true);
             }
           }
         }
