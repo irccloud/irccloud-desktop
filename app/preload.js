@@ -18,8 +18,8 @@ resetSelection();
 window.addEventListener('mousedown', resetSelection);
 
 function setupSpellcheck () {
-  let locale = remote.app.getLocale();
-  let spellCheckLocale = locale;
+  var locale = remote.app.getLocale();
+  var spellCheckLocale = locale;
   // electron-spell-check-provider only supports en-US, use it for any en
   if (locale === 'en' || locale.startsWith('en-')) {
     spellCheckLocale = 'en-US';
