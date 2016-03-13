@@ -17,16 +17,25 @@ resetSelection();
 
 window.addEventListener('mousedown', resetSelection);
 
-webFrame.setSpellCheckProvider(
-  remote.app.getLocale(),
-  true,
-  new SpellCheckProvider(remote.app.getLocale()).on('misspelling', function(suggestions) {
-    if (window.getSelection().toString()) {
-      selection.isMisspelled = true;
-      selection.spellingSuggestions = suggestions.slice(0, 3);
-    }
-}));
+function setupSpellcheck () {
+  let locale = remote.app.getLocale();
+  let spellCheckLocale = locale;
+  // electron-spell-check-provider only supports en-US, use it for any en
+  if (locale === 'en' || locale.startsWith('en-')) {
+    spellCheckLocale = 'en-US';
+  }
+  webFrame.setSpellCheckProvider(
+    locale,
+    true,
+    new SpellCheckProvider(spellCheckLocale).on('misspelling', function(suggestions) {
+      if (window.getSelection().toString()) {
+        selection.isMisspelled = true;
+        selection.spellingSuggestions = suggestions.slice(0, 3);
+      }
+  }));
+}
 
+setupSpellcheck();
 
 /* Right-click context menus */
 window.addEventListener('contextmenu', function(e) {
