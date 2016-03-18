@@ -50,6 +50,18 @@ function openMainWindow() {
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
+  
+  mainWindow.on('swipe-right', function (e) {
+    if (mainWindow.webContents.canGoForward()) {
+      mainWindow.webContents.goForward();
+    }
+  });
+  
+  mainWindow.on('swipe-left', function (e) {
+    if (mainWindow.webContents.canGoBack()) {
+      mainWindow.webContents.goBack();
+    }
+  });
 
   mainWindow.on('resize', function() {
     size = mainWindow.getSize();
