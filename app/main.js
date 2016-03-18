@@ -95,6 +95,9 @@ function openMainWindow() {
         mainWindow.webContents.goForward();
       }
       break;
+    case 'browser-refresh':
+      mainWindow.webContents.reloadIgnoringCache();
+      break;
     default:
       break;
     }
