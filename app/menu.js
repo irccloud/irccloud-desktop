@@ -155,6 +155,15 @@ module.exports = {
         type: 'separator'
       });
       file_menu.submenu.push({
+        label: 'Show in Tray',
+        type:  'checkbox',
+        checked: Boolean(app.config.get('tray')),
+        click: function(item, focusedWindow){
+            app.config.set('tray', item.checked);
+            app.toggleTray();
+        }
+      });
+      file_menu.submenu.push({
         label: 'Quit',
         accelerator: 'Alt+F4',
         click: function(item, focusedWindow) {

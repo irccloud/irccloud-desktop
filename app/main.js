@@ -13,6 +13,8 @@ if (SquirrelWindows.handleStartupEvent()) {
 
 var mainWindow = null;
 var menu = null;
+var appIcon = null;
+
 const host = 'https://www.irccloud.com';
 const config = new ConfigStore(app.getName(), {
   'width': 1024,
@@ -20,6 +22,7 @@ const config = new ConfigStore(app.getName(), {
 });
 
 app.userInitiatedQuit = false;
+app.config = config;
 
 var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
   // Someone tried to run a second instance, we should focus our window
@@ -130,7 +133,7 @@ function openMainWindow() {
       Shell.openExternal(url);
   });
   mainWindow.on('close', function(ev){
-    if(!app.userInitiatedQuit){
+    if(!app.userInitiatedQuit && config.get('tray')){
         ev.preventDefault();
         mainWindow.hide();
     }
@@ -145,15 +148,27 @@ app.on('window-all-closed', function() {
   }
 });
 
-app.on('ready', function() {
-  menu = Menu.setup(app, host);
-  openMainWindow();
-  var appIcon = new Tray(__dirname + '/icon.png');
+function destroyTray(){
+    if(appIcon) appIcon.destroy();
+}
+
+function setupTray(){
+  appIcon = new Tray(path.join(__dirname, '/icon.png'));
   appIcon.setToolTip('IRCCloud');
   appIcon.on('click', function(){
       mainWindow.show();
   });
   var tray_menu = Menu.setup_tray(app);
   appIcon.setContextMenu(tray_menu);
+}
 
+app.toggleTray = function(){
+    if(config.get('tray')) return setupTray();
+    else return destroyTray();
+}
+
+app.on('ready', function() {
+  menu = Menu.setup(app, host);
+  openMainWindow();
+  if(config.get('tray') && process.platform != 'darwin') setupTray();
 });
