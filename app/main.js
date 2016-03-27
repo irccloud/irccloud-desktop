@@ -36,6 +36,7 @@ if (shouldQuit) {
 
 function openMainWindow() {
   mainWindow = new BrowserWindow({
+    'icon': __dirname + '/icon.png', 
     'width': config.get('width'),
     'height': config.get('height'),
     'webPreferences': {
