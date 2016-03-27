@@ -10,10 +10,6 @@
   "license": "Apache-2.0",
   "version": "0.1.5",
   "main": "main.js",
-  "build": {
-    "app-bundle-id": "com.irccloud.desktop",
-    "app-category-type": "public.app-category.productivity"
-  },
   "dependencies": {
     "configstore": "^2.0.0",
     "electron-editor-context-menu": "^1.1.1",
