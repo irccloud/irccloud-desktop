@@ -353,7 +353,7 @@ module.exports = {
             app.quit();
           }
         }
-    ])
+    ]);
     return menu;
   }
 };
