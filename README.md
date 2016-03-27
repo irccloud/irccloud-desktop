@@ -20,6 +20,10 @@ The appropriate version should be detected based on your OS.
 Status](https://travis-ci.org/irccloud/irccloud-desktop.svg?branch=master)](https://travis-ci.org/irccloud/irccloud-desktop)
 [![Build status](https://ci.appveyor.com/api/projects/status/gx0f02q8w4hqwdt0?svg=true)](https://ci.appveyor.com/project/russss/irccloud-desktop)
 
+IRCCloud Desktop is built on the Electron app framework, as used by
+GitHub's Atom editor. For more information, check out the [Electron
+documentation](http://electron.atom.io/docs/v0.37.2/).
+
 ### Build Requirements
 * Node JS version 5.3 or higher
 
