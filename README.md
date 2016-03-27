@@ -1,7 +1,8 @@
 # IRCCloud Desktop
 
-This is a prototype of an IRCCloud desktop app, currently available for
-Windows and MacOS X. The app wraps the IRCCloud website in a native window.
+This is a prototype of an IRCCloud desktop app for Windows, Linux
+(Debian/Ubuntu), and MacOS X. The app wraps the IRCCloud website
+in a native window.
 
 This app is currently experimental and is not officially supported,
 however it should provide equivalent or better functionality to other
