@@ -7,9 +7,12 @@ node_modules: package.json
 clean:
 	rm -Rf ./dist
 
-test:
+dev: node_modules
+	./node_modules/.bin/electron ./app
+
+test: node_modules
 	./node_modules/.bin/jshint ./app
 
 ci: test dist
 
-.PHONY: dist clean test ci
+.PHONY: dist clean dev test ci

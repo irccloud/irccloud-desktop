@@ -1,16 +1,38 @@
-# IRCCloud Desktop Wrapper
+# IRCCloud Desktop
 
+This is a prototype of an IRCCloud desktop app, currently available for
+Windows and MacOS X. The app wraps the IRCCloud website in a native window.
+
+This app is currently experimental and is not officially supported,
+however it should provide equivalent or better functionality to other
+IRCCloud desktop wrapper apps.
+
+If you have any issues, please file them in the [GitHub Issue
+Tracker](https://github.com/irccloud/irccloud-desktop/issues).
+
+## Downloading
+
+IRCCloud Desktop can be [downloaded here](http://desktop.irccloud.com).
+The appropriate version should be detected based on your OS.
+
+## Development
 [![Build
 Status](https://travis-ci.org/irccloud/irccloud-desktop.svg?branch=master)](https://travis-ci.org/irccloud/irccloud-desktop)
 [![Build status](https://ci.appveyor.com/api/projects/status/gx0f02q8w4hqwdt0?svg=true)](https://ci.appveyor.com/project/russss/irccloud-desktop)
 
-This is an experimental prototype of an IRCCloud native wrapper app
-using the Electron framework. Pull requests are welcome.
+### Build Requirements
+* Node JS version 5.3 or higher
 
-## Development
+### Running
 
-`./node_modules/.bin/electron ./app` will run the app (without icons).
+Run `npm install` in the root of the repository. `make dev` will run the
+app quickly (without icons).
 
-## Install
+To build a full version, `make build`.
 
-`make` will build the app in the `dist/` directory
+## Feedback
+
+If you have any questions, get in touch on [#feedback at
+irc.irccloud.com](https://www.irccloud.com/#!/ircs://irc.irccloud.com:6697/%23feedback).
+
+
