@@ -56,6 +56,7 @@ module.exports = {
           label: 'Quit',
           accelerator: 'Cmd+Q',
           click: function(item, focusedWindow) {
+            app.userInitiatedQuit = true;
             app.quit();
           }
         }
@@ -340,6 +341,19 @@ module.exports = {
       menu = Menu.buildFromTemplate([file_menu, edit_menu, view_menu, go_menu, help_menu]);
     }
     Menu.setApplicationMenu(menu);
+    return menu;
+  },
+  setup_tray: function(app){
+    var menu;
+    menu = Menu.buildFromTemplate([
+        {
+          label: 'Quit',
+          click: function(item, focusedWindow) {
+            app.userInitiatedQuit = true;
+            app.quit();
+          }
+        }
+    ])
     return menu;
   }
 };

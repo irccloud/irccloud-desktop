@@ -5,6 +5,7 @@ var Shell = require('shell');
 var ConfigStore = require('configstore');
 var Menu = require('./menu');
 var SquirrelWindows = require('./squirrel_windows');
+var Tray = require('tray');
 
 if (SquirrelWindows.handleStartupEvent()) {
   return;
@@ -18,12 +19,15 @@ const config = new ConfigStore(app.getName(), {
   'height': 768
 });
 
+app.userInitiatedQuit = false;
+
 var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
   // Someone tried to run a second instance, we should focus our window
   if (mainWindow) {
     if (mainWindow.isMinimized()) {
         mainWindow.restore();
     }
+    mainWindow.show();
     mainWindow.focus();
   }
   return true;
@@ -125,6 +129,13 @@ function openMainWindow() {
       event.preventDefault();
       Shell.openExternal(url);
   });
+  mainWindow.on('close', function(ev){
+    if(!app.userInitiatedQuit){
+        ev.preventDefault();
+        mainWindow.hide();
+    }
+  });
+
 }
 
 app.on('activate-with-no-open-windows', openMainWindow);
@@ -137,4 +148,12 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
   menu = Menu.setup(app, host);
   openMainWindow();
+  var appIcon = new Tray(__dirname + '/icon.png');
+  appIcon.setToolTip('IRCCloud');
+  appIcon.on('click', function(){
+      mainWindow.show();
+  });
+  var tray_menu = Menu.setup_tray(app);
+  appIcon.setContextMenu(tray_menu);
+
 });
