@@ -7,6 +7,9 @@ node_modules: package.json
 clean:
 	rm -Rf ./dist
 
+distclean: clean
+	rm -Rf ./node_modules ./app/node_modules ./.nvm
+
 dev: node_modules
 	./node_modules/.bin/electron ./app
 
@@ -15,4 +18,4 @@ test: node_modules
 
 ci: test dist
 
-.PHONY: dist clean dev test ci
+.PHONY: dist clean distclean dev test ci
