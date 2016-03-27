@@ -1,6 +1,7 @@
 language: cpp
 os:
 - osx
+- linux
 compiler:
 - clang
 env:
@@ -12,6 +13,7 @@ addons:
   apt:
     packages:
     - icnsutils
+    - graphicsmagick
 cache:
   directories:
   - node_modules
