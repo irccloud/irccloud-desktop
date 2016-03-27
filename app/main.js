@@ -132,8 +132,8 @@ function openMainWindow() {
       event.preventDefault();
       Shell.openExternal(url);
   });
-  mainWindow.on('close', function(ev){
-    if(!app.userInitiatedQuit && config.get('tray')){
+  mainWindow.on('close', function(ev) {
+    if (!app.userInitiatedQuit && config.get('tray')) {
         ev.preventDefault();
         mainWindow.hide();
     }
@@ -148,27 +148,34 @@ app.on('window-all-closed', function() {
   }
 });
 
-function destroyTray(){
-    if(appIcon) appIcon.destroy();
+function destroyTray() {
+    if (appIcon) {
+        appIcon.destroy();
+    }
 }
 
-function setupTray(){
+function setupTray() {
   appIcon = new Tray(path.join(__dirname, '/icon.png'));
   appIcon.setToolTip('IRCCloud');
-  appIcon.on('click', function(){
+  appIcon.on('click', function() {
       mainWindow.show();
   });
   var tray_menu = Menu.setup_tray(app);
   appIcon.setContextMenu(tray_menu);
 }
 
-app.toggleTray = function(){
-    if(config.get('tray')) return setupTray();
-    else return destroyTray();
-}
+app.toggleTray = function() {
+    if (config.get('tray')) {
+        return setupTray();
+    } else {
+        return destroyTray();
+    }
+};
 
 app.on('ready', function() {
   menu = Menu.setup(app, host);
   openMainWindow();
-  if(config.get('tray') && process.platform != 'darwin') setupTray();
+  if (config.get('tray') && process.platform != 'darwin') {
+      setupTray();
+  }
 });
