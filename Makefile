@@ -9,3 +9,7 @@ clean:
 
 test:
 	./node_modules/.bin/jshint ./app
+
+ci: test dist
+
+.PHONY: dist clean test ci
