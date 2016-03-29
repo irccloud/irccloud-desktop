@@ -45,6 +45,14 @@ function openMainWindow() {
     },
     'title': app.getName()
   });
+  // Enable the streamlined login page
+  var inviteCookie = { url : host, name : "invite", value : "1" };
+  mainWindow.webContents.session.cookies.set(inviteCookie, function (error) {
+    if (error) {
+      console.error(error);
+    }
+  });
+
   mainWindow.loadURL(host);
 
   mainWindow.on('closed', function() {
