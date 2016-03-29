@@ -51,18 +51,21 @@ function openMainWindow() {
     mainWindow = null;
   });
   
-  mainWindow.on('swipe-right', function (e) {
-    if (mainWindow.webContents.canGoForward()) {
-      mainWindow.webContents.goForward();
+  mainWindow.on('swipe', function (e, direction) {
+    switch (direction) {
+    case 'right':
+        if (mainWindow.webContents.canGoForward()) {
+          mainWindow.webContents.goForward();
+        }
+        break;
+    case 'left':
+        if (mainWindow.webContents.canGoBack()) {
+          mainWindow.webContents.goBack();
+        }
+        break;
     }
   });
   
-  mainWindow.on('swipe-left', function (e) {
-    if (mainWindow.webContents.canGoBack()) {
-      mainWindow.webContents.goBack();
-    }
-  });
-
   mainWindow.on('resize', function() {
     size = mainWindow.getSize();
     config.set({
