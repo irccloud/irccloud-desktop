@@ -1,10 +1,16 @@
-var app = require('app');
-var path = require('path');
-var BrowserWindow = require('browser-window');
-var Shell = require('shell');
-var ConfigStore = require('configstore');
-var Menu = require('./menu');
-var SquirrelWindows = require('./squirrel_windows');
+process.env.ELECTRON_HIDE_INTERNAL_MODULES = 'true';
+
+const electron = require('electron');
+
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const Shell = electron.shell;
+
+const path = require('path');
+
+const ConfigStore = require('configstore');
+const Menu = require('./menu');
+const SquirrelWindows = require('./squirrel_windows');
 
 if (SquirrelWindows.handleStartupEvent()) {
   return;
@@ -146,6 +152,6 @@ app.on('window-all-closed', function() {
 });
 
 app.on('ready', function() {
-  menu = Menu.setup(app, host);
+  menu = Menu.setup(host);
   openMainWindow();
 });

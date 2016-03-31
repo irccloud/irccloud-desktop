@@ -1,4 +1,7 @@
-const app = require('app');
+const electron = require('electron');
+
+const app = electron.app;
+
 const child_process = require('child_process');
 const path = require('path');
 

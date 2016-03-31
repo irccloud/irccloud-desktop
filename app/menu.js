@@ -1,8 +1,11 @@
-var Menu = require('menu');
-var MenuItem = require('menu-item');
+const electron = require('electron');
+
+const app = electron.app;
+const Menu = electron.Menu;
+const MenuItem = electron.MenuItem;
 
 module.exports = {
-  setup: function (app, host) {
+  setup: function (host) {
     var name = app.getName();
 
     var app_menu = {
