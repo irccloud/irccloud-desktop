@@ -42,6 +42,7 @@ if (shouldQuit) {
 
 function openMainWindow() {
   mainWindow = new BrowserWindow({
+    'icon': path.join(__dirname, 'icon.png'), 
     'width': config.get('width'),
     'height': config.get('height'),
     'webPreferences': {
