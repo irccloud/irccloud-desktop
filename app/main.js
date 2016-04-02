@@ -10,6 +10,7 @@ const path = require('path');
 
 const ConfigStore = require('configstore');
 const Menu = require('./menu');
+const Tray = require('tray');
 const SquirrelWindows = require('./squirrel_windows');
 
 if (SquirrelWindows.handleStartupEvent()) {
@@ -18,11 +19,16 @@ if (SquirrelWindows.handleStartupEvent()) {
 
 var mainWindow = null;
 var menu = null;
+var appIcon = null;
+
 const host = 'https://www.irccloud.com';
 const config = new ConfigStore(app.getName(), {
   'width': 1024,
   'height': 768
 });
+
+app.userInitiatedQuit = false;
+app.config = config;
 
 var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
   // Someone tried to run a second instance, we should focus our window
@@ -30,6 +36,7 @@ var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) 
     if (mainWindow.isMinimized()) {
         mainWindow.restore();
     }
+    mainWindow.show();
     mainWindow.focus();
   }
   return true;
@@ -143,6 +150,13 @@ function openMainWindow() {
       event.preventDefault();
       Shell.openExternal(url);
   });
+  mainWindow.on('close', function(ev) {
+    if (!app.userInitiatedQuit && config.get('tray')) {
+        ev.preventDefault();
+        mainWindow.hide();
+    }
+  });
+
 }
 
 app.on('activate-with-no-open-windows', openMainWindow);
@@ -152,7 +166,34 @@ app.on('window-all-closed', function() {
   }
 });
 
+function destroyTray() {
+    if (appIcon) {
+        appIcon.destroy();
+    }
+}
+
+function setupTray() {
+  appIcon = new Tray(path.join(__dirname, '/icon.png'));
+  appIcon.setToolTip('IRCCloud');
+  appIcon.on('click', function() {
+      mainWindow.show();
+  });
+  var tray_menu = Menu.setup_tray(app);
+  appIcon.setContextMenu(tray_menu);
+}
+
+app.toggleTray = function() {
+    if (config.get('tray')) {
+        return setupTray();
+    } else {
+        return destroyTray();
+    }
+};
+
 app.on('ready', function() {
   menu = Menu.setup(host);
   openMainWindow();
+  if (config.get('tray') && process.platform != 'darwin') {
+      setupTray();
+  }
 });
