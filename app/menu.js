@@ -59,6 +59,7 @@ module.exports = {
           label: 'Quit',
           accelerator: 'Cmd+Q',
           click: function(item, focusedWindow) {
+            app.userInitiatedQuit = true;
             app.quit();
           }
         }
@@ -155,6 +156,15 @@ module.exports = {
       });
       file_menu.submenu.push({
         type: 'separator'
+      });
+      file_menu.submenu.push({
+        label: 'Show in Tray',
+        type:  'checkbox',
+        checked: Boolean(app.config.get('tray')),
+        click: function(item, focusedWindow){
+            app.config.set('tray', item.checked);
+            app.toggleTray();
+        }
       });
       file_menu.submenu.push({
         label: 'Quit',
@@ -343,6 +353,19 @@ module.exports = {
       menu = Menu.buildFromTemplate([file_menu, edit_menu, view_menu, go_menu, help_menu]);
     }
     Menu.setApplicationMenu(menu);
+    return menu;
+  },
+  setup_tray: function(app){
+    var menu;
+    menu = Menu.buildFromTemplate([
+        {
+          label: 'Quit',
+          click: function(item, focusedWindow) {
+            app.userInitiatedQuit = true;
+            app.quit();
+          }
+        }
+    ]);
     return menu;
   }
 };
