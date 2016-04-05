@@ -147,8 +147,11 @@ function openMainWindow() {
   });
 
   mainWindow.webContents.on('new-window', function(event, url, frameName, disposition) {
-      event.preventDefault();
-      Shell.openExternal(url);
+    event.preventDefault();
+    var activate = disposition != 'background-tab';
+    Shell.openExternal(url, {
+      activate: activate
+    });
   });
   mainWindow.on('close', function(ev) {
     if (!app.userInitiatedQuit && config.get('tray')) {
