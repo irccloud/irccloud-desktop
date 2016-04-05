@@ -1,5 +1,8 @@
-const remote = require('electron').remote;
-const clipboard = require('electron').clipboard;
+const electron = require('electron');
+
+const remote = electron.remote;
+const clipboard = electron.clipboard;
+const Shell = electron.shell;
 const Menu = remote.Menu;
 const MenuItem = remote.MenuItem;
 
@@ -12,6 +15,22 @@ module.exports = {
                 label: 'Copy Link Address',
                 click: function (e, focusedWindow) {
                   clipboard.writeText(target.href);
+                }
+            });
+            template.push({
+                label: 'Open Link in Browser',
+                click: function (e, focusedWindow) {
+                  Shell.openExternal(target.href, {
+                    activate: true
+                  });
+                }
+            });
+            template.push({
+                label: 'Open Link in Browser (Background)',
+                click: function (e, focusedWindow) {
+                  Shell.openExternal(target.href, {
+                    activate: false
+                  });
                 }
             });
         } else {
