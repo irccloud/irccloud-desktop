@@ -1,7 +1,7 @@
 {
   "license": "Apache-2.0",
   "scripts": {
-      "postinstall": "install-app-deps",
+      "postinstall": "./node_modules/electron-builder/out/install-app-deps.js",
       "pack": "build",
       "dist": "build"
   },
