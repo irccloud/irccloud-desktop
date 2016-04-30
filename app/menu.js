@@ -91,34 +91,69 @@ module.exports = {
             },
             {
               label: 'Jump to…',
-              accelerator: 'CmdOrCtrl+K'
+              accelerator: 'CmdOrCtrl+K',
+              click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.channelSwitcher.toggle()', true);
+                }
+              }
             },
             {
               label: 'Select Next in List',
-              accelerator: 'Alt+Down'
+              accelerator: 'Alt+Down',
+              click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.sidebar.bufferList.selectNextBuffer()', true);
+                }
+              }
             },
             {
               label: 'Select Previous in List',
-              accelerator: 'Alt+Up'
+              accelerator: 'Alt+Up',
+              click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.sidebar.bufferList.selectPreviousBuffer()', true);
+                }
+              }
             },
             {
               label: 'Select Next Unread in List',
-              accelerator: 'Alt+Shift+Down'
+              accelerator: 'Alt+Shift+Down',
+              click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.sidebar.bufferList.selectNextUnreadBuffer()', true);
+                }
+              }
             },
             {
               label: 'Select Previous Unread in List',
-              accelerator: 'Alt+Shift+Up'
+              accelerator: 'Alt+Shift+Up',
+              click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.sidebar.bufferList.selectPreviousUnreadBuffer()', true);
+                }
+              }
             },
             {
               type: 'separator'
             },
             {
               label: 'Mark Current as Read',
-              accelerator: 'Esc'
+              accelerator: 'Esc',
+              click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                  focusedWindow.webContents.executeJavaScript('if (SESSION.currentBuffer) SESSION.currentBuffer.read()', true);
+                }
+              }
             },
             {
               label: 'Mark All as Read',
-              accelerator: 'Shift+Esc'
+              accelerator: 'Shift+Esc',
+              click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                  focusedWindow.webContents.executeJavaScript('SESSION.markAllAsRead()', true);
+                }
+              }
             },
             {
               type: 'separator'
@@ -332,7 +367,10 @@ module.exports = {
       submenu: [
         {
           label: 'Keyboard Shortcuts',
-          accelerator: 'CmdOrCtrl+/'
+          accelerator: 'CmdOrCtrl+/',
+          click: function (item, focusedWindow) {
+            focusedWindow.webContents.executeJavaScript('SESSIONVIEW.navigate("?/shortcuts", {trigger: true});', true);
+          }
         },
         {
           type: 'separator'
