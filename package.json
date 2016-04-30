@@ -10,8 +10,8 @@
     "app-category-type": "public.app-category.productivity"
   },
   "devDependencies": {
-    "electron-builder": "3.1.0",
-    "electron-prebuilt": "0.37.2",
+    "electron-builder": "3.14.0",
+    "electron-prebuilt": "0.37.8",
     "tsconfig-glob": "^0.4.1",
     "typescript": "^1.8.2",
     "jshint": "^2.9.1"
