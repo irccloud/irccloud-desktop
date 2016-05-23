@@ -49,7 +49,7 @@ if (shouldQuit) {
 
 function openMainWindow() {
   mainWindow = new BrowserWindow({
-    'icon': path.join(__dirname, 'icon.ico'), 
+    'icon': path.join(__dirname, process.platform == 'win32' ? 'icon.ico' : 'icon.png'),
     'width': config.get('width'),
     'height': config.get('height'),
     'webPreferences': {
@@ -176,7 +176,7 @@ function destroyTray() {
 }
 
 function setupTray() {
-  appIcon = new Tray(path.join(__dirname, '/icon.ico'));
+  appIcon = new Tray(path.join(__dirname, process.platform == 'win32' ? 'icon.ico' : 'icon.png'));
   appIcon.setToolTip('IRCCloud');
   appIcon.on('click', function() {
       mainWindow.show();
