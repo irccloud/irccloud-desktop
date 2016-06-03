@@ -203,7 +203,13 @@ module.exports = {
       });
       file_menu.submenu.push({
         label: 'Quit',
-        accelerator: 'Alt+F4',
+        accelerator: (function() {
+            if (process.platform == 'win32') {
+                return 'Alt+F4';
+            } else {
+                return 'Ctrl+Q';
+            }
+        })(),
         click: function(item, focusedWindow) {
           app.quit();
         }
