@@ -293,6 +293,21 @@ module.exports = {
         },
       ]
     };
+    if (process.platform != 'darwin') {
+        view_menu.submenu.splice(2, 0, {
+            label: 'Toggle Menu Bar',
+            accelerator: 'Ctrl+Shift+M',
+            click: function(item, focusedWindow) {
+                if (focusedWindow.isMenuBarAutoHide()) {
+                    app.config.set('menu-bar', true);
+                    app.toggleMenuBar(focusedWindow);
+                } else {
+                    app.config.set('menu-bar', false);
+                    app.toggleMenuBar(focusedWindow);
+                }
+            }
+        });
+    }
 
     var go_menu = {
       label: 'Go',
