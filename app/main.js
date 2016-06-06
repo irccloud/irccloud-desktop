@@ -10,7 +10,7 @@ const path = require('path');
 
 const ConfigStore = require('configstore');
 const Menu = require('./menu');
-const Tray = require('tray');
+const Tray = electron.Tray;
 const SquirrelWindows = require('./squirrel_windows');
 
 if (SquirrelWindows.handleStartupEvent()) {
