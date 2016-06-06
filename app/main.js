@@ -96,6 +96,18 @@ function openMainWindow() {
     });
   });
 
+  if (config.get('maximize') === true) {
+    mainWindow.maximize();
+  }
+
+  mainWindow.on('maximize', function() {
+    config.set('maximize', true);
+  });
+
+  mainWindow.on('unmaximize', function() {
+    config.set('maximize', false);
+  });
+
   mainWindow.on('page-title-updated', function(event) {
       var title = mainWindow.getTitle();
       if (title && process.platform == 'darwin') {
