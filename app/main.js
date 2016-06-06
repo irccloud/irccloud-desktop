@@ -205,10 +205,31 @@ app.toggleTray = function() {
     }
 };
 
+function hideMenuBar(window) {
+    window.setAutoHideMenuBar(true);
+    window.setMenuBarVisibility(false);
+}
+
+function showMenuBar(window) {
+    window.setAutoHideMenuBar(false);
+    window.setMenuBarVisibility(true);
+}
+
+app.toggleMenuBar = function (window) {
+    if (config.get('menu-bar')) {
+        return showMenuBar(window);
+    } else {
+        return hideMenuBar(window);
+    }
+};
+
 app.on('ready', function() {
   menu = Menu.setup(host);
   openMainWindow();
   if (config.get('tray') && process.platform != 'darwin') {
       setupTray();
+  }
+  if (config.get('menu-bar') === false && process.platform != 'darwin') {
+      hideMenuBar(mainWindow);
   }
 });
