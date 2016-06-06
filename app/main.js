@@ -9,6 +9,7 @@ const Shell = electron.shell;
 const path = require('path');
 
 const ConfigStore = require('configstore');
+const FS = require('fs');
 const Menu = require('./menu');
 const Tray = electron.Tray;
 const SquirrelWindows = require('./squirrel_windows');
@@ -170,6 +171,16 @@ function openMainWindow() {
         ev.preventDefault();
         mainWindow.hide();
     }
+  });
+
+  mainWindow.webContents.on('dom-ready', function(event) {
+      FS.readFile('user-style.css', 'utf8', (err, data) => {
+          if (err) {
+              // That's OK; just means the file wasn't readable.
+              return;
+          }
+          mainWindow.webContents.insertCSS(data);
+      });
   });
 
 }
