@@ -1,6 +1,7 @@
 /* Javascript injected into the page on-load */
 var remote = require('electron').remote;
 var webFrame = require('electron').webFrame;
+var ipcRenderer = require('electron').ipcRenderer;
 var buildEditorContextMenu = remote.require('electron-editor-context-menu');
 var SpellCheckProvider = require('electron-spell-check-provider');
 var config = remote.getGlobal('config');
@@ -16,6 +17,11 @@ function resetSelection() {
 resetSelection();
 
 window.addEventListener('mousedown', resetSelection);
+
+webFrame.setZoomLevel(config.get('zoom'));
+ipcRenderer.on('update-zoom-level', function (event, message) {
+    webFrame.setZoomLevel(config.get('zoom'));
+});
 
 function setupSpellcheck () {
   var locale = remote.app.getLocale();

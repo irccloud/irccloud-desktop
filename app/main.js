@@ -24,11 +24,15 @@ var appIcon = null;
 const host = 'https://www.irccloud.com';
 const config = new ConfigStore(app.getName(), {
   'width': 1024,
-  'height': 768
+  'height': 768,
+  'zoom': 0
 });
+const minZoom = -8;
+const maxZoom = 9;
 
 app.userInitiatedQuit = false;
 app.config = config;
+global.config = config;
 
 var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
   // Someone tried to run a second instance, we should focus our window
@@ -205,6 +209,48 @@ app.toggleTray = function() {
     }
 };
 
+function updateZoomMenu() {
+    var zoomLevel = config.get('zoom');
+    var viewMenu = menu.items.find(function (item) {
+      return item.id == 'view';
+    });
+    viewMenu.submenu.items.forEach(function (viewItem) {
+      switch (viewItem.id) {
+      case 'zoomReset':
+        viewItem.enabled = zoomLevel !== 0;
+        break;
+      case 'zoomIn':
+        viewItem.enabled = zoomLevel < maxZoom;
+        break;
+      case 'zoomOut':
+        viewItem.enabled = zoomLevel > minZoom;
+        break;
+      default:
+        break;
+      }
+    });
+}
+
+function updateZoom(zoomLevel) {
+    config.set('zoom', zoomLevel);
+    if (mainWindow) {
+        mainWindow.webContents.send('update-zoom-level');
+    }
+    updateZoomMenu();
+}
+
+app.zoomIn = function () {
+    var newZoom = Math.min(maxZoom, config.get('zoom') + 1);
+    updateZoom(newZoom);
+};
+app.zoomOut = function () {
+    var newZoom = Math.max(minZoom, config.get('zoom') - 1);
+    updateZoom(newZoom);
+};
+app.resetZoom = function () {
+    updateZoom(0);
+};
+
 function hideMenuBar(window) {
     window.setAutoHideMenuBar(true);
     window.setMenuBarVisibility(false);
@@ -225,6 +271,7 @@ app.toggleMenuBar = function (window) {
 
 app.on('ready', function() {
   menu = Menu.setup(host);
+  updateZoomMenu();
   openMainWindow();
   if (config.get('tray') && process.platform != 'darwin') {
       setupTray();

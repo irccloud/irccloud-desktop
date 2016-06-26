@@ -257,6 +257,7 @@ module.exports = {
 
     var view_menu = {
       label: 'View',
+      id: 'view',
       submenu: [
         {
           label: 'Reload',
@@ -266,6 +267,9 @@ module.exports = {
               focusedWindow.webContents.reloadIgnoringCache();
             }
           }
+        },
+        {
+          type: 'separator'
         },
         {
           label: 'Toggle Full Screen',
@@ -281,6 +285,36 @@ module.exports = {
               focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
             }
           }
+        },
+        {
+          label: 'Actual Size',
+          id: 'zoomReset',
+          enabled: false,
+          accelerator: 'CmdOrCtrl+0',
+          click: function(item, focusedWindow) {
+            app.resetZoom();
+          }
+        },
+        {
+          label: 'Zoom In',
+          id: 'zoomIn',
+          enabled: false,
+          accelerator: 'CmdOrCtrl+=',
+          click: function(item, focusedWindow) {
+            app.zoomIn();
+          }
+        },
+        {
+          label: 'Zoom Out',
+          id: 'zoomOut',
+          enabled: false,
+          accelerator: 'CmdOrCtrl+-',
+          click: function(item, focusedWindow) {
+            app.zoomOut();
+          }
+        },
+        {
+          type: 'separator'
         },
         {
           label: 'Toggle Developer Tools',
