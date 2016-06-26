@@ -3,6 +3,7 @@ const electron = require('electron');
 const app = electron.app;
 const Menu = electron.Menu;
 const MenuItem = electron.MenuItem;
+const autoUpdater = electron.autoUpdater;
 
 module.exports = {
   setup: function (host) {
@@ -14,6 +15,12 @@ module.exports = {
         {
           label: 'About ' + name,
           role: 'about'
+        },
+        {
+          label: 'Check for Updates…',
+          click: function (item, focusedWindow) {
+            autoUpdater.checkForUpdates();
+          }
         },
         {
           type: 'separator'
