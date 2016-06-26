@@ -50,7 +50,7 @@ window.addEventListener('contextmenu', function(e) {
   if (e.target.closest('textarea, input, [contenteditable="true"]')) {
       menu = buildEditorContextMenu(selection);
   } else {
-      menu = contextMenu.build(window, e.target);
+      menu = contextMenu.build(window, e);
   }
   // The 'contextmenu' event is emitted after 'selectionchange' has fired but possibly before the
   // visible selection has changed. Try to wait to show the menu until after that, otherwise the

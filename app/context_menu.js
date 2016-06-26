@@ -7,7 +7,8 @@ const Menu = remote.Menu;
 const MenuItem = remote.MenuItem;
 
 module.exports = {
-    build: function(window, target) {
+    build: function(window, e) {
+        var target = e.target;
         var template = [];
         if (target.closest('a')) {
             target = target.closest('a');
@@ -68,15 +69,27 @@ module.exports = {
                 });
             }
         }
+        
+        template = [...template, {
+            type: 'separator'
+        }, {
+            label: 'Inspect Element',
+            click: function(item, focusedWindow) {
+                if (focusedWindow) {
+                    focusedWindow.webContents.inspectElement(e.pageX, e.pageY);
+                    if (focusedWindow.isDevToolsOpened()) {
+                        focusedWindow.devToolsWebContents.focus();
+                    }
+                }
+            }
+        }];
 
         if (process.platform == 'darwin') {
-            template = [...template, {
-                type: 'separator'
-            }, {
+            template.push({
                 label: 'Services',
                 role: 'services',
                 submenu: []
-            }];
+            });
         }
         return Menu.buildFromTemplate(template);
     }
