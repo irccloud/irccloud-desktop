@@ -13,6 +13,9 @@ const Menu = require('./menu');
 const Tray = electron.Tray;
 const SquirrelWindows = require('./squirrel_windows');
 
+const log = require('electron-log');
+log.transports.file.level = 'silly';
+
 if (SquirrelWindows.handleStartupEvent()) {
   return;
 }
@@ -67,7 +70,7 @@ function openMainWindow() {
   var inviteCookie = { url : config.get('host'), name : "invite", value : "1" };
   mainWindow.webContents.session.cookies.set(inviteCookie, function (error) {
     if (error) {
-      console.error(error);
+      log.error(error);
     }
   });
 
