@@ -9,6 +9,10 @@ var updateAvailable = false;
 
 module.exports = {
     setup: function (menu) {
+        // Needed for Squirrel.Windows
+        // https://github.com/electron/electron/blob/master/docs/api/auto-updater.md#windows
+        app.setAppUserModelId('com.squirrel.irccloud.' + app.getName());
+        
         var version = app.getVersion();
         version = 'v0.1.5';
         var feedUrl = 'http://desktop.irccloud.com/update/' + process.platform + '/' + version;

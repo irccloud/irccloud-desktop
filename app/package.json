@@ -1,5 +1,6 @@
 {
-  "name": "IRCCloud",
+  "name": "irccloud",
+  "productName": "IRCCloud",
   "description": "IRCCloud Desktop Client",
   "author": {
     "name": "IRCCloud Ltd.",

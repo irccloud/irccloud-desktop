@@ -193,7 +193,7 @@ function destroyTray() {
 
 function setupTray() {
   appIcon = new Tray(path.join(__dirname, process.platform == 'win32' ? 'icon.ico' : 'icon.png'));
-  appIcon.setToolTip('IRCCloud');
+  appIcon.setToolTip(app.getName());
   appIcon.on('click', function() {
       mainWindow.show();
   });
