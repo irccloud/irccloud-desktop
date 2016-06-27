@@ -317,7 +317,7 @@ module.exports = {
           type: 'separator'
         },
         {
-          label: 'Toggle Developer Tools',
+          label: 'Developer Tools',
           accelerator: (function() {
             if (process.platform == 'darwin') {
               return 'Cmd+Alt+I';
@@ -327,7 +327,7 @@ module.exports = {
           })(),
           click: function(item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.toggleDevTools();
+              focusedWindow.openDevTools();
             }
           }
         },
