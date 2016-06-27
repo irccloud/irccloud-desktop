@@ -21,7 +21,7 @@ resetSelection();
 window.addEventListener('mousedown', resetSelection);
 
 webFrame.setZoomLevel(config.get('zoom'));
-ipcRenderer.on('update-zoom-level', function (event, message) {
+ipcRenderer.on('update-zoom-level', function (event) {
     webFrame.setZoomLevel(config.get('zoom'));
 });
 
