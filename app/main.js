@@ -173,19 +173,16 @@ function openMainWindow() {
     });
   });
   mainWindow.on('close', function(ev) {
-    if (!app.userInitiatedQuit && config.get('tray')) {
+    if (config.get('tray')) {
         ev.preventDefault();
         mainWindow.hide();
     }
   });
-
 }
 
 app.on('activate-with-no-open-windows', openMainWindow);
 app.on('window-all-closed', function() {
-  if (process.platform != 'darwin') {
-    app.quit();
-  }
+  app.quit();
 });
 
 function destroyTray() {
