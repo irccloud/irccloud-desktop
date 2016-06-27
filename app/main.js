@@ -13,6 +13,7 @@ const Menu = require('./menu');
 const Tray = electron.Tray;
 const SquirrelWindows = require('./squirrel_windows');
 const autoUpdater = electron.autoUpdater;
+const dialog = electron.dialog;
 
 const log = require('electron-log');
 log.transports.file.level = 'silly';
@@ -55,6 +56,19 @@ if (shouldQuit) {
   return;
 }
 
+function setUpdateCheckMenuEnabled (value) {
+    var appMenu = menu.items.find(function (item) {
+      return item.id == 'app';
+    });
+    if (appMenu) {
+        appMenu.submenu.items.forEach(function (appItem) {
+          if (appItem.id == 'updateCheck') {
+            appItem.enabled = value;
+          }
+        });
+    }
+}
+
 function setupAutoUpdate() {
     var version = app.getVersion();
     var feedUrl = 'http://desktop.irccloud.com/update/' + process.platform + '/' + version;
@@ -63,8 +77,26 @@ function setupAutoUpdate() {
     
     autoUpdater.on('error', function (error, errorMessage) {
         log.error('autoUpdater error', error);
+        setUpdateCheckMenuEnabled(true);
+        dialog.showMessageBox({
+            type: 'error',
+            message: 'Error checking for updates',
+            detail: errorMessage,
+            buttons: ['OK'],
+            defaultId: 0
+        });
     });
-    autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateURL) {
+    autoUpdater.on('checking-for-update', function (event) {
+        setUpdateCheckMenuEnabled(false);
+    });
+    autoUpdater.on('update-available', function (event) {
+    });
+    autoUpdater.on('update-not-available', function (event) {
+        setUpdateCheckMenuEnabled(true);
+    });
+    autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, 
+        releaseDate, updateURL) {
+        setUpdateCheckMenuEnabled(true);
         app.updateAvailable = {
             version: releaseName,
             notes: releaseNotes

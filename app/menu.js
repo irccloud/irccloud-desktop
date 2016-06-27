@@ -32,35 +32,53 @@ function showUpdateDialog() {
     }
 }
 
+function onUpdateDownloaded (event, releaseNotes, releaseName, releaseDate, updateURL) {
+    app.updateAvailable = {
+        version: releaseName,
+        notes: releaseNotes
+    };
+    showUpdateDialog();
+    autoUpdater.removeListener('error', onUpdateError);
+    autoUpdater.removeListener('update-not-available', onUpdateNotAvailable);
+}
+function onUpdateNotAvailable (event) {
+    if (app.updateAvailable) {
+        showUpdateDialog();
+    } else {
+        dialog.showMessageBox({
+            type: 'info',
+            message: 'You’re up to date!',
+            detail: app.getName() + ' ' + app.getVersion() + ' is currently the newest version available.',
+            buttons: ['OK'],
+            defaultId: 0
+        });
+    }
+    autoUpdater.removeListener('error', onUpdateError);
+    autoUpdater.removeListener('update-downloaded', onUpdateDownloaded);
+}
+function onUpdateError (error, errorMessage) {
+    autoUpdater.removeListener('update-downloaded', onUpdateDownloaded);
+    autoUpdater.removeListener('update-not-available', onUpdateNotAvailable);
+}
+
 module.exports = {
   setup: function (config) {
     var app_menu = {
       label: app.getName(),
+      id: 'app',
       submenu: [
         {
           role: 'about'
         },
         {
           label: 'Check for Updates…',
+          id: 'updateCheck',
           click: function (item, focusedWindow) {
             // TODO show progress dialog
-            autoUpdater.once('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateURL) {
-                app.updateAvailable = {
-                    version: releaseName,
-                    notes: releaseNotes
-                };
-                showUpdateDialog();
-            });
-            autoUpdater.once('update-not-available', function (event) {
-                dialog.showMessageBox({
-                    type: 'info',
-                    message: 'You’re up to date!',
-                    detail: app.getName() + ' ' + app.getVersion() + ' is currently the newest version available.',
-                    buttons: ['OK'],
-                    defaultId: 0
-                });
-            });
             autoUpdater.checkForUpdates();
+            autoUpdater.once('error', onUpdateError);
+            autoUpdater.once('update-downloaded', onUpdateDownloaded);
+            autoUpdater.once('update-not-available', onUpdateNotAvailable);
           }
         },
         {
