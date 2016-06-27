@@ -61,8 +61,8 @@ function setupAutoUpdate() {
     autoUpdater.setFeedURL(feedUrl);
     autoUpdater.checkForUpdates();
     
-    autoUpdater.on('error', function (error) {
-        log.error('autoUpdater error', arguments);
+    autoUpdater.on('error', function (error, errorMessage) {
+        log.error('autoUpdater error', error);
     });
     autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateURL) {
         app.updateAvailable = {
