@@ -43,6 +43,7 @@ module.exports = {
         {
           label: 'Check for Updates…',
           click: function (item, focusedWindow) {
+            // TODO show progress dialog
             autoUpdater.once('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateURL) {
                 app.updateAvailable = {
                     version: releaseName,
