@@ -23,7 +23,7 @@ module.exports = {
           accelerator: 'Cmd+,',
           click: function (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.openSettings()', true);
+              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.openSettings(); }', true);
             }
           }
         },
@@ -82,7 +82,7 @@ module.exports = {
               label: 'Add a Network…',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.addNetwork()', true);
+                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.addNetwork(); }', true);
                 }
               }
             },
@@ -94,7 +94,7 @@ module.exports = {
               accelerator: 'CmdOrCtrl+K',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.channelSwitcher.toggle()', true);
+                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.channelSwitcher.toggle(); }', true);
                 }
               }
             },
@@ -103,7 +103,7 @@ module.exports = {
               accelerator: 'Alt+Down',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.sidebar.bufferList.selectNextBuffer()', true);
+                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextBuffer(); }', true);
                 }
               }
             },
@@ -112,7 +112,7 @@ module.exports = {
               accelerator: 'Alt+Up',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.sidebar.bufferList.selectPreviousBuffer()', true);
+                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousBuffer(); }', true);
                 }
               }
             },
@@ -121,7 +121,7 @@ module.exports = {
               accelerator: 'Alt+Shift+Down',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.sidebar.bufferList.selectNextUnreadBuffer()', true);
+                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextUnreadBuffer(); }', true);
                 }
               }
             },
@@ -130,7 +130,7 @@ module.exports = {
               accelerator: 'Alt+Shift+Up',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('SESSIONVIEW.sidebar.bufferList.selectPreviousUnreadBuffer()', true);
+                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousUnreadBuffer(); }', true);
                 }
               }
             },
@@ -142,7 +142,7 @@ module.exports = {
               accelerator: 'Esc',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (SESSION.currentBuffer) SESSION.currentBuffer.read()', true);
+                  focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.read(); }', true);
                 }
               }
             },
@@ -151,7 +151,7 @@ module.exports = {
               accelerator: 'Shift+Esc',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('SESSION.markAllAsRead()', true);
+                  focusedWindow.webContents.executeJavaScript('if (SESSION) { SESSION.markAllAsRead(); }', true);
                 }
               }
             },
@@ -162,7 +162,7 @@ module.exports = {
               label: 'Upload a File…',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (cb()) cb().trigger("uploadPrompt");', true);
+                  focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("uploadPrompt"); }', true);
                 }
               }
             },
@@ -170,7 +170,7 @@ module.exports = {
               label: 'Start a Pastebin…',
               click: function (item, focusedWindow) {
                 if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (cb()) cb().trigger("pastePrompt");', true);
+                  focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("pastePrompt"); }', true);
                 }
               }
             }
@@ -185,7 +185,7 @@ module.exports = {
         accelerator: 'Ctrl+,',
         click: function (item, focusedWindow) {
           if (focusedWindow) {
-            focusedWindow.webContents.executeJavaScript('SESSIONVIEW.openSettings()', true);
+            focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.openSettings(); }', true);
           }
         }
       });
@@ -382,7 +382,7 @@ module.exports = {
           label: 'File Uploads',
           click: function (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.files.show();', true);
+              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.files.show(); }', true);
             }
           }
         },
@@ -390,7 +390,7 @@ module.exports = {
           label: 'Pastebins',
           click: function (item, focusedWindow) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('SESSIONVIEW.pastebins.show();', true);
+              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.pastebins.show(); }', true);
             }
           }
         }
@@ -424,7 +424,7 @@ module.exports = {
           label: 'Keyboard Shortcuts',
           accelerator: 'CmdOrCtrl+/',
           click: function (item, focusedWindow) {
-            focusedWindow.webContents.executeJavaScript('SESSIONVIEW.navigate("?/shortcuts", {trigger: true});', true);
+            focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.navigate("?/shortcuts", {trigger: true}); }', true);
           }
         },
         {
