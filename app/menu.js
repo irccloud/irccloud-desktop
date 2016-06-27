@@ -3,63 +3,7 @@ const electron = require('electron');
 const app = electron.app;
 const Menu = electron.Menu;
 const MenuItem = electron.MenuItem;
-const autoUpdater = electron.autoUpdater;
-const dialog = electron.dialog;
-
-function showUpdateDialog() {
-    if (!app.updateAvailable) {
-        return;
-    }
-    
-    var message = app.getName() + ' ' + app.updateAvailable.version + ' is now available. It will be installed the next time you restart the application.';
-    if (app.updateAvailable.notes) {
-        splitNotes = app.updateAvailable.notes.split(/[^\r]\n/);
-        message += '\n\nRelease notes:\n';
-        splitNotes.forEach(function (notes) {
-            message += notes + '\n\n';
-        });
-    }
-    var ret = dialog.showMessageBox({
-        type: 'info',
-        message: 'A new version of ' + app.getName() + ' has been downloaded',
-        detail: message,
-        buttons: ['OK', 'Install and Relaunch'],
-        cancelId: 0,
-        defaultId: 1
-    });
-    if (ret === 1) {
-        autoUpdater.quitAndInstall();
-    }
-}
-
-function onUpdateDownloaded (event, releaseNotes, releaseName, releaseDate, updateURL) {
-    app.updateAvailable = {
-        version: releaseName,
-        notes: releaseNotes
-    };
-    showUpdateDialog();
-    autoUpdater.removeListener('error', onUpdateError);
-    autoUpdater.removeListener('update-not-available', onUpdateNotAvailable);
-}
-function onUpdateNotAvailable (event) {
-    if (app.updateAvailable) {
-        showUpdateDialog();
-    } else {
-        dialog.showMessageBox({
-            type: 'info',
-            message: 'You’re up to date!',
-            detail: app.getName() + ' ' + app.getVersion() + ' is currently the newest version available.',
-            buttons: ['OK'],
-            defaultId: 0
-        });
-    }
-    autoUpdater.removeListener('error', onUpdateError);
-    autoUpdater.removeListener('update-downloaded', onUpdateDownloaded);
-}
-function onUpdateError (error, errorMessage) {
-    autoUpdater.removeListener('update-downloaded', onUpdateDownloaded);
-    autoUpdater.removeListener('update-not-available', onUpdateNotAvailable);
-}
+const auto_updater = require('./auto_update.js');
 
 module.exports = {
   setup: function (config) {
@@ -74,11 +18,7 @@ module.exports = {
           label: 'Check for Updates…',
           id: 'updateCheck',
           click: function (item, focusedWindow) {
-            // TODO show progress dialog
-            autoUpdater.checkForUpdates();
-            autoUpdater.once('error', onUpdateError);
-            autoUpdater.once('update-downloaded', onUpdateDownloaded);
-            autoUpdater.once('update-not-available', onUpdateNotAvailable);
+            auto_updater.check();
           }
         },
         {
