@@ -6,13 +6,10 @@ const MenuItem = electron.MenuItem;
 
 module.exports = {
   setup: function (config) {
-    var name = app.getName();
-
     var app_menu = {
-      label: name,
+      label: app.getName(),
       submenu: [
         {
-          label: 'About ' + name,
           role: 'about'
         },
         {
@@ -21,7 +18,7 @@ module.exports = {
         {
           label: 'Preferences…',
           accelerator: 'Cmd+,',
-          click: function (item, focusedWindow) {
+          click: function (item, focusedWindow, event) {
             if (focusedWindow) {
               focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.openSettings(); }', true);
             }
@@ -31,7 +28,6 @@ module.exports = {
           type: 'separator'
         },
         {
-          label: 'Services',
           role: 'services',
           submenu: []
         },
@@ -39,29 +35,19 @@ module.exports = {
           type: 'separator'
         },
         {
-          label: 'Hide ' + name,
-          accelerator: 'Cmd+H',
           role: 'hide'
         },
         {
-          label: 'Hide Others',
-          accelerator: 'Cmd+Alt+H',
           role: 'hideothers'
         },
         {
-          label: 'Show All',
           role: 'unhide'
         },
         {
           type: 'separator'
         },
         {
-          label: 'Quit',
-          accelerator: 'Cmd+Q',
-          click: function(item, focusedWindow) {
-            app.userInitiatedQuit = true;
-            app.quit();
-          }
+          role: 'quit'
         }
       ]
     };
@@ -70,7 +56,7 @@ module.exports = {
         submenu: [
             {
               label: 'Open in Browser',
-              click: function(item, focusedWindow) {
+              click: function(item, focusedWindow, event) {
                 var url = focusedWindow ? focusedWindow.webContents.getURL() : config.get('host');
                 require('electron').shell.openExternal(url);
               }
@@ -80,7 +66,7 @@ module.exports = {
             },
             {
               label: 'Add a Network…',
-              click: function (item, focusedWindow) {
+              click: function (item, focusedWindow, event) {
                 if (focusedWindow) {
                   focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.addNetwork(); }', true);
                 }
@@ -92,7 +78,7 @@ module.exports = {
             {
               label: 'Jump to…',
               accelerator: 'CmdOrCtrl+K',
-              click: function (item, focusedWindow) {
+              click: function (item, focusedWindow, event) {
                 if (focusedWindow) {
                   focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.channelSwitcher.toggle(); }', true);
                 }
@@ -101,7 +87,7 @@ module.exports = {
             {
               label: 'Select Next in List',
               accelerator: 'Alt+Down',
-              click: function (item, focusedWindow) {
+              click: function (item, focusedWindow, event) {
                 if (focusedWindow) {
                   focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextBuffer(); }', true);
                 }
@@ -110,7 +96,7 @@ module.exports = {
             {
               label: 'Select Previous in List',
               accelerator: 'Alt+Up',
-              click: function (item, focusedWindow) {
+              click: function (item, focusedWindow, event) {
                 if (focusedWindow) {
                   focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousBuffer(); }', true);
                 }
@@ -119,7 +105,7 @@ module.exports = {
             {
               label: 'Select Next Unread in List',
               accelerator: 'Alt+Shift+Down',
-              click: function (item, focusedWindow) {
+              click: function (item, focusedWindow, event) {
                 if (focusedWindow) {
                   focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextUnreadBuffer(); }', true);
                 }
@@ -128,7 +114,7 @@ module.exports = {
             {
               label: 'Select Previous Unread in List',
               accelerator: 'Alt+Shift+Up',
-              click: function (item, focusedWindow) {
+              click: function (item, focusedWindow, event) {
                 if (focusedWindow) {
                   focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousUnreadBuffer(); }', true);
                 }
@@ -140,7 +126,7 @@ module.exports = {
             {
               label: 'Mark Current as Read',
               accelerator: 'Esc',
-              click: function (item, focusedWindow) {
+              click: function (item, focusedWindow, event) {
                 if (focusedWindow) {
                   focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.read(); }', true);
                 }
@@ -149,7 +135,7 @@ module.exports = {
             {
               label: 'Mark All as Read',
               accelerator: 'Shift+Esc',
-              click: function (item, focusedWindow) {
+              click: function (item, focusedWindow, event) {
                 if (focusedWindow) {
                   focusedWindow.webContents.executeJavaScript('if (SESSION) { SESSION.markAllAsRead(); }', true);
                 }
@@ -160,7 +146,7 @@ module.exports = {
             },
             {
               label: 'Upload a File…',
-              click: function (item, focusedWindow) {
+              click: function (item, focusedWindow, event) {
                 if (focusedWindow) {
                   focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("uploadPrompt"); }', true);
                 }
@@ -168,7 +154,7 @@ module.exports = {
             },
             {
               label: 'Start a Pastebin…',
-              click: function (item, focusedWindow) {
+              click: function (item, focusedWindow, event) {
                 if (focusedWindow) {
                   focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("pastePrompt"); }', true);
                 }
@@ -183,7 +169,7 @@ module.exports = {
       file_menu.submenu.push({
         label: 'Preferences…',
         accelerator: 'Ctrl+,',
-        click: function (item, focusedWindow) {
+        click: function (item, focusedWindow, event) {
           if (focusedWindow) {
             focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.openSettings(); }', true);
           }
@@ -196,23 +182,13 @@ module.exports = {
         label: 'Show in Tray',
         type:  'checkbox',
         checked: Boolean(app.config.get('tray')),
-        click: function(item, focusedWindow){
+        click: function(item, focusedWindow, event) {
             app.config.set('tray', item.checked);
             app.toggleTray();
         }
       });
       file_menu.submenu.push({
-        label: 'Quit',
-        accelerator: (function() {
-            if (process.platform == 'win32') {
-                return 'Alt+F4';
-            } else {
-                return 'Ctrl+Q';
-            }
-        })(),
-        click: function(item, focusedWindow) {
-          app.quit();
-        }
+        role: 'quit',
       });
     }
 
@@ -220,36 +196,30 @@ module.exports = {
       label: 'Edit',
       submenu: [
         {
-          label: 'Undo',
-          accelerator: 'CmdOrCtrl+Z',
           role: 'undo'
         },
         {
-          label: 'Redo',
-          accelerator: 'Shift+CmdOrCtrl+Z',
           role: 'redo'
         },
         {
           type: 'separator'
         },
         {
-          label: 'Cut',
-          accelerator: 'CmdOrCtrl+X',
           role: 'cut'
         },
         {
-          label: 'Copy',
-          accelerator: 'CmdOrCtrl+C',
           role: 'copy'
         },
         {
-          label: 'Paste',
-          accelerator: 'CmdOrCtrl+V',
+          role: 'delete'
+        },
+        {
           role: 'paste'
         },
         {
-          label: 'Select All',
-          accelerator: 'CmdOrCtrl+A',
+          role: 'pasteandmatchstyle'
+        },
+        {
           role: 'selectall'
         },
       ]
@@ -262,7 +232,7 @@ module.exports = {
         {
           label: 'Reload',
           accelerator: 'CmdOrCtrl+R',
-          click: function(item, focusedWindow) {
+          click: function(item, focusedWindow, event) {
             if (focusedWindow) {
               focusedWindow.webContents.reloadIgnoringCache();
             }
@@ -272,26 +242,14 @@ module.exports = {
           type: 'separator'
         },
         {
-          label: 'Toggle Full Screen',
-          accelerator: (function() {
-            if (process.platform == 'darwin') {
-              return 'Ctrl+Cmd+F';
-            } else {
-              return 'F11';
-            }
-          })(),
-          click: function(item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
-            }
-          }
+          role: 'togglefullscreen'
         },
         {
           label: 'Actual Size',
           id: 'zoomReset',
           enabled: false,
           accelerator: 'CmdOrCtrl+0',
-          click: function(item, focusedWindow) {
+          click: function(item, focusedWindow, event) {
             app.resetZoom();
           }
         },
@@ -300,7 +258,7 @@ module.exports = {
           id: 'zoomIn',
           enabled: false,
           accelerator: 'CmdOrCtrl+=',
-          click: function(item, focusedWindow) {
+          click: function(item, focusedWindow, event) {
             app.zoomIn();
           }
         },
@@ -309,7 +267,7 @@ module.exports = {
           id: 'zoomOut',
           enabled: false,
           accelerator: 'CmdOrCtrl+-',
-          click: function(item, focusedWindow) {
+          click: function(item, focusedWindow, event) {
             app.zoomOut();
           }
         },
@@ -325,7 +283,7 @@ module.exports = {
               return 'Ctrl+Shift+I';
             }
           })(),
-          click: function(item, focusedWindow) {
+          click: function(item, focusedWindow, event) {
             if (focusedWindow) {
               focusedWindow.openDevTools();
             }
@@ -337,7 +295,7 @@ module.exports = {
         view_menu.submenu.splice(2, 0, {
             label: 'Toggle Menu Bar',
             accelerator: 'Ctrl+Shift+M',
-            click: function(item, focusedWindow) {
+            click: function(item, focusedWindow, event) {
                 if (focusedWindow.isMenuBarAutoHide()) {
                     app.config.set('menu-bar', true);
                     app.toggleMenuBar(focusedWindow);
@@ -358,7 +316,7 @@ module.exports = {
           accelerator: 'CmdOrCtrl+[',
           enabled: false,
           id: 'backMenu',
-          click: function (item, focusedWindow) {
+          click: function (item, focusedWindow, event) {
             if (focusedWindow) {
               focusedWindow.webContents.goBack();
             }
@@ -369,7 +327,7 @@ module.exports = {
           accelerator: 'CmdOrCtrl+]',
           enabled: false,
           id: 'fwdMenu',
-          click: function (item, focusedWindow) {
+          click: function (item, focusedWindow, event) {
             if (focusedWindow) {
               focusedWindow.webContents.goForward();
             }
@@ -380,7 +338,7 @@ module.exports = {
         },
         {
           label: 'File Uploads',
-          click: function (item, focusedWindow) {
+          click: function (item, focusedWindow, event) {
             if (focusedWindow) {
               focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.files.show(); }', true);
             }
@@ -388,7 +346,7 @@ module.exports = {
         },
         {
           label: 'Pastebins',
-          click: function (item, focusedWindow) {
+          click: function (item, focusedWindow, event) {
             if (focusedWindow) {
               focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.pastebins.show(); }', true);
             }
@@ -402,28 +360,24 @@ module.exports = {
       role: 'window',
       submenu: [
         {
-          label: 'Minimize',
-          accelerator: 'CmdOrCtrl+M',
           role: 'minimize'
         },
         {
           type: 'separator'
         },
         {
-          label: 'Bring All to Front',
           role: 'front'
         }
       ]
     };
 
     var help_menu = {
-      label: 'Help',
       role: 'help',
       submenu: [
         {
           label: 'Keyboard Shortcuts',
           accelerator: 'CmdOrCtrl+/',
-          click: function (item, focusedWindow) {
+          click: function (item, focusedWindow, event) {
             focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.navigate("?/shortcuts", {trigger: true}); }', true);
           }
         },
@@ -432,7 +386,7 @@ module.exports = {
         },
         {
           label: 'Known Issues',
-          click: function(item, focusedWindow) {
+          click: function(item, focusedWindow, event) {
             require('electron').shell.openExternal('https://github.com/irccloud/irccloud-desktop/issues');
           }
         },
@@ -452,11 +406,7 @@ module.exports = {
     var menu;
     menu = Menu.buildFromTemplate([
         {
-          label: 'Quit',
-          click: function(item, focusedWindow) {
-            app.userInitiatedQuit = true;
-            app.quit();
-          }
+          role: 'quit'
         }
     ]);
     return menu;

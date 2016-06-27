@@ -33,7 +33,7 @@ const config = new ConfigStore(app.getName(), {
 const minZoom = -8;
 const maxZoom = 9;
 
-app.userInitiatedQuit = false;
+app.updateAvailable = false;
 app.config = config;
 global.config = config;
 
