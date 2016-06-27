@@ -12,6 +12,7 @@ const ConfigStore = require('configstore');
 const Menu = require('./menu');
 const Tray = electron.Tray;
 const SquirrelWindows = require('./squirrel_windows');
+const autoUpdater = electron.autoUpdater;
 
 const log = require('electron-log');
 log.transports.file.level = 'silly';
@@ -53,6 +54,24 @@ if (shouldQuit) {
   app.quit();
   return;
 }
+
+function setupAutoUpdate() {
+    var version = app.getVersion();
+    var feedUrl = 'http://desktop.irccloud.com/update/' + process.platform + '/' + version;
+    autoUpdater.setFeedURL(feedUrl);
+    autoUpdater.checkForUpdates();
+    
+    autoUpdater.on('error', function (error) {
+        log.error('autoUpdater error', arguments);
+    });
+    autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateURL) {
+        app.updateAvailable = {
+            version: releaseName,
+            notes: releaseNotes
+        };
+    });
+}
+setupAutoUpdate();
 
 function openMainWindow() {
   mainWindow = new BrowserWindow({
