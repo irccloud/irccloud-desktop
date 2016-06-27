@@ -70,7 +70,7 @@ function openMainWindow() {
   var inviteCookie = { url : config.get('host'), name : "invite", value : "1" };
   mainWindow.webContents.session.cookies.set(inviteCookie, function (error) {
     if (error) {
-      log.error(error);
+      log.error('set invite cookie error', error);
     }
   });
 
