@@ -21,8 +21,8 @@ var mainWindow = null;
 var menu = null;
 var appIcon = null;
 
-const host = 'https://www.irccloud.com';
 const config = new ConfigStore(app.getName(), {
+  'host': 'https://www.irccloud.com',
   'width': 1024,
   'height': 768,
   'zoom': 0
@@ -64,14 +64,14 @@ function openMainWindow() {
     'title': app.getName()
   });
   // Enable the streamlined login page
-  var inviteCookie = { url : host, name : "invite", value : "1" };
+  var inviteCookie = { url : config.get('host'), name : "invite", value : "1" };
   mainWindow.webContents.session.cookies.set(inviteCookie, function (error) {
     if (error) {
       console.error(error);
     }
   });
 
-  mainWindow.loadURL(host);
+  mainWindow.loadURL(config.get('host'));
 
   mainWindow.on('closed', function() {
     mainWindow = null;
@@ -270,7 +270,7 @@ app.toggleMenuBar = function (window) {
 };
 
 app.on('ready', function() {
-  menu = Menu.setup(host);
+  menu = Menu.setup(config);
   updateZoomMenu();
   openMainWindow();
   if (config.get('tray') && process.platform != 'darwin') {

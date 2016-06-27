@@ -5,7 +5,7 @@ const Menu = electron.Menu;
 const MenuItem = electron.MenuItem;
 
 module.exports = {
-  setup: function (host) {
+  setup: function (config) {
     var name = app.getName();
 
     var app_menu = {
@@ -71,7 +71,7 @@ module.exports = {
             {
               label: 'Open in Browser',
               click: function(item, focusedWindow) {
-                var url = focusedWindow ? focusedWindow.webContents.getURL() : host;
+                var url = focusedWindow ? focusedWindow.webContents.getURL() : config.get('host');
                 require('electron').shell.openExternal(url);
               }
             },
