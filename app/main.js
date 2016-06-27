@@ -13,7 +13,6 @@ const Menu = require('./menu');
 const Tray = electron.Tray;
 const SquirrelWindows = require('./squirrel_windows');
 
-const os = require('os');
 const autoUpdater = electron.autoUpdater;
 
 if (SquirrelWindows.handleStartupEvent()) {
@@ -55,26 +54,19 @@ if (shouldQuit) {
 }
 
 function setupAutoUpdate() {
-    var platform = os.platform() + '_' + os.arch();
     var version = app.getVersion();
-    var feedUrl = 'http://desktop.irccloud.com/update/' + platform + '/' + version;
+    var feedUrl = 'http://desktop.irccloud.com/update/' + process.platform + '/' + version;
     autoUpdater.setFeedURL(feedUrl);
     autoUpdater.checkForUpdates();
     
-    autoUpdater.on('error', function (event) {
-        console.log('autoUpdater error', arguments);
+    autoUpdater.on('error', function (error) {
+        console.error('autoUpdater error', arguments);
     });
-    autoUpdater.on('checking-for-update', function (event) {
-        console.log('checking-for-update', arguments);
-    });
-    autoUpdater.on('update-available', function (event) {
-        console.log('update-available', arguments);
-    });
-    autoUpdater.on('update-not-available', function (event) {
-        console.log('update-not-available', arguments);
-    });
-    autoUpdater.on('update-downloaded', function (event) {
-        console.log('update-downloaded', arguments);
+    autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateURL) {
+        app.updateAvailable = {
+            version: releaseName,
+            notes: releaseNotes
+        };
     });
 }
 setupAutoUpdate();

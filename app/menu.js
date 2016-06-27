@@ -4,6 +4,33 @@ const app = electron.app;
 const Menu = electron.Menu;
 const MenuItem = electron.MenuItem;
 const autoUpdater = electron.autoUpdater;
+const dialog = electron.dialog;
+
+function showUpdateDialog() {
+    if (!app.updateAvailable) {
+        return;
+    }
+    
+    var message = app.getName() + ' ' + app.updateAvailable.version + ' is now available. It will be installed the next time you restart the application.';
+    if (app.updateAvailable.notes) {
+        splitNotes = app.updateAvailable.notes.split(/[^\r]\n/);
+        message += '\n\nRelease notes:\n';
+        splitNotes.forEach(function (notes) {
+            message += notes + '\n\n';
+        });
+    }
+    var ret = dialog.showMessageBox({
+        type: 'info',
+        message: 'A new version of ' + app.getName() + ' has been downloaded',
+        detail: message,
+        buttons: ['OK', 'Install and Relaunch'],
+        cancelId: 0,
+        defaultId: 1
+    });
+    if (ret === 1) {
+        autoUpdater.quitAndInstall();
+    }
+}
 
 module.exports = {
   setup: function (host) {
@@ -19,6 +46,22 @@ module.exports = {
         {
           label: 'Check for Updates…',
           click: function (item, focusedWindow) {
+            autoUpdater.once('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateURL) {
+                app.updateAvailable = {
+                    version: releaseName,
+                    notes: releaseNotes
+                };
+                showUpdateDialog();
+            });
+            autoUpdater.once('update-not-available', function (event) {
+                dialog.showMessageBox({
+                    type: 'info',
+                    message: 'You’re up to date!',
+                    detail: app.getName() + ' ' + app.getVersion() + ' is currently the newest version available.',
+                    buttons: ['OK'],
+                    defaultId: 0
+                });
+            });
             autoUpdater.checkForUpdates();
           }
         },
