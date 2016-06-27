@@ -7,6 +7,8 @@ var SpellCheckProvider = require('electron-spell-check-provider');
 var config = remote.getGlobal('config');
 var contextMenu = require('./context_menu');
 
+window.IRCCLOUD_DESKTOP_VERSION = remote.app.getVersion();
+
 var selection;
 function resetSelection() {
   selection = {
