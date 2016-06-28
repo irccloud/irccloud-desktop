@@ -8,8 +8,6 @@ compiler:
 env:
   global:
   - NODE_VERSION=5
-  - secure: f1HJIpjOHgWFyAzvCXhZW9ElIEEFx+3wGqPk96YOb5AINyU/SnyfiXfpzyZPWxOUe/2dA8iKMiQbf4Me9ZQZsVbHnWPgQiX9Bqv1SV7dQuu4rblevA4ZBhJzZS124JxA57eGJt21dlFaUdW2jQjmEvWlQBv43O9DoFgPGkQv1vlCoZmoEapMieueC6zV1huR1E5Df9BcshlPcOQFWUnSwqbUicYQwiKyLDuSOzQTjbIaZIVNfJUNHauuLsiT/4IxOEfASqrx1ROGq201jOBnsSBPjdNgDPymE+cSuOyDeX4IPBUnclvZE5Cy9yvTATbtbS9p+X9SKLYkMX00Z2N/MAfMWVKLozd4RYfCmROINdNNl6ajyNHd8HXeHoDUAqAjr/W/vi5ABo3n/b2mXolSR/m/jhW+E0N4VuVOsEYED4M2uY/OrcBRMAOKe7rtMu57xmG60R2o0eyBbIOYh0sPg98+qs64cuqrtTjOTRm1BSmTXwuVS5qP0RW7kVLzOaW2UhrEAhoaTpXn/AhzxesiRrmyg//TpbH2ytVYy0a3qZqBfz8kc6z9sf/zi06gO0rphsWLhv9tleWrQeCRR1qB7H8kRQQan5bilPJsiyjYVgGpdj9GtFcLRYM8LSZlUHGMI3KG6IZXDiLA7pdtOgmS2xhFaGOpLFzWTaZh6AB6X6k=
-  - secure: lguBjfyvmaIehpt2o9JUehhh2Dbt8xcjQCTt8XTwbNcgXN7RLxoofkLYpzIOvE6Xw10pMrVGTWM+TgAUbOKx5kBb8z0TcgAz5Na/QYCrRo5neGBSlIcLgT+vd1o7M6pXCpLKuaC4owAx+iiqD5pnqGdboeL2ILILREMRm+TTCFfkbH5o1AC2ZtNJP5akD8FPG4rDUZYGFe5zZJpqdYJVF9u+zHEYb1F1GWS6VvJnPc4IZ+6lb6NbOlZEu1kbt0CJu2zUsMm0awbY0AYD3pUNAQMvPCK8V2cF+Dq46muhtlyg5V4V8piaUN+aDRcc9TI/p9+y0q2UM4RVWYIG99SocGDfKTmsFk8jXllz60eEfqqVXSzHYvCsLXnQuVqTA1Cx9QMPi2hw+4MS5ya+kXyzBhse+eEkZgQ3fo91WMN7A9gNzlTmslF+ve0ceP63ZoVvPOHQHrvsh+5qggSfpdvs0yxhDNw5BsKHTRabkcyiqpozxCgfW/CSd2C4sEkXoXFdTmqNZse9q09Ndeb8FsUR5c6PshtspNL+TQNRCrXBt+RJA3WtyJhysXWnEfOJHA5cpp7K6+DzhtOVqv+3iHPw7tXdugMFyZC1SdSdIdyUZrs8aacPrMQZ+hSVjMCn3wm8+OJkoIkul5PHIAs8oyfM7SwRbCeZ5fQmHEe3+i3UNfI=
 addons:
   apt:
     packages:
@@ -19,10 +17,13 @@ cache:
   directories:
   - node_modules
   - app/node_modules
-  - .nvm
-  - $HOME/.electron
-  - $HOME/.npm
+  - ".nvm"
+  - "$HOME/.electron"
+  - "$HOME/.npm"
 before_install:
+- openssl aes-256-cbc -K $encrypted_fc666da9e2f5_key -iv $encrypted_fc666da9e2f5_iv
+  -in .travis.env.enc -out .travis.env -d
+- source .travis.env
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then gem install fpm; fi
 - if [ ! -f ./.nvm/nvm.sh ]; then git clone https://github.com/creationix/nvm.git
   ./.nvm; fi
