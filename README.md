@@ -35,7 +35,7 @@ app quickly (without icons).
 
 To build a full version, `make dist`.
 
-Instructions for making signed builds on CI servers are in (docs/OfficialBuilds.md)
+Instructions for building packages and signed binaries on CI are at [docs/OfficialBuilds.md](docs/OfficialBuilds.md)
 
 ## Feedback
 
