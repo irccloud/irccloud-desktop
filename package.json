@@ -10,8 +10,8 @@
     "npmRebuild": true
   },
   "devDependencies": {
-    "electron-builder": "5.10.1",
-    "electron-prebuilt": "1.2.5",
+    "electron-builder": "^5.10.2",
+    "electron-prebuilt": "^1.2.5",
     "tsconfig-glob": "^0.4.1",
     "typescript": "^1.8.2",
     "jshint": "^2.9.1"
