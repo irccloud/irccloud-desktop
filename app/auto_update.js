@@ -14,7 +14,6 @@ module.exports = {
         app.setAppUserModelId('com.squirrel.irccloud.' + app.getName());
         
         var version = app.getVersion();
-        version = 'v0.1.5';
         var feedUrl = 'http://desktop.irccloud.com/update/' + process.platform + '/' + version;
         autoUpdater.setFeedURL(feedUrl);
         autoUpdater.checkForUpdates();
