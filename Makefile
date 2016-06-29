@@ -18,4 +18,7 @@ test: node_modules
 
 ci: test dist
 
+encryptenv:
+	travis encrypt-file .travis.env --add
+
 .PHONY: dist clean distclean dev test ci

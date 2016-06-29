@@ -4,3 +4,4 @@ dist
 npm-debug.log
 .DS_Store
 .vagrant
+.travis.env
