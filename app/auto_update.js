@@ -26,13 +26,6 @@ module.exports = {
         autoUpdater.on('error', function (error, errorMessage) {
             log.error('autoUpdater error', error);
             setUpdateCheckMenuEnabled(menu, true);
-            dialog.showMessageBox({
-                type: 'error',
-                message: 'Error checking for updates',
-                detail: errorMessage,
-                buttons: ['OK'],
-                defaultId: 0
-            });
         });
         autoUpdater.on('checking-for-update', function (event) {
             setUpdateCheckMenuEnabled(menu, false);
@@ -125,6 +118,13 @@ function onUpdateNotAvailable (event) {
     autoUpdater.removeListener('update-downloaded', onUpdateDownloaded);
 }
 function onUpdateError (error, errorMessage) {
+    dialog.showMessageBox({
+        type: 'error',
+        message: 'Error checking for updates',
+        detail: errorMessage,
+        buttons: ['OK'],
+        defaultId: 0
+    });
     autoUpdater.removeListener('update-downloaded', onUpdateDownloaded);
     autoUpdater.removeListener('update-not-available', onUpdateNotAvailable);
 }
