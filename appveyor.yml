@@ -9,6 +9,7 @@ cache:
   - '%USERPROFILE%\.electron'
 
 environment:
+  GYP_MSVS_VERSION: 2015
   GH_TOKEN:
     secure: lAoTVd9zu2MCJs2+NplDMegxezyoXTU5HK4OYpQQrJCOX9Mq542OcrqZlQa61qxn
   CSC_LINK:
