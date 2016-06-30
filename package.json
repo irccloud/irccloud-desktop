@@ -2,7 +2,9 @@
   "scripts": {
       "postinstall": "install-app-deps",
       "pack": "build",
-      "dist": "build"
+      "dist": "build",
+      "test": "jshint ./app",
+      "app": "electron ./app"
   },
   "build": {
     "appId": "com.irccloud.desktop",

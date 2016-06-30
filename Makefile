@@ -11,10 +11,10 @@ distclean: clean
 	rm -Rf ./node_modules ./app/node_modules ./.nvm
 
 dev: node_modules
-	./node_modules/.bin/electron ./app
+	npm run app
 
 test: node_modules
-	./node_modules/.bin/jshint ./app
+	npm run test
 
 ci: test dist
 
