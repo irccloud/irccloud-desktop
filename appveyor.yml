@@ -27,6 +27,7 @@ install:
   - npm install npm -g
   - node --version
   - npm --version
+  - python --version
   - npm install
   - npm prune
 
