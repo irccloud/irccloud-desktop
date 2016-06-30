@@ -14,6 +14,7 @@ const Tray = electron.Tray;
 const SquirrelWindows = require('./squirrel_windows');
 const auto_updater = require('./auto_update.js');
 
+const _ = require('lodash');
 const log = require('electron-log');
 log.transports.file.level = 'silly';
 
@@ -95,13 +96,13 @@ function openMainWindow() {
     }
   });
   
-  mainWindow.on('resize', function() {
+  mainWindow.on('resize', _.debounce(function() {
     size = mainWindow.getSize();
     config.set({
       'width': size[0],
       'height': size[1]
     });
-  });
+  }, 1000));
 
   if (config.get('maximize') === true) {
     mainWindow.maximize();

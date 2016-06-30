@@ -15,6 +15,7 @@
     "configstore": "^2.0.0",
     "electron-editor-context-menu": "^1.1.1",
     "electron-log": "^1.0.14",
-    "electron-spell-check-provider": "^1.0.0"
+    "electron-spell-check-provider": "^1.0.0",
+    "lodash": "^4.13.1"
   }
 }
