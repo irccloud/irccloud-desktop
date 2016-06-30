@@ -121,7 +121,7 @@ function onUpdateError (error, errorMessage) {
     dialog.showMessageBox({
         type: 'error',
         message: 'Error checking for updates',
-        detail: errorMessage,
+        detail: 'Please try again',
         buttons: ['OK'],
         defaultId: 0
     });
