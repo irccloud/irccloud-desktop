@@ -5,6 +5,14 @@ const Menu = electron.Menu;
 const MenuItem = electron.MenuItem;
 const auto_updater = require('./auto_update.js');
 
+var checkForUpdates = {
+  label: 'Check for Updates…',
+  id: 'updateCheck',
+  click: function (item, focusedWindow) {
+    auto_updater.check();
+  }
+};
+
 module.exports = {
   setup: function (config) {
     var app_menu = {
@@ -14,13 +22,7 @@ module.exports = {
         {
           role: 'about'
         },
-        {
-          label: 'Check for Updates…',
-          id: 'updateCheck',
-          click: function (item, focusedWindow) {
-            auto_updater.check();
-          }
-        },
+        checkForUpdates,
         {
           type: 'separator'
         },
@@ -401,6 +403,9 @@ module.exports = {
         },
       ]
     };
+    if (process.platform != 'darwin') {
+        help_menu.submenu.push(checkForUpdates);
+    }
 
     var menu;
     if (process.platform == 'darwin') {
