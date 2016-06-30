@@ -1,7 +1,7 @@
 node_modules
 app/node_modules
 dist
-npm-debug.log
+npm-debug.log*
 .DS_Store
 .vagrant
 .travis.env
