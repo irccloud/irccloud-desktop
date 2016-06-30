@@ -23,13 +23,13 @@ install:
   - ps: Install-Product node 5 x64
   - git reset --hard HEAD
   - npm install npm -g
-  - npm prune
-  - npm update
-
-build_script:
   - node --version
   - npm --version
-  - npm install
+  - npm update
+  - npm prune
+
+build_script:
   - npm run dist
 
-test: off
+test_script:
+  - npm run test
