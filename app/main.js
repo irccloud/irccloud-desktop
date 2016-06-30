@@ -173,7 +173,7 @@ function openMainWindow() {
     });
   });
   mainWindow.on('close', function(ev) {
-    if (config.get('tray')) {
+    if (!quitting && config.get('tray')) {
         ev.preventDefault();
         mainWindow.hide();
     }
@@ -181,6 +181,10 @@ function openMainWindow() {
 }
 
 app.on('activate-with-no-open-windows', openMainWindow);
+var quitting = false;
+app.on('before-quit', function () {
+  quitting = true;
+});
 app.on('window-all-closed', function() {
   app.quit();
 });
