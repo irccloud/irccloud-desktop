@@ -25,7 +25,7 @@ install:
   - npm install npm -g
   - node --version
   - npm --version
-  - npm update
+  - npm install
   - npm prune
 
 build_script:
