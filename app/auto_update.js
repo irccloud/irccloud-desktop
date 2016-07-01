@@ -15,11 +15,11 @@ module.exports = {
         
         var version = app.getVersion();
         var feedUrl = 'http://desktop.irccloud.com/update/' + process.platform + '/' + version;
-        autoUpdater.setFeedURL(feedUrl);
         try {
+          autoUpdater.setFeedURL(feedUrl);
           autoUpdater.checkForUpdates();
         } catch (exc) {
-          log.error('checkForUpdates error', exc);
+          // This will error if running with code signing
         }
           
         
