@@ -27,6 +27,7 @@ before_install:
   source .travis.env;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  rvm install 2.2.0
   ruby --version;
   gem --version;
   gem install fpm; fi
