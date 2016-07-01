@@ -21,10 +21,15 @@ cache:
   - "$HOME/.electron"
   - "$HOME/.npm"
 before_install:
-- openssl aes-256-cbc -K $encrypted_fc666da9e2f5_key -iv $encrypted_fc666da9e2f5_iv
-  -in .travis.env.enc -out .travis.env -d
-- source .travis.env
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then gem install fpm; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  openssl aes-256-cbc -K $encrypted_fc666da9e2f5_key -iv $encrypted_fc666da9e2f5_iv
+  -in .travis.env.enc -out .travis.env -d;
+  source .travis.env;
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  ruby --version;
+  gem --version;
+  gem install fpm; fi
 - if [ ! -f ./.nvm/nvm.sh ]; then git clone https://github.com/creationix/nvm.git
   ./.nvm; fi
 - source ./.nvm/nvm.sh
