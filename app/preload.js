@@ -24,6 +24,11 @@ webFrame.setZoomLevel(config.get('zoom'));
 ipcRenderer.on('update-zoom-level', function (event) {
     webFrame.setZoomLevel(config.get('zoom'));
 });
+ipcRenderer.on('set-irc-url', function (event, url) {
+    if (SESSIONVIEW) {
+        SESSIONVIEW.ircUrl(url);
+    }
+});
 
 function setupSpellcheck () {
   var locale = remote.app.getLocale();

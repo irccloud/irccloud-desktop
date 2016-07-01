@@ -5,6 +5,7 @@ const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const Shell = electron.shell;
+const dialog = electron.dialog;
 
 const path = require('path');
 
@@ -30,7 +31,8 @@ const config = new ConfigStore(app.getName(), {
   'host': 'https://www.irccloud.com',
   'width': 1024,
   'height': 768,
-  'zoom': 0
+  'zoom': 0,
+  'neverPromptIrcUrls': false
 });
 const minZoom = -8;
 const maxZoom = 9;
@@ -74,8 +76,13 @@ function openMainWindow() {
       log.error('set invite cookie error', error);
     }
   });
-
-  mainWindow.loadURL(config.get('host'));
+  
+  var initialUrl = config.get('host') + '/';
+  if (ircUrlOnOpen) {
+    initialUrl += '#?/irc_url=' + ircUrlOnOpen;
+    ircUrlOnOpen = null;
+  }
+  mainWindow.loadURL(initialUrl);
 
   mainWindow.on('closed', function() {
     mainWindow = null;
@@ -190,6 +197,15 @@ app.on('window-all-closed', function() {
   app.quit();
 });
 
+// Handles urls from app.isDefaultProtocolClient
+app.on('open-url', function (event, url) {
+  if (mainWindow) {
+    mainWindow.webContents.send('set-irc-url', url);
+  } else {
+    ircUrlOnOpen = url;
+  }
+});
+
 function destroyTray() {
     if (appIcon) {
         appIcon.destroy();
@@ -274,7 +290,40 @@ app.toggleMenuBar = function (window) {
     }
 };
 
+// Handle irc URLs
+var ircUrlOnOpen;
+function handleProtocolUrls () {
+  // https://github.com/electron/electron/blob/master/docs/api/app.md#appsetasdefaultprotocolclientprotocol-macos-windows
+  var isHandler = (
+    app.isDefaultProtocolClient('irc') &&
+    app.isDefaultProtocolClient('ircs')
+  );
+  
+  if (!isHandler && !config.get('neverPromptIrcUrls')) {
+    dialog.showMessageBox({
+        type: 'info',
+        message: 'Would you like to set ' + app.getName() + ' as your default IRC client?',
+        buttons: ['Set Default', 'Not Now', 'Don’t Ask Again'],
+        cancelId: 1,
+        defaultId: 0
+    }, function (ret) {
+      switch (ret) {
+      case 0:
+        app.setAsDefaultProtocolClient('irc');
+        app.setAsDefaultProtocolClient('ircs');
+        handleProtocolUrls();
+        break;
+      case 2:
+        config.set('neverPromptIrcUrls', true);
+        break;
+      }
+    });
+  }
+}
+
 app.on('ready', function() {
+  handleProtocolUrls();
+  
   menu = Menu.setup(config);
   auto_updater.setup(menu);
   updateZoomMenu();

@@ -9,7 +9,8 @@
   "build": {
     "appId": "com.irccloud.desktop",
     "app-category-type": "public.app-category.productivity",
-    "npmRebuild": true
+    "npmRebuild": true,
+    "extend-info": "Info.plist"
   },
   "devDependencies": {
     "electron-builder": "^5.10.2",
