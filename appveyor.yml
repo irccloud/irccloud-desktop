@@ -32,7 +32,7 @@ install:
   - npm prune
 
 build_script:
-  - npm run windist
+  - npm run dist
 
 test_script:
   - npm run test
