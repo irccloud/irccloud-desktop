@@ -3,6 +3,7 @@
       "postinstall": "install-app-deps",
       "pack": "build",
       "dist": "build",
+      "windist": "build --win --ia32 --x64",
       "test": "jshint ./app",
       "app": "electron ./app"
   },
