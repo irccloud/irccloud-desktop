@@ -9,7 +9,7 @@
   "build": {
     "appId": "com.irccloud.desktop",
     "app-category-type": "public.app-category.productivity",
-    "npmRebuild": true,
+    "npmRebuild": false,
     "extend-info": "Info.plist"
   },
   "devDependencies": {
