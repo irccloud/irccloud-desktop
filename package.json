@@ -7,6 +7,9 @@
       "app": "electron ./app"
   },
   "build": {
+    "dmg": {
+        "icon": ""
+    },
     "appId": "com.irccloud.desktop",
     "app-category-type": "public.app-category.productivity",
     "npmRebuild": false,
