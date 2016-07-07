@@ -13,6 +13,8 @@ addons:
     packages:
     - icnsutils
     - graphicsmagick
+    - xz-utils
+    - xorriso
 cache:
   directories:
   - ".nvm"
