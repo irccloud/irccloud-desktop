@@ -10,9 +10,6 @@
     "mac": {
         "target": ["dmg", "zip", "mas"]
     },
-    "linux": {
-        "target": ["deb", "AppImage"]
-    },
     "dmg": {
         "icon": ""
     },
