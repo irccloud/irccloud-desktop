@@ -16,7 +16,6 @@ addons:
     - icnsutils
     - graphicsmagick
     - xz-utils
-    - xorriso
 cache:
   directories:
   - ".nvm"
