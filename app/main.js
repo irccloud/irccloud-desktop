@@ -58,6 +58,16 @@ if (shouldQuit) {
   return;
 }
 
+function enableStreamlinedLogin() {
+  // Enable the streamlined login page
+  var inviteCookie = { url : config.get('host'), name : "invite", value : "1" };
+  mainWindow.webContents.session.cookies.set(inviteCookie, function (error) {
+    if (error) {
+      log.error('set invite cookie error', error);
+    }
+  });
+}
+
 function openMainWindow() {
   var windowOpts = {
     'icon': path.join(__dirname, process.platform == 'win32' ? 'icon.ico' : 'icon.png'),
@@ -79,19 +89,13 @@ function openMainWindow() {
     mainWindow.maximize();
   }
   
-  // Enable the streamlined login page
-  var inviteCookie = { url : config.get('host'), name : "invite", value : "1" };
-  mainWindow.webContents.session.cookies.set(inviteCookie, function (error) {
-    if (error) {
-      log.error('set invite cookie error', error);
-    }
-  });
-  
   var initialUrl = config.get('host') + '/';
   if (ircUrlOnOpen) {
     initialUrl += '#?/irc_url=' + ircUrlOnOpen;
     ircUrlOnOpen = null;
   }
+  
+  enableStreamlinedLogin();
   mainWindow.loadURL(initialUrl);
 
   mainWindow.on('closed', function() {
@@ -144,7 +148,12 @@ function openMainWindow() {
       break;
     }
   });
-
+  
+  mainWindow.webContents.on('will-navigate', function (e, url) {
+    // Make sure the invite cookie persists over logout
+    enableStreamlinedLogin();
+  });
+  
   mainWindow.webContents.on('did-navigate-in-page', function (e, url) {
     var historyMenu = menu.items.find(function (item) {
       return item.id == 'history';
