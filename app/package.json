@@ -9,7 +9,7 @@
   },
   "repository": "https://github.com/irccloud/irccloud-desktop",
   "license": "Apache-2.0",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "main": "main.js",
   "dependencies": {
     "configstore": "yeoman/configstore#901a91bd1b10ddaa554d5772412352c1c55a0d73",
