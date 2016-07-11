@@ -58,7 +58,7 @@ if (shouldQuit) {
 }
 
 function openMainWindow() {
-  mainWindow = new BrowserWindow({
+  var windowOpts = {
     'icon': path.join(__dirname, process.platform == 'win32' ? 'icon.ico' : 'icon.png'),
     'width': config.get('width'),
     'height': config.get('height'),
@@ -68,7 +68,16 @@ function openMainWindow() {
       'nodeIntegration': false
     },
     'title': app.getName()
-  });
+  };
+  if (config.has('x') && config.has('y')) {
+    windowOpts.x = config.get('x');
+    windowOpts.y = config.get('y');
+  }
+  mainWindow = new BrowserWindow(windowOpts);
+  if (config.get('maximize') === true) {
+    mainWindow.maximize();
+  }
+  
   // Enable the streamlined login page
   var inviteCookie = { url : config.get('host'), name : "invite", value : "1" };
   mainWindow.webContents.session.cookies.set(inviteCookie, function (error) {
@@ -101,26 +110,6 @@ function openMainWindow() {
         }
         break;
     }
-  });
-  
-  mainWindow.on('resize', _.debounce(function() {
-    size = mainWindow.getSize();
-    config.set({
-      'width': size[0],
-      'height': size[1]
-    });
-  }, 1000));
-
-  if (config.get('maximize') === true) {
-    mainWindow.maximize();
-  }
-
-  mainWindow.on('maximize', function() {
-    config.set('maximize', true);
-  });
-
-  mainWindow.on('unmaximize', function() {
-    config.set('maximize', false);
   });
 
   mainWindow.on('page-title-updated', function(event) {
@@ -181,6 +170,18 @@ function openMainWindow() {
     });
   });
   mainWindow.on('close', function(ev) {
+    var size = mainWindow.getSize();
+    var position = mainWindow.getPosition();
+    var props = {
+      'width': size[0],
+      'height': size[1],
+      'x': position[0],
+      'y': position[1]
+    };
+    if (mainWindow.isMaximized()) {
+        props.maximized = true;
+    }
+    config.set(props);
     if (!quitting && config.get('tray')) {
         ev.preventDefault();
         mainWindow.hide();

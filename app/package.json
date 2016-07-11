@@ -12,7 +12,7 @@
   "version": "0.1.9",
   "main": "main.js",
   "dependencies": {
-    "configstore": "^2.0.0",
+    "configstore": "yeoman/configstore#901a91bd1b10ddaa554d5772412352c1c55a0d73",
     "electron-editor-context-menu": "^1.1.1",
     "electron-log": "^1.0.14",
     "electron-spell-check-provider": "^1.0.0",
