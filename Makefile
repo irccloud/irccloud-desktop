@@ -1,7 +1,7 @@
 dist: node_modules
 	npm run dist
 
-node_modules: package.json
+node_modules: package.json app/package.json
 	npm install
 
 clean:
