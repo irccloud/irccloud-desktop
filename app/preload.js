@@ -29,6 +29,20 @@ ipcRenderer.on('set-irc-url', function (event, url) {
         SESSIONVIEW.ircUrl(url);
     }
 });
+ipcRenderer.on('disable-spellcheck', function (event) {
+    disableSpellcheck();
+});
+ipcRenderer.on('enable-spellcheck', function (event) {
+    enableSpellcheck();
+});
+
+var spellCheckWhileTyping = config.get('spellcheck');
+function enableSpellcheck () {
+  spellCheckWhileTyping = true;
+}
+function disableSpellcheck () {
+  spellCheckWhileTyping = false;
+}
 
 function setupSpellcheck () {
   var locale = remote.app.getLocale();
@@ -37,15 +51,22 @@ function setupSpellcheck () {
   if (locale === 'en' || locale.startsWith('en-')) {
     spellCheckLocale = 'en-US';
   }
-  webFrame.setSpellCheckProvider(
-    locale,
-    true,
-    new SpellCheckProvider(spellCheckLocale).on('misspelling', function(suggestions) {
+  var provider = new SpellCheckProvider(spellCheckLocale).on('misspelling', function(suggestions) {
       if (window.getSelection().toString()) {
         selection.isMisspelled = true;
         selection.spellingSuggestions = suggestions.slice(0, 3);
       }
-  }));
+  });
+  var actualSpellCheck = provider.spellCheck;
+  provider.spellCheck = function () {
+    var ret = actualSpellCheck.apply(provider, arguments);
+    if (spellCheckWhileTyping) {
+      return ret;
+    } else {
+      return true;
+    }
+  };
+  webFrame.setSpellCheckProvider(locale, true, provider);
 }
 
 setupSpellcheck();

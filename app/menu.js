@@ -202,9 +202,30 @@ module.exports = {
         role: 'quit',
       });
     }
-
+    
+    var spellingItem;
+    var spellingSubItem = {
+      type: 'checkbox',
+      id: 'spellingItem',
+      checked: app.config.get('spellcheck'),
+      click: function(item, focusedWindow, event) {
+          app.config.set('spellcheck', item.checked);
+          app.toggleSpellcheck();
+      }
+    };
+    if (process.platform == 'darwin') {
+        spellingSubItem.label = 'Check Spelling While Typing';
+        spellingItem = {
+          label: 'Spelling and Grammar',
+          submenu: [spellingSubItem]
+        };
+    } else {
+        spellingSubItem.label = 'Check spelling as you type';
+        spellingItem = spellingSubItem;
+    }
     var edit_menu = {
       label: 'Edit',
+      id: 'edit',
       submenu: [
         {
           role: 'undo'
@@ -233,6 +254,10 @@ module.exports = {
         {
           role: 'selectall'
         },
+        {
+          type: 'separator'
+        },
+        spellingItem
       ]
     };
 

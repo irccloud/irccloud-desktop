@@ -32,6 +32,7 @@ const config = new ConfigStore(app.getName(), {
   'width': 1024,
   'height': 768,
   'zoom': 0,
+  'spellcheck': true,
   'neverPromptIrcUrls': false
 });
 const minZoom = -8;
@@ -228,6 +229,13 @@ app.toggleTray = function() {
         return setupTray();
     } else {
         return destroyTray();
+    }
+};
+app.toggleSpellcheck = function() {
+    if (config.get('spellcheck')) {
+        mainWindow.webContents.send('enable-spellcheck');
+    } else {
+        mainWindow.webContents.send('disable-spellcheck');
     }
 };
 
