@@ -2,7 +2,6 @@ const electron = require('electron');
 
 const app = electron.app;
 const Menu = electron.Menu;
-const MenuItem = electron.MenuItem;
 const auto_updater = require('./auto_update.js');
 
 var checkForUpdates = {
@@ -25,8 +24,7 @@ module.exports = {
         checkForUpdates,
         {
           type: 'separator'
-        },
-        {
+        }, {
           label: 'Preferences…',
           accelerator: 'Cmd+,',
           click: function (item, focusedWindow, event) {
@@ -34,144 +32,122 @@ module.exports = {
               focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.openSettings(); }', true);
             }
           }
-        },
-        {
+        }, {
           type: 'separator'
-        },
-        {
+        }, {
           role: 'services',
           submenu: []
-        },
-        {
+        }, {
           type: 'separator'
-        },
-        {
+        }, {
           role: 'hide'
-        },
-        {
+        }, {
           role: 'hideothers'
-        },
-        {
+        }, {
           role: 'unhide'
-        },
-        {
+        }, {
           type: 'separator'
-        },
-        {
+        }, {
           role: 'quit'
         }
       ]
     };
     var file_menu = {
-        label: 'File',
-        submenu: [
-            {
-              label: 'Open in Browser',
-              click: function(item, focusedWindow, event) {
-                var url = focusedWindow ? focusedWindow.webContents.getURL() : config.get('host');
-                require('electron').shell.openExternal(url);
-              }
-            },
-            {
-              type: 'separator'
-            },
-            {
-              label: 'Add a Network…',
-              click: function (item, focusedWindow, event) {
-                if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.addNetwork(); }', true);
-                }
-              }
-            },
-            {
-              type: 'separator'
-            },
-            {
-              label: 'Jump to…',
-              accelerator: 'CmdOrCtrl+K',
-              click: function (item, focusedWindow, event) {
-                if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.channelSwitcher.toggle(); }', true);
-                }
-              }
-            },
-            {
-              label: 'Select Next in List',
-              accelerator: 'Alt+Down',
-              click: function (item, focusedWindow, event) {
-                if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextBuffer(); }', true);
-                }
-              }
-            },
-            {
-              label: 'Select Previous in List',
-              accelerator: 'Alt+Up',
-              click: function (item, focusedWindow, event) {
-                if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousBuffer(); }', true);
-                }
-              }
-            },
-            {
-              label: 'Select Next Unread in List',
-              accelerator: 'Alt+Shift+Down',
-              click: function (item, focusedWindow, event) {
-                if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextUnreadBuffer(); }', true);
-                }
-              }
-            },
-            {
-              label: 'Select Previous Unread in List',
-              accelerator: 'Alt+Shift+Up',
-              click: function (item, focusedWindow, event) {
-                if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousUnreadBuffer(); }', true);
-                }
-              }
-            },
-            {
-              type: 'separator'
-            },
-            {
-              label: 'Mark Current as Read',
-              accelerator: 'Esc',
-              click: function (item, focusedWindow, event) {
-                if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.read(); }', true);
-                }
-              }
-            },
-            {
-              label: 'Mark All as Read',
-              accelerator: 'Shift+Esc',
-              click: function (item, focusedWindow, event) {
-                if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (SESSION) { SESSION.markAllAsRead(); }', true);
-                }
-              }
-            },
-            {
-              type: 'separator'
-            },
-            {
-              label: 'Upload a File…',
-              click: function (item, focusedWindow, event) {
-                if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("uploadPrompt"); }', true);
-                }
-              }
-            },
-            {
-              label: 'Start a Pastebin…',
-              click: function (item, focusedWindow, event) {
-                if (focusedWindow) {
-                  focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("pastePrompt"); }', true);
-                }
-              }
+      label: 'File',
+      submenu: [
+        {
+          label: 'Open in Browser',
+          click: function(item, focusedWindow, event) {
+            var url = focusedWindow ? focusedWindow.webContents.getURL() : config.get('host');
+            require('electron').shell.openExternal(url);
+          }
+        }, {
+          type: 'separator'
+        }, {
+          label: 'Add a Network…',
+          click: function (item, focusedWindow, event) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.addNetwork(); }', true);
             }
-        ]
+          }
+        }, {
+          type: 'separator'
+        }, {
+          label: 'Jump to…',
+          accelerator: 'CmdOrCtrl+K',
+          click: function (item, focusedWindow, event) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.channelSwitcher.toggle(); }', true);
+            }
+          }
+        }, {
+          label: 'Select Next in List',
+          accelerator: 'Alt+Down',
+          click: function (item, focusedWindow, event) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextBuffer(); }', true);
+            }
+          }
+        }, {
+          label: 'Select Previous in List',
+          accelerator: 'Alt+Up',
+          click: function (item, focusedWindow, event) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousBuffer(); }', true);
+            }
+          }
+        }, {
+          label: 'Select Next Unread in List',
+          accelerator: 'Alt+Shift+Down',
+          click: function (item, focusedWindow, event) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextUnreadBuffer(); }', true);
+            }
+          }
+        }, {
+          label: 'Select Previous Unread in List',
+          accelerator: 'Alt+Shift+Up',
+          click: function (item, focusedWindow, event) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousUnreadBuffer(); }', true);
+            }
+          }
+        }, {
+          type: 'separator'
+        }, {
+          label: 'Mark Current as Read',
+          accelerator: 'Esc',
+          click: function (item, focusedWindow, event) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.read(); }', true);
+            }
+          }
+        }, {
+          label: 'Mark All as Read',
+          accelerator: 'Shift+Esc',
+          click: function (item, focusedWindow, event) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('if (SESSION) { SESSION.markAllAsRead(); }', true);
+            }
+          }
+        }, {
+          type: 'separator'
+        }, {
+          label: 'Upload a File…',
+          click: function (item, focusedWindow, event) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("uploadPrompt"); }', true);
+            }
+          }
+        }, {
+          label: 'Start a Pastebin…',
+          click: function (item, focusedWindow, event) {
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("pastePrompt"); }', true);
+            }
+          }
+        }
+      ]
     };
     if (process.platform != 'darwin') {
       file_menu.submenu.push({
@@ -194,8 +170,8 @@ module.exports = {
         type:  'checkbox',
         checked: Boolean(app.config.get('tray')),
         click: function(item, focusedWindow, event) {
-            app.config.set('tray', item.checked);
-            app.toggleTray();
+          app.config.set('tray', item.checked);
+          app.toggleTray();
         }
       });
       file_menu.submenu.push({
@@ -209,19 +185,19 @@ module.exports = {
       id: 'spellingItem',
       checked: app.config.get('spellcheck'),
       click: function(item, focusedWindow, event) {
-          app.config.set('spellcheck', item.checked);
-          app.toggleSpellcheck();
+        app.config.set('spellcheck', item.checked);
+        app.toggleSpellcheck();
       }
     };
     if (process.platform == 'darwin') {
-        spellingSubItem.label = 'Check Spelling While Typing';
-        spellingItem = {
-          label: 'Spelling and Grammar',
-          submenu: [spellingSubItem]
-        };
+      spellingSubItem.label = 'Check Spelling While Typing';
+      spellingItem = {
+        label: 'Spelling and Grammar',
+        submenu: [spellingSubItem]
+      };
     } else {
-        spellingSubItem.label = 'Check spelling as you type';
-        spellingItem = spellingSubItem;
+      spellingSubItem.label = 'Check spelling as you type';
+      spellingItem = spellingSubItem;
     }
     var edit_menu = {
       label: 'Edit',
@@ -229,32 +205,23 @@ module.exports = {
       submenu: [
         {
           role: 'undo'
-        },
-        {
+        }, {
           role: 'redo'
-        },
-        {
+        }, {
           type: 'separator'
-        },
-        {
+        }, {
           role: 'cut'
-        },
-        {
+        }, {
           role: 'copy'
-        },
-        {
+        }, {
           role: 'delete'
-        },
-        {
+        }, {
           role: 'paste'
-        },
-        {
+        }, {
           role: 'pasteandmatchstyle'
-        },
-        {
+        }, {
           role: 'selectall'
-        },
-        {
+        }, {
           type: 'separator'
         },
         spellingItem
@@ -273,14 +240,11 @@ module.exports = {
               focusedWindow.webContents.reloadIgnoringCache();
             }
           }
-        },
-        {
+        }, {
           type: 'separator'
-        },
-        {
+        }, {
           role: 'togglefullscreen'
-        },
-        {
+        }, {
           label: 'Actual Size',
           id: 'zoomReset',
           enabled: false,
@@ -288,8 +252,7 @@ module.exports = {
           click: function(item, focusedWindow, event) {
             app.resetZoom();
           }
-        },
-        {
+        }, {
           label: 'Zoom In',
           id: 'zoomIn',
           enabled: false,
@@ -297,8 +260,7 @@ module.exports = {
           click: function(item, focusedWindow, event) {
             app.zoomIn();
           }
-        },
-        {
+        }, {
           label: 'Zoom Out',
           id: 'zoomOut',
           enabled: false,
@@ -306,11 +268,9 @@ module.exports = {
           click: function(item, focusedWindow, event) {
             app.zoomOut();
           }
-        },
-        {
+        }, {
           type: 'separator'
-        },
-        {
+        }, {
           label: 'Developer Tools',
           accelerator: (function() {
             if (process.platform == 'darwin') {
@@ -324,23 +284,23 @@ module.exports = {
               focusedWindow.openDevTools();
             }
           }
-        },
+        }
       ]
     };
     if (process.platform != 'darwin') {
-        view_menu.submenu.splice(2, 0, {
-            label: 'Toggle Menu Bar',
-            accelerator: 'Ctrl+Shift+M',
-            click: function(item, focusedWindow, event) {
-                if (focusedWindow.isMenuBarAutoHide()) {
-                    app.config.set('menu-bar', true);
-                    app.toggleMenuBar(focusedWindow);
-                } else {
-                    app.config.set('menu-bar', false);
-                    app.toggleMenuBar(focusedWindow);
-                }
-            }
-        });
+      view_menu.submenu.splice(2, 0, {
+        label: 'Toggle Menu Bar',
+        accelerator: 'Ctrl+Shift+M',
+        click: function(item, focusedWindow, event) {
+          if (focusedWindow.isMenuBarAutoHide()) {
+            app.config.set('menu-bar', true);
+            app.toggleMenuBar(focusedWindow);
+          } else {
+            app.config.set('menu-bar', false);
+            app.toggleMenuBar(focusedWindow);
+          }
+        }
+      });
     }
 
     var go_menu = {
@@ -357,8 +317,7 @@ module.exports = {
               focusedWindow.webContents.goBack();
             }
           }
-        },
-        {
+        }, {
           label: 'Forward',
           accelerator: 'CmdOrCtrl+]',
           enabled: false,
@@ -368,19 +327,16 @@ module.exports = {
               focusedWindow.webContents.goForward();
             }
           }
-        },
-        {
+        }, {
           type: 'separator'
-        },
-        {
+        }, {
           label: 'File Uploads',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
               focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.files.show(); }', true);
             }
           }
-        },
-        {
+        }, {
           label: 'Pastebins',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
@@ -397,11 +353,9 @@ module.exports = {
       submenu: [
         {
           role: 'minimize'
-        },
-        {
+        }, {
           type: 'separator'
-        },
-        {
+        }, {
           role: 'front'
         }
       ]
@@ -416,20 +370,18 @@ module.exports = {
           click: function (item, focusedWindow, event) {
             focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.navigate("?/shortcuts", {trigger: true}); }', true);
           }
-        },
-        {
+        }, {
           type: 'separator'
-        },
-        {
+        }, {
           label: 'Known Issues',
           click: function(item, focusedWindow, event) {
             require('electron').shell.openExternal('https://github.com/irccloud/irccloud-desktop/issues');
           }
-        },
+        }
       ]
     };
     if (process.platform != 'darwin') {
-        help_menu.submenu.push(checkForUpdates);
+      help_menu.submenu.push(checkForUpdates);
     }
 
     var menu;
@@ -444,9 +396,9 @@ module.exports = {
   setup_tray: function(app){
     var menu;
     menu = Menu.buildFromTemplate([
-        {
-          role: 'quit'
-        }
+      {
+        role: 'quit'
+      }
     ]);
     return menu;
   }

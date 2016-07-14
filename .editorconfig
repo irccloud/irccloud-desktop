@@ -1,0 +1,12 @@
+root = true
+
+[*.{js,json,yml}]
+
+# 2 space indentation
+indent_style = space
+indent_size = 2
+
+[Makefile]
+# Tab indentation (no size specified)
+indent_style = tab
+

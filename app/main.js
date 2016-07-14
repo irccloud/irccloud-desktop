@@ -20,7 +20,7 @@ const log = require('electron-log');
 log.transports.file.level = 'silly';
 
 if (SquirrelWindows.handleStartupEvent()) {
-  return;
+  process.exit();
 }
 
 var mainWindow = null;
@@ -45,7 +45,7 @@ var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) 
   // Someone tried to run a second instance, we should focus our window
   if (mainWindow) {
     if (mainWindow.isMinimized()) {
-        mainWindow.restore();
+      mainWindow.restore();
     }
     mainWindow.show();
     mainWindow.focus();
@@ -55,7 +55,7 @@ var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) 
 
 if (shouldQuit) {
   app.quit();
-  return;
+  process.exit();
 }
 
 function enableStreamlinedLogin() {
@@ -105,28 +105,28 @@ function openMainWindow() {
   mainWindow.on('swipe', function (e, direction) {
     switch (direction) {
     case 'right':
-        if (mainWindow.webContents.canGoForward()) {
-          mainWindow.webContents.goForward();
-        }
-        break;
+      if (mainWindow.webContents.canGoForward()) {
+        mainWindow.webContents.goForward();
+      }
+      break;
     case 'left':
-        if (mainWindow.webContents.canGoBack()) {
-          mainWindow.webContents.goBack();
-        }
-        break;
+      if (mainWindow.webContents.canGoBack()) {
+        mainWindow.webContents.goBack();
+      }
+      break;
     }
   });
 
   mainWindow.on('page-title-updated', function(event) {
-      var title = mainWindow.getTitle();
-      if (title && process.platform == 'darwin') {
-          var unread = "";
-          var matches = title.match(/^\((\d+)\)/);
-          if (matches) {
-            unread = matches[1];
-          }
-          app.dock.setBadge(unread);
+    var title = mainWindow.getTitle();
+    if (title && process.platform == 'darwin') {
+      var unread = "";
+      var matches = title.match(/^\((\d+)\)/);
+      if (matches) {
+        unread = matches[1];
       }
+      app.dock.setBadge(unread);
+    }
   });
 
   mainWindow.on('app-command', function (e, cmd) {
@@ -189,12 +189,12 @@ function openMainWindow() {
       'y': position[1]
     };
     if (mainWindow.isMaximized()) {
-        props.maximized = true;
+      props.maximized = true;
     }
     config.set(props);
     if (!quitting && config.get('tray')) {
-        ev.preventDefault();
-        mainWindow.hide();
+      ev.preventDefault();
+      mainWindow.hide();
     }
   });
 }
@@ -218,94 +218,94 @@ app.on('open-url', function (event, url) {
 });
 
 function destroyTray() {
-    if (appIcon) {
-        appIcon.destroy();
-    }
+  if (appIcon) {
+    appIcon.destroy();
+  }
 }
 
 function setupTray() {
   appIcon = new Tray(path.join(__dirname, process.platform == 'win32' ? 'icon.ico' : 'icon.png'));
   appIcon.setToolTip(app.getName());
   appIcon.on('click', function() {
-      mainWindow.show();
+    mainWindow.show();
   });
   var tray_menu = Menu.setup_tray(app);
   appIcon.setContextMenu(tray_menu);
 }
 
 app.toggleTray = function() {
-    if (config.get('tray')) {
-        return setupTray();
-    } else {
-        return destroyTray();
-    }
+  if (config.get('tray')) {
+    return setupTray();
+  } else {
+    return destroyTray();
+  }
 };
 app.toggleSpellcheck = function() {
-    if (config.get('spellcheck')) {
-        mainWindow.webContents.send('enable-spellcheck');
-    } else {
-        mainWindow.webContents.send('disable-spellcheck');
-    }
+  if (config.get('spellcheck')) {
+    mainWindow.webContents.send('enable-spellcheck');
+  } else {
+    mainWindow.webContents.send('disable-spellcheck');
+  }
 };
 
 function updateZoomMenu() {
-    var zoomLevel = config.get('zoom');
-    var viewMenu = menu.items.find(function (item) {
-      return item.id == 'view';
-    });
-    viewMenu.submenu.items.forEach(function (viewItem) {
-      switch (viewItem.id) {
-      case 'zoomReset':
-        viewItem.enabled = zoomLevel !== 0;
-        break;
-      case 'zoomIn':
-        viewItem.enabled = zoomLevel < maxZoom;
-        break;
-      case 'zoomOut':
-        viewItem.enabled = zoomLevel > minZoom;
-        break;
-      default:
-        break;
-      }
-    });
+  var zoomLevel = config.get('zoom');
+  var viewMenu = menu.items.find(function (item) {
+    return item.id == 'view';
+  });
+  viewMenu.submenu.items.forEach(function (viewItem) {
+    switch (viewItem.id) {
+    case 'zoomReset':
+      viewItem.enabled = zoomLevel !== 0;
+      break;
+    case 'zoomIn':
+      viewItem.enabled = zoomLevel < maxZoom;
+      break;
+    case 'zoomOut':
+      viewItem.enabled = zoomLevel > minZoom;
+      break;
+    default:
+      break;
+    }
+  });
 }
 
 function updateZoom(zoomLevel) {
-    config.set('zoom', zoomLevel);
-    if (mainWindow) {
-        mainWindow.webContents.send('update-zoom-level');
-    }
-    updateZoomMenu();
+  config.set('zoom', zoomLevel);
+  if (mainWindow) {
+    mainWindow.webContents.send('update-zoom-level');
+  }
+  updateZoomMenu();
 }
 
 app.zoomIn = function () {
-    var newZoom = Math.min(maxZoom, config.get('zoom') + 1);
-    updateZoom(newZoom);
+  var newZoom = Math.min(maxZoom, config.get('zoom') + 1);
+  updateZoom(newZoom);
 };
 app.zoomOut = function () {
-    var newZoom = Math.max(minZoom, config.get('zoom') - 1);
-    updateZoom(newZoom);
+  var newZoom = Math.max(minZoom, config.get('zoom') - 1);
+  updateZoom(newZoom);
 };
 app.resetZoom = function () {
-    updateZoom(0);
+  updateZoom(0);
 };
 
 function hideMenuBar(window) {
-    window.setAutoHideMenuBar(true);
-    window.setMenuBarVisibility(false);
+  window.setAutoHideMenuBar(true);
+  window.setMenuBarVisibility(false);
 }
 
 function showMenuBar(window) {
-    window.setAutoHideMenuBar(false);
-    window.setMenuBarVisibility(true);
+  window.setAutoHideMenuBar(false);
+  window.setMenuBarVisibility(true);
 }
 
 app.toggleMenuBar = function (window) {
-    if (config.get('menu-bar')) {
-        return showMenuBar(window);
-    } else {
-        return hideMenuBar(window);
-    }
+  if (config.get('menu-bar')) {
+    return showMenuBar(window);
+  } else {
+    return hideMenuBar(window);
+  }
 };
 
 // Handle irc URLs
@@ -315,15 +315,15 @@ function handleProtocolUrls () {
   var isHandler = (
     app.isDefaultProtocolClient('irc') &&
     app.isDefaultProtocolClient('ircs')
-  );
+    );
   
   if (!isHandler && !config.get('neverPromptIrcUrls')) {
     dialog.showMessageBox({
-        type: 'info',
-        message: 'Would you like to set ' + app.getName() + ' as your default IRC client?',
-        buttons: ['Set Default', 'Not Now', 'Don’t Ask Again'],
-        cancelId: 1,
-        defaultId: 0
+      type: 'info',
+      message: 'Would you like to set ' + app.getName() + ' as your default IRC client?',
+      buttons: ['Set Default', 'Not Now', 'Don’t Ask Again'],
+      cancelId: 1,
+      defaultId: 0
     }, function (ret) {
       switch (ret) {
       case 0:
@@ -347,9 +347,9 @@ app.on('ready', function() {
   updateZoomMenu();
   openMainWindow();
   if (config.get('tray') && process.platform != 'darwin') {
-      setupTray();
+    setupTray();
   }
   if (config.get('menu-bar') === false && process.platform != 'darwin') {
-      hideMenuBar(mainWindow);
+    hideMenuBar(mainWindow);
   }
 });
