@@ -8,6 +8,7 @@ const Shell = electron.shell;
 const dialog = electron.dialog;
 
 const path = require('path');
+const FS = require('fs');
 
 const ConfigStore = require('configstore');
 const Menu = require('./menu');
@@ -149,6 +150,16 @@ function openMainWindow() {
     }
   });
   
+
+  mainWindow.webContents.on('dom-ready', function(event) {
+    var userStylePath = path.join(app.getPath('userData'), 'user-style.css');
+    FS.readFile(userStylePath, 'utf8', function (err, data) {
+      if (!err) {
+        mainWindow.webContents.insertCSS(data);
+      }
+    });
+  });
+
   mainWindow.webContents.on('will-navigate', function (e, url) {
     // Make sure the invite cookie persists over logout
     enableStreamlinedLogin();
