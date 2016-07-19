@@ -11,6 +11,7 @@ const path = require('path');
 const FS = require('fs');
 
 const ConfigStore = require('configstore');
+const Config = require('electron-config');
 const Menu = require('./menu');
 const Tray = electron.Tray;
 const SquirrelWindows = require('./squirrel_windows');
@@ -28,14 +29,35 @@ var mainWindow = null;
 var menu = null;
 var appIcon = null;
 
-const config = new ConfigStore(app.getName(), {
-  'host': 'https://www.irccloud.com',
-  'width': 1024,
-  'height': 768,
-  'zoom': 0,
-  'spellcheck': true,
-  'neverPromptIrcUrls': false
-});
+function setupConfig () {
+  let defaults = {
+    'host': 'https://www.irccloud.com',
+    'width': 1024,
+    'height': 768,
+    'zoom': 0,
+    'spellcheck': true,
+    'neverPromptIrcUrls': false
+  };
+
+  // Migrate from old config, remove this in time
+  let oldConfig = new ConfigStore(app.getName());
+  try {
+    Object.keys(defaults).concat('x', 'y').forEach(key => {
+      if (oldConfig.has(key)) {
+        defaults[key] = oldConfig.get(key);
+      }
+    });
+    FS.unlinkSync(oldConfig.path);
+  } catch (exc) {
+    // noop
+  }
+
+  return new Config({
+    defaults: defaults
+  });
+}
+const config = setupConfig();
+
 const minZoom = -8;
 const maxZoom = 9;
 
