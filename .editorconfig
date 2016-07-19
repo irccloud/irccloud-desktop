@@ -1,6 +1,6 @@
 root = true
 
-[*.{js,json,yml}]
+[*.{js,json,yml,html,css}]
 
 # 2 space indentation
 indent_style = space
