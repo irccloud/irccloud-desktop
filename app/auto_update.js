@@ -74,7 +74,7 @@ function showUpdateDialog() {
   
   var message = app.getName() + ' ' + updateAvailable.version + ' is now available. It will be installed the next time you restart the application.';
   if (updateAvailable.notes) {
-    splitNotes = updateAvailable.notes.split(/[^\r]\n/);
+    let splitNotes = updateAvailable.notes.split(/[^\r]\n/);
     message += '\n\nRelease notes:\n';
     splitNotes.forEach(function (notes) {
       message += notes + '\n\n';
