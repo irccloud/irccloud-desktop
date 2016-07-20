@@ -1,96 +1,187 @@
 const electron = require('electron');
 
-const remote = electron.remote;
-const clipboard = electron.clipboard;
 const Shell = electron.shell;
-const Menu = remote.Menu;
-const MenuItem = remote.MenuItem;
+const Menu = electron.Menu;
+const MenuItem = electron.MenuItem;
+const ipcMain = electron.ipcMain;
 
-module.exports = {
-  build: function(window, e) {
-    var target = e.target;
-    var template = [];
-    if (target.closest('a')) {
-      target = target.closest('a');
+const {download} = require('electron-dl');
+
+var spellingSuggestions = [];
+ipcMain.on('set-spelling-suggestions', (event, suggestions) => {
+  spellingSuggestions = suggestions;
+});
+
+// Some of this is lifted from https://github.com/sindresorhus/electron-context-menu
+// But modified beyond the limits of its prepend/append abilities
+module.exports = (win) => {
+  win.webContents.on('context-menu', (e, props) => {
+    const editFlags = props.editFlags;
+    const hasText = props.selectionText.trim().length > 0;
+    const can = type => editFlags[`can${type}`] && hasText;
+    const cmdOrCtrl = e => {
+      if (process.platform === 'darwin') {
+        return e.metaKey;
+      } else {
+        return e.ctrlKey;
+      }
+    };
+
+    let template = [];
+    spellingSuggestions.forEach(suggestion => {
       template.push({
-        label: 'Copy Link Address',
-        click: function (e, focusedWindow) {
-          clipboard.writeText(target.href);
+        label: suggestion,
+        click (item, focusedWindow, e) {
+          win.webContents.replaceMisspelling(suggestion);
         }
       });
+    });
+
+    if (props.linkURL) {
       template.push({
         label: 'Open Link in Browser',
-        click: function (e, focusedWindow) {
-          Shell.openExternal(target.href, {
-            activate: true
-          });
-        }
-      });
-      template.push({
-        label: 'Open Link in Browser (Background)',
-        click: function (e, focusedWindow) {
-          Shell.openExternal(target.href, {
-            activate: false
+        click (item, focusedWindow, e) {
+          Shell.openExternal(props.linkURL, {
+            activate: !cmdOrCtrl(e)
           });
         }
       });
     } else {
-      if (window.getSelection().toString()) {
-        template.push({
-          label: 'Copy',
-          role: 'copy'
-        });
-      } else {
+      if (!props.selectionText) {
         template.push({
           label: 'Back',
-          enabled: remote.getCurrentWebContents().canGoBack(),
-          click: function (item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.webContents.goBack();
-            } 
+          enabled: win.webContents.canGoBack(),
+          click (item, focusedWindow, e) {
+            win.webContents.goBack();
           }
-        });
-        template.push({
+        }, {
           label: 'Forward',
-          enabled: remote.getCurrentWebContents().canGoForward(),
-          click: function (item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.webContents.goForward();
-            }
+          enabled: win.webContents.canGoForward(),
+          click (item, focusedWindow, e) {
+            win.webContents.goForward();
           }
-        });
-        template.push({
+        }, {
           label: 'Reload',
-          click: function(item, focusedWindow) {
-            if (focusedWindow) {
-              focusedWindow.webContents.reloadIgnoringCache();
-            }
+          click(item, focusedWindow, e) {
+            win.webContents.reloadIgnoringCache();
           }
         });
       }
     }
-    
-    template = [...template, {
+
+    template.push({
+      type: 'separator'
+    }, {
+      label: 'Cut',
+      // needed because of macOS limitation:
+      // https://github.com/electron/electron/issues/5860
+      role: can('Cut') ? 'cut' : '',
+      enabled: can('Cut'),
+      visible: props.isEditable
+    }, {
+      label: 'Copy',
+      role: can('Copy') ? 'copy' : '',
+      enabled: can('Copy'),
+      visible: props.isEditable || hasText
+    }, {
+      label: 'Paste',
+      role: editFlags.canPaste ? 'paste' : '',
+      enabled: editFlags.canPaste,
+      visible: props.isEditable
+    }, {
+      type: 'separator'
+    });
+
+    if (props.linkURL) {
+      template.push({
+        type: 'separator'
+      }, {
+        label: 'Save Link As…',
+        click (item, focusedWindow, e) {
+          download(focusedWindow, props.linkURL, {
+            saveAs: true
+          });
+        }
+      }, {
+        label: 'Copy Link Address',
+        click (item, focusedWindow, e) {
+          if (process.platform === 'linux' || !props.linkText) {
+            electron.clipboard.writeText(props.linkURL);
+          } else {
+            electron.clipboard.writeBookmark(props.linkText, props.linkURL);
+          }
+        }
+      }, {
+        type: 'separator'
+      });
+    }
+
+    if (props.mediaType === 'image') {
+      template.push({
+        type: 'separator'
+      }, {
+        label: 'Open Image in Browser',
+        click (item, focusedWindow, e) {
+          Shell.openExternal(props.srcURL, {
+            activate: !cmdOrCtrl(e)
+          });
+        }
+      }, {
+        label: 'Save Image As…',
+        click (item, focusedWindow, e) {
+          // https://github.com/electron/electron/issues/6551
+          download(focusedWindow, props.srcURL, {
+            saveAs: true
+          });
+        }
+      }, {
+        // TODO copy image data
+        // https://github.com/electron/electron/issues/6553
+        // label: 'Copy Image',
+        // click (item, focusedWindow, e) {
+        // }
+      // }, {
+        label: 'Copy Image Address',
+        click (item, focusedWindow, e) {
+          electron.clipboard.writeText(props.srcURL);
+        }
+      }, {
+        type: 'separator'
+      });
+    }
+
+    template.push({
       type: 'separator'
     }, {
       label: 'Inspect Element',
-      click: function(item, focusedWindow) {
-        if (focusedWindow) {
-          focusedWindow.webContents.inspectElement(e.pageX, e.pageY);
-          if (focusedWindow.isDevToolsOpened()) {
-            focusedWindow.devToolsWebContents.focus();
-          }
+      click (item, win) {
+        win.webContents.inspectElement(props.x, props.y);
+        if (win.webContents.isDevToolsOpened()) {
+          win.webContents.devToolsWebContents.focus();
         }
       }
-    }];
+    }, {
+      type: 'separator'
+    });
 
-    if (process.platform == 'darwin') {
+    if (hasText && process.platform === 'darwin') {
       template.push({
-        label: 'Services',
         role: 'services',
         submenu: []
+      }, {
+        type: 'separator'
       });
     }
-    return Menu.buildFromTemplate(template);
-  }
+
+    // filter out leading/trailing separators
+    // TODO: https://github.com/electron/electron/issues/5869
+    template = template.filter((el, i, arr) => {
+      return !(el.type === 'separator' && (i === 0 || i === arr.length - 1));
+    });
+
+    const menu = Menu.buildFromTemplate(template);
+    setTimeout(() => {
+      menu.popup(win);
+    }, 20);
+  });
 };

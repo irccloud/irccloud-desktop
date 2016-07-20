@@ -12,6 +12,7 @@ const FS = require('fs');
 
 const ConfigStore = require('configstore');
 const Config = require('electron-config');
+const ContextMenu = require('./context_menu');
 const Menu = require('./menu');
 const Tray = electron.Tray;
 const SquirrelWindows = require('./squirrel_windows');
@@ -171,7 +172,8 @@ function openMainWindow() {
       break;
     }
   });
-  
+
+  ContextMenu(mainWindow);
 
   mainWindow.webContents.on('dom-ready', function(event) {
     var userStylePath = path.join(app.getPath('userData'), 'user-style.css');
