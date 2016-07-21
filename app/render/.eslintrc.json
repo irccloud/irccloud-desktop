@@ -1,0 +1,12 @@
+{
+  "env": {
+    "node": false,
+    "browser": true,
+    "commonjs": true,
+    "es6": false
+  },
+  "globals": {
+    "SESSION": false,
+    "SESSIONVIEW": false
+  }
+}
