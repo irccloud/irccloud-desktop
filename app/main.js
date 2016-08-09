@@ -239,10 +239,16 @@ var quitting = false;
 app.on('before-quit', function () {
   quitting = true;
 });
-app.on('window-all-closed', function() {
-  app.quit();
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
-
+app.on('activate', function () {
+  if (!mainWindow) {
+    openMainWindow();
+  }
+});
 // Handles urls from app.isDefaultProtocolClient
 app.on('open-url', function (event, url) {
   if (mainWindow) {
