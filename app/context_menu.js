@@ -1,11 +1,10 @@
 const electron = require('electron');
 
+const app = electron.app;
 const Shell = electron.shell;
 const Menu = electron.Menu;
 const MenuItem = electron.MenuItem;
 const ipcMain = electron.ipcMain;
-
-const {download} = require('electron-dl');
 
 const isMac = process.platform === 'darwin';
 const isLinux = process.platform === 'linux';
@@ -101,9 +100,10 @@ module.exports = (win) => {
       }, {
         label: 'Save Link As…',
         click (item, focusedWindow, e) {
-          download(focusedWindow, props.linkURL, {
-            saveAs: true
+          app.doDownload(focusedWindow, props.linkURL, {
+            saveAs: !e.altKey
           });
+
         }
       }, {
         label: 'Copy Link Address',
@@ -132,9 +132,8 @@ module.exports = (win) => {
       }, {
         label: 'Save Image As…',
         click (item, focusedWindow, e) {
-          // https://github.com/electron/electron/issues/6551
-          download(focusedWindow, props.srcURL, {
-            saveAs: true
+          app.doDownload(focusedWindow, props.srcURL, {
+            saveAs: !e.altKey
           });
         }
       }, {

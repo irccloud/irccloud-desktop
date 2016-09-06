@@ -19,6 +19,7 @@ const SquirrelWindows = require('./squirrel_windows');
 const auto_updater = require('./auto_update.js');
 
 const _ = require('lodash');
+require('electron-dl')();
 const log = require('electron-log');
 log.transports.file.level = 'silly';
 
@@ -193,6 +194,14 @@ function openMainWindow() {
     // Make sure the invite cookie persists over logout
     enableStreamlinedLogin();
   });
+  mainWindow.webContents.session.on('will-download', function (e, item, webContents) {
+    if (manualDownload && manualDownload.saveAs) {
+      item.setSavePath('');
+    }
+    item.on('done', function (e, state) {
+      manualDownload = null;
+    });
+  });
   
   mainWindow.webContents.on('did-navigate-in-page', function (e, url) {
     var historyMenu = menu.items.find(function (item) {
@@ -274,6 +283,12 @@ function setupTray() {
   var tray_menu = Menu.setup_tray(app);
   appIcon.setContextMenu(tray_menu);
 }
+
+var manualDownload;
+app.doDownload = function (win, url, opts) {
+  manualDownload = opts;
+  win.webContents.downloadURL(url);
+};
 
 app.toggleTray = function() {
   if (config.get('tray')) {
