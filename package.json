@@ -24,7 +24,7 @@
       "icon": ""
     },
     "appId": "com.irccloud.desktop",
-    "app-category-type": "public.app-category.productivity",
+    "category": "public.app-category.productivity",
     "npmRebuild": false,
     "protocols": [
       {
