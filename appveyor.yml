@@ -3,12 +3,6 @@ platform:
   - x64
 os: Previous Visual Studio 2015
 
-cache:
-  - node_modules -> **\package.json
-  - app\node_modules -> **\app\package.json
-  - '%APPDATA%\npm-cache'
-  - '%USERPROFILE%\.electron'
-
 environment:
   GYP_MSVS_VERSION: 2015
   GH_TOKEN:

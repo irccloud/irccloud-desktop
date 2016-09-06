@@ -16,11 +16,6 @@ addons:
     - icnsutils
     - graphicsmagick
     - xz-utils
-cache:
-  directories:
-  - ".nvm"
-  - "$HOME/.electron"
-  - "$HOME/.npm"
 before_install:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then openssl aes-256-cbc -K $encrypted_fc666da9e2f5_key
   -iv $encrypted_fc666da9e2f5_iv -in .travis.env.enc -out .travis.env -d; source .travis.env;
@@ -32,6 +27,9 @@ before_install:
 - source ./.nvm/nvm.sh
 - nvm install $NODE_VERSION
 - nvm use --delete-prefix $NODE_VERSION
+- npm install -g npm
+- node --version
+- npm --version
 install:
 - npm prune
 - npm install
