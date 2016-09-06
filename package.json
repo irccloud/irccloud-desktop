@@ -26,7 +26,12 @@
     "appId": "com.irccloud.desktop",
     "app-category-type": "public.app-category.productivity",
     "npmRebuild": false,
-    "extend-info": "Info.plist"
+    "protocols": [
+      {
+        "name": "IRC server URL",
+        "schemes": ["irc", "ircs"]
+      }
+    ]
   },
   "devDependencies": {
     "electron-builder": "^6.4.1",
