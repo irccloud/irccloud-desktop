@@ -1,4 +1,5 @@
 {
+  "name": "irccloud-desktop-build",
   "scripts": {
     "postinstall": "install-app-deps",
     "pack": "build",
