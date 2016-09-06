@@ -69,17 +69,9 @@ app.config = config;
 global.config = config;
 
 var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
-  // Someone tried to run a second instance, we should focus our window
-  if (mainWindow) {
-    if (mainWindow.isMinimized()) {
-      mainWindow.restore();
-    }
-    mainWindow.show();
-    mainWindow.focus();
-  }
+  openMainWindow();
   return true;
 });
-
 if (shouldQuit) {
   app.quit();
   process.exit();
@@ -96,6 +88,16 @@ function enableStreamlinedLogin() {
 }
 
 function openMainWindow() {
+  // Someone tried to run a second instance, we should focus our window
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore();
+    }
+    mainWindow.show();
+    mainWindow.focus();
+    return;
+  }
+
   var windowOpts = {
     'icon': path.join(__dirname, isWin ? 'icon.ico' : 'icon.png'),
     'width': config.get('width'),
@@ -230,21 +232,23 @@ function openMainWindow() {
       props.maximized = true;
     }
     config.set(props);
-    if (!quitting && config.get('tray')) {
+    if (!quitting && (isMac || config.get('tray'))) {
       ev.preventDefault();
       mainWindow.hide();
     }
   });
 }
 
-app.on('activate-with-no-open-windows', openMainWindow);
 var quitting = false;
+app.on('activate', openMainWindow);
 app.on('before-quit', function () {
   quitting = true;
 });
-app.on('window-all-closed', function() {
-  app.quit();
-});
+if (!isMac) {
+  app.on('window-all-closed', function() {
+    app.quit();
+  });
+}
 
 // Handles urls from app.isDefaultProtocolClient
 app.on('open-url', function (event, url) {
@@ -265,7 +269,7 @@ function setupTray() {
   appIcon = new Tray(path.join(__dirname, isWin ? 'icon.ico' : 'icon.png'));
   appIcon.setToolTip(app.getName());
   appIcon.on('click', function() {
-    mainWindow.show();
+    openMainWindow();
   });
   var tray_menu = Menu.setup_tray(app);
   appIcon.setContextMenu(tray_menu);

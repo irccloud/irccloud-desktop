@@ -58,6 +58,10 @@ module.exports = {
       label: 'File',
       submenu: [
         {
+          role: 'close'
+        }, {
+          type: 'separator'
+        }, {
           label: 'Open in Browser',
           click: function(item, focusedWindow, event) {
             var url = focusedWindow ? focusedWindow.webContents.getURL() : config.get('host');
@@ -359,6 +363,14 @@ module.exports = {
           type: 'separator'
         }, {
           role: 'front'
+        }, {
+          type: 'separator'
+        }, {
+          label: 'Main Window',
+          accelerator: 'CmdOrCtrl+0',
+          click: function (item, focusedWindow, event) {
+            app.emit('activate');
+          }
         }
       ]
     };
