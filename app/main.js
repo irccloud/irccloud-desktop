@@ -26,6 +26,9 @@ if (SquirrelWindows.handleStartupEvent()) {
   process.exit();
 }
 
+const isMac = process.platform === 'darwin';
+const isWin = process.platform === 'win32';
+
 var mainWindow = null;
 var menu = null;
 var appIcon = null;
@@ -94,7 +97,7 @@ function enableStreamlinedLogin() {
 
 function openMainWindow() {
   var windowOpts = {
-    'icon': path.join(__dirname, process.platform == 'win32' ? 'icon.ico' : 'icon.png'),
+    'icon': path.join(__dirname, isWin ? 'icon.ico' : 'icon.png'),
     'width': config.get('width'),
     'height': config.get('height'),
     'webPreferences': {
@@ -143,7 +146,7 @@ function openMainWindow() {
 
   mainWindow.on('page-title-updated', function(event) {
     var title = mainWindow.getTitle();
-    if (title && process.platform == 'darwin') {
+    if (title && isMac) {
       var unread = "";
       var matches = title.match(/^\((\d+)\)/);
       if (matches) {
@@ -259,7 +262,7 @@ function destroyTray() {
 }
 
 function setupTray() {
-  appIcon = new Tray(path.join(__dirname, process.platform == 'win32' ? 'icon.ico' : 'icon.png'));
+  appIcon = new Tray(path.join(__dirname, isWin ? 'icon.ico' : 'icon.png'));
   appIcon.setToolTip(app.getName());
   appIcon.on('click', function() {
     mainWindow.show();
@@ -381,10 +384,10 @@ app.on('ready', function() {
   auto_updater.setup(menu);
   updateZoomMenu();
   openMainWindow();
-  if (config.get('tray') && process.platform != 'darwin') {
+  if (config.get('tray') && !isMac) {
     setupTray();
   }
-  if (config.get('menu-bar') === false && process.platform != 'darwin') {
+  if (config.get('menu-bar') === false && !isMac) {
     hideMenuBar(mainWindow);
   }
 });
