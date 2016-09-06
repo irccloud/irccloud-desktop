@@ -369,6 +369,10 @@ app.toggleMenuBar = function (window) {
 var ircUrlOnOpen;
 function handleProtocolUrls () {
   // https://github.com/electron/electron/blob/master/docs/api/app.md#appsetasdefaultprotocolclientprotocol-macos-windows
+  var supported = isMac || isWin;
+  if (!supported) {
+    return;
+  }
   var isHandler = (
     app.isDefaultProtocolClient('irc') &&
     app.isDefaultProtocolClient('ircs')
