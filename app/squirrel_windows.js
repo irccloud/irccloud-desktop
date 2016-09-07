@@ -4,12 +4,13 @@ const app = electron.app;
 
 const child_process = require('child_process');
 const path = require('path');
+const is = require('electron-is');
 
 module.exports = {
   handleStartupEvent: function() {
     // Handle Squirrel startup events, called by the Windows installer.
     // https://github.com/electronjs/windows-installer#handling-squirrel-events
-    if (process.platform !== 'win32') {
+    if (!is.windows()) {
       return false;
     }
 

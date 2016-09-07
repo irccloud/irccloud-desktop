@@ -19,6 +19,7 @@ const SquirrelWindows = require('./squirrel_windows');
 const auto_updater = require('./auto_update.js');
 
 const _ = require('lodash');
+const is = require('electron-is');
 require('electron-dl')();
 const log = require('electron-log');
 log.transports.file.level = 'silly';
@@ -26,9 +27,6 @@ log.transports.file.level = 'silly';
 if (SquirrelWindows.handleStartupEvent()) {
   process.exit();
 }
-
-const isMac = process.platform === 'darwin';
-const isWin = process.platform === 'win32';
 
 var mainWindow = null;
 var menu = null;
@@ -105,7 +103,7 @@ function openMainWindow(opts) {
   }
 
   var windowOpts = {
-    'icon': path.join(__dirname, isWin ? 'icon.ico' : 'icon.png'),
+    'icon': path.join(__dirname, is.windows() ? 'icon.ico' : 'icon.png'),
     'width': config.get('width'),
     'height': config.get('height'),
     'webPreferences': {
@@ -154,7 +152,7 @@ function openMainWindow(opts) {
 
   mainWindow.on('page-title-updated', function(event) {
     var title = mainWindow.getTitle();
-    if (title && isMac) {
+    if (title && is.macOS()) {
       var unread = "";
       var matches = title.match(/^\((\d+)\)/);
       if (matches) {
@@ -246,7 +244,7 @@ function openMainWindow(opts) {
       props.maximized = true;
     }
     config.set(props);
-    if (!quitting && (isMac || config.get('tray'))) {
+    if (!quitting && (is.macOS() || config.get('tray'))) {
       ev.preventDefault();
       mainWindow.hide();
     }
@@ -258,7 +256,7 @@ app.on('activate', openMainWindow);
 app.on('before-quit', function () {
   quitting = true;
 });
-if (!isMac) {
+if (!is.macOS()) {
   app.on('window-all-closed', function() {
     app.quit();
   });
@@ -280,7 +278,7 @@ function destroyTray() {
 }
 
 function setupTray() {
-  appIcon = new Tray(path.join(__dirname, isWin ? 'icon.ico' : 'icon.png'));
+  appIcon = new Tray(path.join(__dirname, is.windows() ? 'icon.ico' : 'icon.png'));
   appIcon.setToolTip(app.getName());
   appIcon.on('click', function() {
     openMainWindow();
@@ -374,7 +372,7 @@ app.toggleMenuBar = function (window) {
 var ircUrlOnOpen;
 function handleProtocolUrls () {
   // https://github.com/electron/electron/blob/master/docs/api/app.md#appsetasdefaultprotocolclientprotocol-macos-windows
-  var supported = isMac || isWin;
+  var supported = is.macOS() || is.windows();
   if (!supported) {
     return;
   }
@@ -412,10 +410,10 @@ app.on('ready', function() {
   auto_updater.setup(menu);
   updateZoomMenu();
   openMainWindow();
-  if (config.get('tray') && !isMac) {
+  if (config.get('tray') && !is.macOS()) {
     setupTray();
   }
-  if (config.get('menu-bar') === false && !isMac) {
+  if (config.get('menu-bar') === false && !is.macOS()) {
     hideMenuBar(mainWindow);
   }
 });

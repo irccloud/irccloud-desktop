@@ -6,8 +6,7 @@ const Menu = electron.Menu;
 const MenuItem = electron.MenuItem;
 const ipcMain = electron.ipcMain;
 
-const isMac = process.platform === 'darwin';
-const isLinux = process.platform === 'linux';
+const is = require('electron-is');
 
 var spellingSuggestions = [];
 ipcMain.on('set-spelling-suggestions', (event, suggestions) => {
@@ -22,7 +21,7 @@ module.exports = (win) => {
     const hasText = props.selectionText.trim().length > 0;
     const can = type => editFlags[`can${type}`] && hasText;
     const cmdOrCtrl = e => {
-      if (isMac) {
+      if (is.macOS()) {
         return e.metaKey;
       } else {
         return e.ctrlKey;
@@ -108,7 +107,7 @@ module.exports = (win) => {
       }, {
         label: 'Copy Link Address',
         click (item, focusedWindow, e) {
-          if (isLinux || !props.linkText) {
+          if (is.linux() || !props.linkText) {
             electron.clipboard.writeText(props.linkURL);
           } else {
             electron.clipboard.writeBookmark(props.linkText, props.linkURL);
@@ -165,7 +164,7 @@ module.exports = (win) => {
       type: 'separator'
     });
 
-    if (hasText && isMac) {
+    if (hasText && is.macOS()) {
       template.push({
         role: 'services',
         submenu: []

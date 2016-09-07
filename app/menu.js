@@ -3,8 +3,7 @@ const electron = require('electron');
 const app = electron.app;
 const Menu = electron.Menu;
 const auto_updater = require('./auto_update.js');
-
-const isMac = process.platform === 'darwin';
+const is = require('electron-is');
 
 var checkForUpdates = {
   label: 'Check for Updates…',
@@ -155,7 +154,7 @@ module.exports = {
         }
       ]
     };
-    if (!isMac) {
+    if (!is.macOS()) {
       file_menu.submenu.push({
         type: 'separator'
       });
@@ -195,7 +194,7 @@ module.exports = {
         app.toggleSpellcheck();
       }
     };
-    if (isMac) {
+    if (is.macOS()) {
       spellingSubItem.label = 'Check Spelling While Typing';
       spellingItem = {
         label: 'Spelling and Grammar',
@@ -283,7 +282,7 @@ module.exports = {
         }, {
           label: 'Developer Tools',
           accelerator: (function() {
-            if (isMac) {
+            if (is.macOS()) {
               return 'Cmd+Alt+I';
             } else {
               return 'Ctrl+Shift+I';
@@ -297,7 +296,7 @@ module.exports = {
         }
       ]
     };
-    if (!isMac) {
+    if (!is.macOS()) {
       view_menu.submenu.splice(2, 0, {
         label: 'Toggle Menu Bar',
         accelerator: 'Ctrl+Shift+M',
@@ -398,12 +397,12 @@ module.exports = {
         }
       ]
     };
-    if (!isMac) {
+    if (!is.macOS()) {
       help_menu.submenu.push(checkForUpdates);
     }
 
     var menu;
-    if (isMac) {
+    if (is.macOS()) {
       menu = Menu.buildFromTemplate([app_menu, file_menu, edit_menu, view_menu, go_menu, window_menu, help_menu]);
     } else {
       menu = Menu.buildFromTemplate([file_menu, edit_menu, view_menu, go_menu, help_menu]);
