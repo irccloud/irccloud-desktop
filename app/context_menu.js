@@ -137,12 +137,11 @@ module.exports = (win) => {
           });
         }
       }, {
-        // TODO copy image data
-        // https://github.com/electron/electron/issues/6553
-        // label: 'Copy Image',
-        // click (item, focusedWindow, e) {
-        // }
-      // }, {
+        label: 'Copy Image',
+        click (item, focusedWindow, e) {
+          win.webContents.copyImageAt(props.x, props.y);
+        }
+      }, {
         label: 'Copy Image Address',
         click (item, focusedWindow, e) {
           electron.clipboard.writeText(props.srcURL);
