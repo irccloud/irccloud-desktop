@@ -11,3 +11,4 @@ require('./focus')();
 require('./zoom')();
 require('./spellcheck')();
 require('./irc-url')();
+require('./notification')();
