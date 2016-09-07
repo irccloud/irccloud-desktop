@@ -7,6 +7,7 @@ window.addEventListener('wheel', function (e) {
   // console.log('onwheel');
 });
 
+require('./focus')();
 require('./zoom')();
 require('./spellcheck')();
 require('./irc-url')();

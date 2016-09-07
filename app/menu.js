@@ -244,6 +244,10 @@ module.exports = {
           click: function(item, focusedWindow, event) {
             if (focusedWindow) {
               focusedWindow.webContents.reloadIgnoringCache();
+            } else {
+              app.emit('activate', {
+                reload: true
+              });
             }
           }
         }, {

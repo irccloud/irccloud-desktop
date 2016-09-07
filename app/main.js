@@ -88,7 +88,9 @@ function enableStreamlinedLogin() {
   });
 }
 
-function openMainWindow() {
+function openMainWindow(opts) {
+  opts = opts || {};
+  var reload;
   // Someone tried to run a second instance, we should focus our window
   if (mainWindow) {
     if (mainWindow.isMinimized()) {
@@ -96,6 +98,9 @@ function openMainWindow() {
     }
     mainWindow.show();
     mainWindow.focus();
+    if (opts.reload) {
+      mainWindow.webContents.reloadIgnoringCache();
+    }
     return;
   }
 
@@ -228,7 +233,7 @@ function openMainWindow() {
       activate: activate
     });
   });
-  mainWindow.on('close', function(ev) {
+  mainWindow.on('close', function (ev) {
     var size = mainWindow.getSize();
     var position = mainWindow.getPosition();
     var props = {
