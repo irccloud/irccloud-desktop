@@ -100,7 +100,7 @@ module.exports = (win) => {
       }, {
         label: 'Save Link As…',
         click (item, focusedWindow, e) {
-          app.doDownload(focusedWindow, props.linkURL, {
+          app.doDownload(win, props.linkURL, {
             saveAs: !e.altKey
           });
 
@@ -132,7 +132,7 @@ module.exports = (win) => {
       }, {
         label: 'Save Image As…',
         click (item, focusedWindow, e) {
-          app.doDownload(focusedWindow, props.srcURL, {
+          app.doDownload(win, props.srcURL, {
             saveAs: !e.altKey
           });
         }
@@ -156,7 +156,7 @@ module.exports = (win) => {
       type: 'separator'
     }, {
       label: 'Inspect Element',
-      click (item, win) {
+      click (item, focusedWindow, e) {
         win.webContents.inspectElement(props.x, props.y);
         if (win.webContents.isDevToolsOpened()) {
           win.webContents.devToolsWebContents.focus();
