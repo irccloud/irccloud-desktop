@@ -5,7 +5,8 @@
     "pack": "build",
     "dist": "build",
     "test": "eslint .",
-    "app": "electron ./app"
+    "app": "electron ./app",
+    "mas": "build --mac mas"
   },
   "build": {
     "mac": {
