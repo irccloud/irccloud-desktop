@@ -67,13 +67,18 @@ const maxZoom = 9;
 app.config = config;
 global.config = config;
 
-var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
-  openMainWindow();
-  return true;
-});
-if (shouldQuit) {
-  app.quit();
-  process.exit();
+// https://github.com/electron/electron/issues/6771
+// This breaks MAS builds, and is only needed to prevent command line started dupes
+// on macOS so we can disable it entirely
+if (!is.macOS()) {
+  var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
+    openMainWindow();
+    return true;
+  });
+  if (shouldQuit) {
+    app.quit();
+    process.exit();
+  }
 }
 
 function enableStreamlinedLogin() {
