@@ -31,7 +31,10 @@
     "protocols": [
       {
         "name": "IRC server URL",
-        "schemes": ["irc", "ircs"]
+        "schemes": [
+          "irc",
+          "ircs"
+        ]
       }
     ]
   },

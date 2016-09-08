@@ -24,6 +24,7 @@
     "test": "snyk test"
   },
   "devDependencies": {
+    "devtron": "^1.3.0",
     "snyk": "^1.19.1"
   }
 }
