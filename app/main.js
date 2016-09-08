@@ -67,10 +67,12 @@ const maxZoom = 9;
 app.config = config;
 global.config = config;
 
+// https://github.com/delvedor/electron-is/pull/1
+const isSandbox = 'APP_SANDBOX_CONTAINER_ID' in process.env;
+
 // https://github.com/electron/electron/issues/6771
-// This breaks MAS builds, and is only needed to prevent command line started dupes
-// on macOS so we can disable it entirely
-if (!is.macOS()) {
+// This always returns true in MAS builds, preventing startup
+if (!isSandbox) {
   var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
     openMainWindow();
     return true;
