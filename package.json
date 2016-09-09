@@ -6,7 +6,8 @@
     "dist": "build",
     "test": "eslint .",
     "app": "electron ./app",
-    "mas": "build --mac mas"
+    "mas": "build --mac mas",
+    "win": "build --ia32"
   },
   "build": {
     "mac": {
