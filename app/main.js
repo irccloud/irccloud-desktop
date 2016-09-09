@@ -67,12 +67,9 @@ const maxZoom = 9;
 app.config = config;
 global.config = config;
 
-// https://github.com/delvedor/electron-is/pull/1
-const isSandbox = 'APP_SANDBOX_CONTAINER_ID' in process.env;
-
 // https://github.com/electron/electron/issues/6771
 // This always returns true in MAS builds, preventing startup
-if (!isSandbox) {
+if (!is.sandbox()) {
   var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
     openMainWindow();
     return true;
@@ -379,7 +376,7 @@ app.toggleMenuBar = function (window) {
 var ircUrlOnOpen;
 function handleProtocolUrls () {
   // https://github.com/electron/electron/blob/master/docs/api/app.md#appsetasdefaultprotocolclientprotocol-macos-windows
-  var supported = (is.macOS() || is.windows()) && !isSandbox;
+  var supported = (is.macOS() || is.windows()) && !is.sandbox();
   if (!supported) {
     return;
   }
