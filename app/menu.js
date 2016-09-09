@@ -377,7 +377,7 @@ module.exports = {
           type: 'separator'
         }, {
           label: 'Main Window',
-          accelerator: 'CmdOrCtrl+0',
+          accelerator: 'CmdOrCtrl+1',
           click: function (item, focusedWindow, event) {
             app.emit('activate');
           }
