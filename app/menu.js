@@ -4,6 +4,7 @@ const app = electron.app;
 const Menu = electron.Menu;
 const auto_updater = require('./auto_update.js');
 const is = require('electron-is');
+const open = require('open');
 
 var checkForUpdates = {
   label: 'Check for Updates…',
@@ -65,6 +66,12 @@ module.exports = {
           click: function(item, focusedWindow, event) {
             var url = focusedWindow ? focusedWindow.webContents.getURL() : config.get('host');
             require('electron').shell.openExternal(url);
+          }
+        }, {
+          label: 'Open Browser Tab…',
+          accelerator: 'CmdOrCtrl+T',
+          click: function(item, focusedWindow, event) {
+            open('http://');
           }
         }, {
           type: 'separator'
