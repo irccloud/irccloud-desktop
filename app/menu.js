@@ -187,7 +187,7 @@ module.exports = {
         }
       });
       file_menu.submenu.push({
-        role: 'quit',
+        role: 'quit'
       });
     }
     
