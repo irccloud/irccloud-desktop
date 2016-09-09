@@ -20,6 +20,8 @@ const auto_updater = require('./auto_update.js');
 
 const _ = require('lodash');
 const is = require('electron-is');
+const mime = require('mime-types');
+const unusedFilename = require('unused-filename');
 require('electron-dl')();
 const log = require('electron-log');
 log.transports.file.level = 'silly';
@@ -204,6 +206,14 @@ function openMainWindow(opts) {
   mainWindow.webContents.session.on('will-download', function (e, item, webContents) {
     if (manualDownload && manualDownload.saveAs) {
       item.setSavePath('');
+    } else if (item.getSavePath() && _.last(item.getURL()) === '/') {
+      // https://github.com/electron/electron/issues/7151
+      var savePath = unusedFilename.sync(path.format({
+        dir: path.dirname(item.getSavePath()),
+        name: 'download',
+        ext: '.' + mime.extension(item.getMimeType())
+      }));
+      item.setSavePath(savePath);
     }
     item.on('done', function (e, state) {
       manualDownload = null;
