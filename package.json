@@ -17,6 +17,9 @@
         "mas"
       ]
     },
+    "mas": {
+      "publish": null
+    },
     "linux": {
       "target": [
         "deb",
