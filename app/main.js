@@ -34,9 +34,11 @@ var mainWindow = null;
 var menu = null;
 var appIcon = null;
 
+const defaultHost = 'https://www.irccloud.com';
+
 function setupConfig () {
   let defaults = {
-    'host': 'https://www.irccloud.com',
+    'host': defaultHost,
     'width': 1024,
     'height': 768,
     'zoom': 0,
@@ -69,6 +71,10 @@ const maxZoom = 9;
 app.config = config;
 global.config = config;
 
+
+function isMainHost () {
+  return config.get('host') === defaultHost;
+}
 // https://github.com/electron/electron/issues/6771
 // This always returns true in MAS builds, preventing startup
 if (!is.sandbox()) {
@@ -82,14 +88,28 @@ if (!is.sandbox()) {
   }
 }
 
-function enableStreamlinedLogin() {
+function enableStreamlinedLogin () {
   // Enable the streamlined login page
-  var inviteCookie = { url : config.get('host'), name : "invite", value : "1" };
-  mainWindow.webContents.session.cookies.set(inviteCookie, function (error) {
-    if (error) {
-      log.error('set invite cookie error', error);
-    }
-  });
+  var url = config.get('host');
+  var name = "invite";
+  if (isMainHost()) {
+    var inviteCookie = {
+      url : url,
+      name : name,
+      value : "1"
+    };
+    mainWindow.webContents.session.cookies.set(inviteCookie, function (error) {
+      if (error) {
+        log.error('set invite cookie error', error);
+      }
+    });
+  } else {
+    mainWindow.webContents.session.cookies.remove(url, name, function (error) {
+      if (error) {
+        log.error('remove invite cookie error', error);
+      }
+    });
+  }
 }
 
 function openMainWindow(opts) {
