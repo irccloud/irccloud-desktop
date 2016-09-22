@@ -16,10 +16,10 @@
     "electron-config": "^0.2.1",
     "electron-dl": "^1.5.0",
     "electron-is": "^2.3.0",
-    "electron-log": "^1.0.19",
+    "electron-log": "^1.1.1",
     "electron-spell-check-provider": "^1.0.0",
-    "lodash": "^4.15.0",
-    "mime-types": "^2.1.11",
+    "lodash": "^4.16.1",
+    "mime-types": "^2.1.12",
     "open": "0.0.5",
     "unused-filename": "^0.1.0"
   },
