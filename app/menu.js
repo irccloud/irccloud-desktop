@@ -14,6 +14,9 @@ var checkForUpdates = {
     auto_updater.check();
   }
 };
+var sep = {
+  type: 'separator'
+};
 var prefs = {
   label: 'Preferences…',
   accelerator: 'CmdOrCtrl+,',
@@ -40,27 +43,25 @@ module.exports = {
           role: 'about'
         },
         checkForUpdates,
-        {
-          type: 'separator'
-        },
+        sep,
         prefs,
+        sep,
         show_config,
+        sep,
         {
-          type: 'separator'
-        }, {
           role: 'services',
           submenu: []
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           role: 'hide'
         }, {
           role: 'hideothers'
         }, {
           role: 'unhide'
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           role: 'quit'
         }
       ]
@@ -70,9 +71,9 @@ module.exports = {
       submenu: [
         {
           role: 'close'
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           label: 'Open in Browser',
           click: function(item, focusedWindow, event) {
             var url = focusedWindow ?
@@ -86,18 +87,18 @@ module.exports = {
           click: function(item, focusedWindow, event) {
             open('http://');
           }
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           label: 'Add a Network…',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
               focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.addNetwork(); }', true);
             }
           }
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           label: 'Jump to…',
           accelerator: 'CmdOrCtrl+K',
           click: function (item, focusedWindow, event) {
@@ -137,9 +138,9 @@ module.exports = {
               focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousUnreadBuffer(); }', true);
             }
           }
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           label: 'Mark Current as Read',
           accelerator: 'Esc',
           click: function (item, focusedWindow, event) {
@@ -155,9 +156,9 @@ module.exports = {
               focusedWindow.webContents.executeJavaScript('if (SESSION) { SESSION.markAllAsRead(); }', true);
             }
           }
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           label: 'Upload a File…',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
@@ -175,14 +176,10 @@ module.exports = {
       ]
     };
     if (!is.macOS()) {
-      file_menu.submenu.push({
-        type: 'separator'
-      });
+      file_menu.submenu.push(sep);
       file_menu.submenu.push(prefs);
       file_menu.submenu.push(show_config);
-      file_menu.submenu.push({
-        type: 'separator'
-      });
+      file_menu.submenu.push(sep);
       file_menu.submenu.push({
         label: 'Show in Tray',
         type:  'checkbox',
@@ -225,9 +222,9 @@ module.exports = {
           role: 'undo'
         }, {
           role: 'redo'
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           role: 'cut'
         }, {
           role: 'copy'
@@ -239,9 +236,8 @@ module.exports = {
           role: 'pasteandmatchstyle'
         }, {
           role: 'selectall'
-        }, {
-          type: 'separator'
         },
+        sep,
         spellingItem
       ]
     };
@@ -262,9 +258,9 @@ module.exports = {
               });
             }
           }
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           role: 'togglefullscreen'
         }, {
           label: 'Actual Size',
@@ -290,9 +286,9 @@ module.exports = {
           click: function(item, focusedWindow, event) {
             app.zoomOut();
           }
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           label: 'Developer Tools',
           accelerator: (function() {
             if (is.macOS()) {
@@ -349,9 +345,9 @@ module.exports = {
               focusedWindow.webContents.goForward();
             }
           }
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           label: 'File Uploads',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
@@ -375,13 +371,13 @@ module.exports = {
       submenu: [
         {
           role: 'minimize'
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           role: 'front'
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           label: 'Main Window',
           accelerator: 'CmdOrCtrl+1',
           click: function (item, focusedWindow, event) {
@@ -400,9 +396,9 @@ module.exports = {
           click: function (item, focusedWindow, event) {
             focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.navigate("?/shortcuts", {trigger: true}); }', true);
           }
-        }, {
-          type: 'separator'
-        }, {
+        },
+        sep,
+        {
           label: 'Known Issues',
           click: function(item, focusedWindow, event) {
             require('electron').shell.openExternal('https://github.com/irccloud/irccloud-desktop/issues');
