@@ -36,6 +36,8 @@ var appIcon = null;
 
 const defaultHost = 'https://www.irccloud.com';
 
+app.setAppUserModelId('com.irccloud.desktop');
+
 function setupConfig () {
   let defaults = {
     'host': defaultHost,
