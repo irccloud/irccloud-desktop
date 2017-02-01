@@ -6,6 +6,7 @@ const Menu = electron.Menu;
 const auto_updater = require('./auto_update.js');
 const is = require('electron-is');
 const open = require('open');
+const log = require('electron-log');
 
 var checkForUpdates = {
   label: 'Check for Updates…',
