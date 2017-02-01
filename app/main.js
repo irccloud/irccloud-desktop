@@ -36,6 +36,7 @@ var appIcon = null;
 
 const defaultHost = 'https://www.irccloud.com';
 
+// TODO pull this from the outermost package.json
 app.setAppUserModelId('com.irccloud.desktop');
 
 function setupConfig () {
