@@ -144,8 +144,11 @@ function openMainWindow(opts) {
     windowOpts.y = config.get('y');
   }
   mainWindow = new BrowserWindow(windowOpts);
-  if (config.get('maximize') === true) {
+  if (config.get('maximized') === true) {
     mainWindow.maximize();
+  }
+  if (config.get('fullscreen') === true) {
+    mainWindow.setFullScreen(true);
   }
   
   var initialUrl = config.get('host') + '/';
@@ -266,9 +269,8 @@ function openMainWindow(opts) {
       'x': position[0],
       'y': position[1]
     };
-    if (mainWindow.isMaximized()) {
-      props.maximized = true;
-    }
+    props.maximized = mainWindow.isMaximized();
+    props.fullscreen = mainWindow.isFullScreen();
     config.set(props);
     if (!quitting && (is.macOS() || config.get('tray'))) {
       ev.preventDefault();
