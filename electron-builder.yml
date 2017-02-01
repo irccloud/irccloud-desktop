@@ -1,0 +1,33 @@
+{
+  "mac": {
+    "target": [
+      "dmg",
+      "zip",
+      "mas"
+    ]
+  },
+  "mas": {
+    "publish": null
+  },
+  "linux": {
+    "target": [
+      "deb",
+      "AppImage"
+    ]
+  },
+  "dmg": {
+    "icon": null
+  },
+  "appId": "com.irccloud.desktop",
+  "category": "public.app-category.productivity",
+  "protocols": [
+    {
+      "name": "IRC server URL",
+      "role": "Viewer",
+      "schemes": [
+        "irc",
+        "ircs"
+      ]
+    }
+  ]
+}
