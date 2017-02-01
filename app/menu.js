@@ -32,6 +32,12 @@ var show_config = {
     Shell.showItemInFolder(app.config.path);
   }
 };
+var show_log = {
+  label: 'Reveal Log File…',
+  click: function (item, focusedWindow, event) {
+    Shell.showItemInFolder(log.findLogPath());
+  }
+};
 
 module.exports = {
   setup: function () {
@@ -47,6 +53,7 @@ module.exports = {
         prefs,
         sep,
         show_config,
+        show_log,
         sep,
         {
           role: 'services',
@@ -179,6 +186,7 @@ module.exports = {
       file_menu.submenu.push(sep);
       file_menu.submenu.push(prefs);
       file_menu.submenu.push(show_config);
+      file_menu.submenu.push(show_log);
       file_menu.submenu.push(sep);
       file_menu.submenu.push({
         label: 'Show in Tray',
