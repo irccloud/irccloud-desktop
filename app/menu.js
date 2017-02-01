@@ -15,7 +15,7 @@ var checkForUpdates = {
 };
 
 module.exports = {
-  setup: function (config) {
+  setup: function () {
     var app_menu = {
       label: app.getName(),
       id: 'app',
@@ -64,7 +64,9 @@ module.exports = {
         }, {
           label: 'Open in Browser',
           click: function(item, focusedWindow, event) {
-            var url = focusedWindow ? focusedWindow.webContents.getURL() : config.get('host');
+            var url = focusedWindow ?
+              focusedWindow.webContents.getURL() :
+              app.config.get('host');
             require('electron').shell.openExternal(url);
           }
         }, {

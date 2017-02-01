@@ -432,7 +432,7 @@ function handleProtocolUrls () {
 app.on('ready', function() {
   handleProtocolUrls();
   
-  menu = Menu.setup(config);
+  menu = Menu.setup();
   auto_updater.setup(menu);
   updateZoomMenu();
   openMainWindow();
