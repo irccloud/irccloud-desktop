@@ -1,27 +1,22 @@
 const electron = require('electron');
 
 const app = electron.app;
-const autoUpdater = electron.autoUpdater;
 const dialog = electron.dialog;
 const log = require('electron-log');
+const autoUpdater = require("electron-updater").autoUpdater;
 
 var updateAvailable = false;
 
 module.exports = {
   setup: function (menu) {
-    // Needed for Squirrel.Windows
-    // https://github.com/electron/electron/blob/master/docs/api/auto-updater.md#windows
-    app.setAppUserModelId('com.squirrel.irccloud.' + app.getName());
+    autoUpdater.logger = log;
+    autoUpdater.logger.transports.file.level = "info";
     
-    var version = app.getVersion();
-    var feedUrl = 'http://desktop.irccloud.com/update/' + process.platform + '/' + version;
     try {
-      autoUpdater.setFeedURL(feedUrl);
       autoUpdater.checkForUpdates();
     } catch (exc) {
       // This will error if running with code signing
     }
-    
     
     autoUpdater.on('error', function (error, errorMessage) {
       log.error('autoUpdater error', error);
