@@ -9,7 +9,7 @@
     "mas": "build --mac mas",
     "mac": "build --mac dir",
     "dmg": "build --mac dmg",
-    "win": "build --ia32"
+    "win": "build --x64 --ia32"
   },
   "devDependencies": {
     "electron-builder": "^12.0.3",

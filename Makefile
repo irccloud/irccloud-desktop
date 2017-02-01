@@ -19,6 +19,9 @@ test: node_modules
 mac: node_modules
 	npm run mac
 
+win: node_modules
+	npm run win
+
 ci: test dist
 
 encryptenv:
