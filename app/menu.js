@@ -1,6 +1,7 @@
 const electron = require('electron');
 
 const app = electron.app;
+const Shell = electron.shell;
 const Menu = electron.Menu;
 const auto_updater = require('./auto_update.js');
 const is = require('electron-is');
@@ -11,6 +12,21 @@ var checkForUpdates = {
   id: 'updateCheck',
   click: function (item, focusedWindow) {
     auto_updater.check();
+  }
+};
+var prefs = {
+  label: 'Preferences…',
+  accelerator: 'CmdOrCtrl+,',
+  click: function (item, focusedWindow, event) {
+    if (focusedWindow) {
+      focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.openSettings(); }', true);
+    }
+  }
+};
+var show_config = {
+  label: 'Reveal Config File…',
+  click: function (item, focusedWindow, event) {
+    Shell.showItemInFolder(app.config.path);
   }
 };
 
@@ -26,15 +42,10 @@ module.exports = {
         checkForUpdates,
         {
           type: 'separator'
-        }, {
-          label: 'Preferences…',
-          accelerator: 'Cmd+,',
-          click: function (item, focusedWindow, event) {
-            if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.openSettings(); }', true);
-            }
-          }
-        }, {
+        },
+        prefs,
+        show_config,
+        {
           type: 'separator'
         }, {
           role: 'services',
@@ -167,15 +178,8 @@ module.exports = {
       file_menu.submenu.push({
         type: 'separator'
       });
-      file_menu.submenu.push({
-        label: 'Preferences…',
-        accelerator: 'Ctrl+,',
-        click: function (item, focusedWindow, event) {
-          if (focusedWindow) {
-            focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.openSettings(); }', true);
-          }
-        }
-      });
+      file_menu.submenu.push(prefs);
+      file_menu.submenu.push(show_config);
       file_menu.submenu.push({
         type: 'separator'
       });
