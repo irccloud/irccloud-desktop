@@ -4,7 +4,7 @@ os:
 - linux
 sudo: required
 dist: trusty
-osx_image: xcode8
+osx_image: xcode8 # currently xcode8.1+ doesn't support electron-builder macOS code-signing (https://github.com/electron-userland/electron-builder/issues/820#issuecomment-256728535)
 compiler:
 - clang
 env:
