@@ -3,14 +3,14 @@ const electron = require('electron');
 const app = electron.app;
 const dialog = electron.dialog;
 const log = require('electron-log');
-const autoUpdater = require("electron-updater").autoUpdater;
 
+var autoUpdater;
 var updateAvailable = false;
 
 module.exports = {
   setup: function (menu) {
+    autoUpdater = require("electron-updater").autoUpdater;
     autoUpdater.logger = log;
-    autoUpdater.logger.transports.file.level = "info";
     
     try {
       autoUpdater.checkForUpdates();
@@ -40,11 +40,13 @@ module.exports = {
     });
   },
   check: function () {
-    // TODO show progress dialog
-    autoUpdater.checkForUpdates();
-    autoUpdater.once('error', onUpdateError);
-    autoUpdater.once('update-downloaded', onUpdateDownloaded);
-    autoUpdater.once('update-not-available', onUpdateNotAvailable);
+    if (autoUpdater) {
+      // TODO show progress dialog
+      autoUpdater.checkForUpdates();
+      autoUpdater.once('error', onUpdateError);
+      autoUpdater.once('update-downloaded', onUpdateDownloaded);
+      autoUpdater.once('update-not-available', onUpdateNotAvailable);
+    }
   }
 };
 

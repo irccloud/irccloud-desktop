@@ -16,7 +16,6 @@ const ContextMenu = require('./context_menu');
 const Menu = require('./menu');
 const Tray = electron.Tray;
 const SquirrelWindows = require('./squirrel_windows');
-const auto_updater = require('./auto_update.js');
 
 const _ = require('lodash');
 const is = require('electron-is');
@@ -438,7 +437,9 @@ app.on('ready', function() {
   handleProtocolUrls();
   
   menu = Menu.setup();
-  auto_updater.setup(menu);
+  if (!is.dev()) {
+    require('./auto_update.js').setup(menu);
+  }
   updateZoomMenu();
   openMainWindow();
   if (config.get('tray') && !is.macOS()) {

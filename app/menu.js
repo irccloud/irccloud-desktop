@@ -8,13 +8,16 @@ const is = require('electron-is');
 const open = require('open');
 const log = require('electron-log');
 
-var checkForUpdates = {
-  label: 'Check for Updates…',
-  id: 'updateCheck',
-  click: function (item, focusedWindow) {
-    auto_updater.check();
-  }
-};
+var checkForUpdates = {visible: false, enabled: false};
+if (!is.dev()) {
+  checkForUpdates = {
+    label: 'Check for Updates…',
+    id: 'updateCheck',
+    click: function (item, focusedWindow) {
+      auto_updater.check();
+    }
+  };
+}
 var sep = {
   type: 'separator'
 };
