@@ -15,7 +15,6 @@ const Config = require('electron-config');
 const ContextMenu = require('./context_menu');
 const Menu = require('./menu');
 const Tray = electron.Tray;
-const SquirrelWindows = require('./squirrel_windows');
 
 const _ = require('lodash');
 const is = require('electron-is');
@@ -24,10 +23,6 @@ const unusedFilename = require('unused-filename');
 require('electron-dl')();
 const log = require('electron-log');
 log.transports.file.level = 'silly';
-
-if (SquirrelWindows.handleStartupEvent()) {
-  process.exit();
-}
 
 var mainWindow = null;
 var menu = null;
