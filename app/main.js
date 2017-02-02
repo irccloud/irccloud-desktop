@@ -370,11 +370,11 @@ function updateZoom(zoomLevel) {
 }
 
 app.zoomIn = function () {
-  var newZoom = Math.min(maxZoom, config.get('zoom') + 1);
+  var newZoom = Math.min(maxZoom, config.get('zoom') + 0.5);
   updateZoom(newZoom);
 };
 app.zoomOut = function () {
-  var newZoom = Math.max(minZoom, config.get('zoom') - 1);
+  var newZoom = Math.max(minZoom, config.get('zoom') - 0.5);
   updateZoom(newZoom);
 };
 app.resetZoom = function () {
