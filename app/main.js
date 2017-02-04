@@ -410,9 +410,11 @@ function handleProtocolUrls () {
     dialog.showMessageBox({
       type: 'info',
       message: 'Would you like to set ' + app.getName() + ' as your default IRC client?',
-      buttons: ['Set Default', 'Not Now', 'Don’t Ask Again'],
+      // & is used for access keys on win/linux
+      buttons: ['&Set Default', '&Not Now', '&Don’t Ask Again'],
       cancelId: 1,
-      defaultId: 0
+      defaultId: 0,
+      normalizeAccessKeys: true
     }, function (ret) {
       switch (ret) {
       case 0:
