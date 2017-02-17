@@ -9,7 +9,7 @@
     "mas": "build --mac mas",
     "mac": "build --mac dir",
     "dmg": "build --mac dmg",
-    "win": "build --ia32 --x64"
+    "win": "build --win nsis-web --ia32 --x64"
   },
   "devDependencies": {
     "electron-builder": "^13.9.0",
