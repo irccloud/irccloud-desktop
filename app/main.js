@@ -212,9 +212,17 @@ function openMainWindow(opts) {
 
   mainWindow.webContents.on('dom-ready', function(event) {
     var userStylePath = path.join(app.getPath('userData'), 'user-style.css');
+    var userScriptPath = path.join(app.getPath('userData'), 'user-script.js');
+
     FS.readFile(userStylePath, 'utf8', function (err, data) {
       if (!err) {
         mainWindow.webContents.insertCSS(data);
+      }
+    });
+
+    FS.readFile(userScriptPath, 'utf8', function (err, data) {
+      if (!err) {
+        mainWindow.webContents.executeJavaScript(data);
       }
     });
   });
