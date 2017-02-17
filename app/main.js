@@ -40,7 +40,9 @@ function setupConfig () {
     'height': 768,
     'zoom': 0,
     'spellcheck': true,
-    'neverPromptIrcUrls': false
+    'neverPromptIrcUrls': false,
+    'userStylePath': path.join(app.getPath('userData'), 'user-style.css'),
+    'userScriptPath': path.join(app.getPath('userData'), 'user-script.js')
   };
 
   // Migrate from old config, remove this in time
@@ -106,6 +108,93 @@ function enableStreamlinedLogin () {
         log.error('remove invite cookie error', error);
       }
     });
+  }
+}
+
+function checkUserMods (type, reload) {
+  var opts = {};
+  switch (type) {
+  case 'script':
+    opts = {
+      message: 'A custom user script was detected. Would you like to trust and run user scripts from,now on?',
+      okText: 'Trust and &Run',
+      acceptConfKey: 'acceptUserScripts',
+      pathConfKey: 'userScriptPath',
+      menuId: 'show_user_script',
+      callback: function (data) {
+        mainWindow.webContents.executeJavaScript(data);
+      }
+    };
+    break;
+  case 'style':
+    opts = {
+      message: 'A custom user style was detected. Would you like to load user styles from now on?',
+      okText: '&Load Styles',
+      acceptConfKey: 'acceptUserStyles',
+      pathConfKey: 'userStylePath',
+      menuId: 'show_user_style',
+      callback: function (data) {
+        mainWindow.webContents.insertCSS(data);
+      }
+    };
+    break;
+  default:
+    return;
+  }
+
+  FS.readFile(config.get(opts.pathConfKey), 'utf8', function (err, data) {
+    if (!err) {
+      if (!config.get(opts.acceptConfKey)) {
+        confirmUserMods(data);
+      }
+      if (config.get(opts.acceptConfKey)) {
+        opts.callback(data);
+      }
+    }
+  });
+
+  function confirmUserMods (data) {
+    var revealText = '&Open File Location';
+    if (is.macOS()) {
+      revealText = 'Reveal In Finder';
+    }
+    if (reload) {
+      revealText = 'Reload';
+    }
+
+    var extract = data.substr(0, 500);
+    if (extract.length < data.length) {
+      extract += '\n...';
+    }
+    var buttonId = dialog.showMessageBox({
+      browserWindow: mainWindow,
+      type: 'info',
+      message: opts.message,
+      detail: extract,
+      buttons: [opts.okText, '&No', revealText],
+      cancelId: 1,
+      defaultId: 0,
+      normalizeAccessKeys: true
+    });
+    switch (buttonId) {
+    case 0:
+      config.set(opts.acceptConfKey, true);
+      var appMenu = menu.items.find(function (item) {
+        return item.id == 'app';
+      });
+      appMenu.submenu.items.forEach(function (appItem) {
+        if (appItem.id == opts.menuId) {
+          appItem.visible = true;
+        }
+      });
+      break;
+    case 2:
+      if (!reload) {
+        Shell.showItemInFolder(config.get(opts.pathConfKey));
+      }
+      checkUserMods(type, true);
+      break;
+    }
   }
 }
 
@@ -211,20 +300,8 @@ function openMainWindow(opts) {
   ContextMenu(mainWindow);
 
   mainWindow.webContents.on('dom-ready', function(event) {
-    var userStylePath = path.join(app.getPath('userData'), 'user-style.css');
-    var userScriptPath = path.join(app.getPath('userData'), 'user-script.js');
-
-    FS.readFile(userStylePath, 'utf8', function (err, data) {
-      if (!err) {
-        mainWindow.webContents.insertCSS(data);
-      }
-    });
-
-    FS.readFile(userScriptPath, 'utf8', function (err, data) {
-      if (!err) {
-        mainWindow.webContents.executeJavaScript(data);
-      }
-    });
+    checkUserMods('style');
+    checkUserMods('script');
   });
 
   mainWindow.webContents.on('will-navigate', function (e, url) {
@@ -418,7 +495,6 @@ function handleProtocolUrls () {
     dialog.showMessageBox({
       type: 'info',
       message: 'Would you like to set ' + app.getName() + ' as your default IRC client?',
-      // & is used for access keys on win/linux
       buttons: ['&Set Default', '&Not Now', '&Don’t Ask Again'],
       cancelId: 1,
       defaultId: 0,

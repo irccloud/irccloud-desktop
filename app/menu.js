@@ -8,75 +8,93 @@ const is = require('electron-is');
 const open = require('open');
 const log = require('electron-log');
 
-var checkForUpdates = {visible: false, enabled: false};
-if (!is.dev()) {
-  checkForUpdates = {
-    label: 'Check for Updates…',
-    id: 'updateCheck',
-    click: function (item, focusedWindow) {
-      auto_updater.check();
-    }
-  };
-}
-var sep = {
-  type: 'separator'
-};
-var prefs = {
-  label: 'Preferences…',
-  accelerator: 'CmdOrCtrl+,',
-  click: function (item, focusedWindow, event) {
-    if (focusedWindow) {
-      focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.openSettings(); }', true);
-    }
-  }
-};
-var show_config = {
-  label: 'Reveal Config File…',
-  click: function (item, focusedWindow, event) {
-    Shell.showItemInFolder(app.config.path);
-  }
-};
-var show_log = {
-  label: 'Reveal Log File…',
-  click: function (item, focusedWindow, event) {
-    Shell.showItemInFolder(log.findLogPath());
-  }
-};
-
 module.exports = {
   setup: function () {
+    var checkForUpdates = {visible: false, enabled: false};
+    if (!is.dev()) {
+      checkForUpdates = {
+        label: 'Check for Updates…',
+        id: 'updateCheck',
+        click: function (item, focusedWindow) {
+          auto_updater.check();
+        }
+      };
+    }
+    var sep = {
+      type: 'separator'
+    };
+    var prefs = {
+      label: 'Preferences…',
+      accelerator: 'CmdOrCtrl+,',
+      click: function (item, focusedWindow, event) {
+        if (focusedWindow) {
+          focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.openSettings(); }', true);
+        }
+      }
+    };
+    var show_config = {
+      label: 'Reveal Config File…',
+      click: function (item, focusedWindow, event) {
+        Shell.showItemInFolder(app.config.path);
+      }
+    };
+    var show_log = {
+      label: 'Reveal Log File…',
+      click: function (item, focusedWindow, event) {
+        Shell.showItemInFolder(log.findLogPath());
+      }
+    };
+    var show_user_style = {
+      id: 'show_user_style',
+      label: 'Reveal User Style…',
+      click: function (item, focusedWindow, event) {
+        Shell.showItemInFolder(app.config.get('userStylePath'));
+      },
+      visible: !!app.config.get('acceptUserStyles')
+    };
+    var show_user_script = {
+      id: 'show_user_script',
+      label: 'Reveal User Script…',
+      click: function (item, focusedWindow, event) {
+        Shell.showItemInFolder(app.config.get('userScriptPath'));
+      },
+      visible: !!app.config.get('acceptUserScripts')
+    };
     var app_menu = {
       label: app.getName(),
       id: 'app',
-      submenu: [
-        {
-          role: 'about'
-        },
-        checkForUpdates,
-        sep,
-        prefs,
-        sep,
-        show_config,
-        show_log,
-        sep,
-        {
-          role: 'services',
-          submenu: []
-        },
-        sep,
-        {
-          role: 'hide'
-        }, {
-          role: 'hideothers'
-        }, {
-          role: 'unhide'
-        },
-        sep,
-        {
-          role: 'quit'
-        }
-      ]
+      submenu: []
     };
+    app_menu.submenu.push({
+      role: 'about'
+    });
+    app_menu.submenu.push(checkForUpdates);
+    app_menu.submenu.push(sep);
+    app_menu.submenu.push(prefs);
+    app_menu.submenu.push(sep);
+    app_menu.submenu.push(show_config);
+    app_menu.submenu.push(show_log);
+    app_menu.submenu.push(show_user_style);
+    app_menu.submenu.push(show_user_script);
+    app_menu.submenu.push(sep);
+    app_menu.submenu.push({
+      role: 'services',
+      submenu: []
+    });
+    app_menu.submenu.push(sep);
+    app_menu.submenu.push({
+      role: 'hide'
+    });
+    app_menu.submenu.push({
+      role: 'hideothers'
+    });
+    app_menu.submenu.push({
+      role: 'unhide'
+    });
+    app_menu.submenu.push(sep);
+    app_menu.submenu.push({
+      role: 'quit'
+    });
     var file_menu = {
       label: 'File',
       submenu: [
@@ -191,6 +209,8 @@ module.exports = {
       file_menu.submenu.push(prefs);
       file_menu.submenu.push(show_config);
       file_menu.submenu.push(show_log);
+      file_menu.submenu.push(show_user_style);
+      file_menu.submenu.push(show_user_script);
       file_menu.submenu.push(sep);
       file_menu.submenu.push({
         label: 'Show in Tray',
