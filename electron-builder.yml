@@ -2,8 +2,7 @@
   "mac": {
     "target": [
       "dmg",
-      "zip",
-      "mas"
+      "zip"
     ]
   },
   "mas": {
