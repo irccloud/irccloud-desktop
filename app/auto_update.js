@@ -30,12 +30,11 @@ module.exports = {
     autoUpdater.on('update-not-available', function (event) {
       setUpdateCheckMenuEnabled(menu, true);
     });
-    autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, 
-      releaseDate, updateURL) {
+    autoUpdater.on('update-downloaded', function (event, info) {
       setUpdateCheckMenuEnabled(menu, true);
       updateAvailable = {
-        version: releaseName,
-        notes: releaseNotes
+        version: info.releaseName,
+        notes: info.releaseNotes
       };
     });
   },
@@ -90,10 +89,10 @@ function showUpdateDialog() {
   }
 }
 
-function onUpdateDownloaded (event, releaseNotes, releaseName, releaseDate, updateURL) {
+function onUpdateDownloaded (event, info) {
   updateAvailable = {
-    version: releaseName,
-    notes: releaseNotes
+    version: info.releaseName,
+    notes: info.releaseNotes
   };
   showUpdateDialog();
   autoUpdater.removeListener('error', onUpdateError);
