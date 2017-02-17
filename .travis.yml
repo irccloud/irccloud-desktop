@@ -16,15 +16,27 @@ addons:
     - icnsutils
     - graphicsmagick
     - xz-utils
-    - snapcraft
 before_install:
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then openssl aes-256-cbc -K $encrypted_fc666da9e2f5_key
-  -iv $encrypted_fc666da9e2f5_iv -in .travis.env.enc -out .travis.env -d; source .travis.env;
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  openssl aes-256-cbc -K $encrypted_fc666da9e2f5_key
+  -iv $encrypted_fc666da9e2f5_iv
+  -in .travis.env.enc
+  -out .travis.env
+  -d;
+  source .travis.env;
   fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then rvm install 2.2.0; ruby --version; gem
-  --version; gem install fpm; fi
-- if [ ! -f ./.nvm/nvm.sh ]; then git clone https://github.com/creationix/nvm.git
-  ./.nvm; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  sudo add-apt-repository ppa:snappy-dev/tools -y;
+  sudo apt-get update -q;
+  sudo apt-get install snapcraft -y;
+  rvm install 2.2.0;
+  ruby --version;
+  gem --version;
+  gem install fpm;
+  fi
+- if [ ! -f ./.nvm/nvm.sh ]; then
+  git clone https://github.com/creationix/nvm.git ./.nvm;
+  fi
 - source ./.nvm/nvm.sh
 - nvm install $NODE_VERSION
 - nvm use --delete-prefix $NODE_VERSION
