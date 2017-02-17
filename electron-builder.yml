@@ -11,8 +11,7 @@
   "linux": {
     "target": [
       "deb",
-      "AppImage",
-      "snap"
+      "AppImage"
     ]
   },
   "dmg": {

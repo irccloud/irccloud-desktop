@@ -26,9 +26,6 @@ before_install:
   source .travis.env;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  sudo add-apt-repository ppa:snappy-dev/tools -y;
-  sudo apt-get update -q;
-  sudo apt-get install snapcraft -y;
   rvm install 2.2.0;
   ruby --version;
   gem --version;
