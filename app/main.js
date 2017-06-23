@@ -393,6 +393,9 @@ function setupTray() {
   appIcon.on('click', function() {
     openMainWindow();
   });
+  app.on('show', function() {
+    openMainWindow();
+  });
   var tray_menu = Menu.setup_tray(app);
   appIcon.setContextMenu(tray_menu);
 }
