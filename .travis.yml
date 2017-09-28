@@ -17,6 +17,15 @@ addons:
     - graphicsmagick
     - xz-utils
 before_install:
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  rvm install 2.2.0;
+  ruby --version;
+  gem --version;
+  gem install fpm;
+  fi
+- if [ ! -f ./.nvm/nvm.sh ]; then
+  git clone https://github.com/creationix/nvm.git ./.nvm;
+  fi
 - source ./.nvm/nvm.sh
 - nvm install $NODE_VERSION
 - nvm use --delete-prefix $NODE_VERSION
@@ -30,15 +39,6 @@ before_install:
   -d;
   source .travis.env;
   yarn run snyk
-  fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  rvm install 2.2.0;
-  ruby --version;
-  gem --version;
-  gem install fpm;
-  fi
-- if [ ! -f ./.nvm/nvm.sh ]; then
-  git clone https://github.com/creationix/nvm.git ./.nvm;
   fi
 install:
 - yarn install
