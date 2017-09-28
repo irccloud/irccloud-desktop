@@ -1,30 +1,32 @@
-dist: node_modules
-	npm run dist
+PKG := $(shell command -v yarn 2> /dev/null || command -v npm 2> /dev/null)
 
-node_modules: package.json app/package.json
-	npm install
+node_modules: package.json
+	${PKG} install
+
+dist: node_modules
+	${PKG} run dist
 
 clean:
 	rm -Rf ./dist
 
 distclean: clean
-	rm -Rf ./node_modules ./app/node_modules ./.nvm
+	rm -Rf ./node_modules ./.nvm
 
 dev: node_modules
-	npm run app
+	${PKG} run app
 
 test: node_modules
-	npm run test
+	${PKG} run test
 
 mac: node_modules
-	npm run mac
+	${PKG} run mac
 
 win: node_modules
-	npm run win
+	${PKG} run win
 
 ci: test dist
 
 encryptenv:
 	travis encrypt-file .travis.env --add
 
-.PHONY: dist clean distclean dev test ci
+.PHONY: dist clean distclean dev test mac win ci encryptenv

@@ -1,21 +1,43 @@
 {
-  "name": "irccloud-desktop-build",
+  "name": "irccloud-desktop",
+  "productName": "IRCCloud",
+  "description": "IRCCloud Desktop Client",
+  "author": {
+    "name": "IRCCloud Ltd.",
+    "email": "team@irccloud.com",
+    "url": "https://www.irccloud.com"
+  },
+  "repository": "https://github.com/irccloud/irccloud-desktop",
+  "license": "Apache-2.0",
+  "version": "0.4.0",
+  "main": "app/main.js",
   "scripts": {
-    "postinstall": "install-app-deps",
+    "postinstall": "electron-builder install-app-deps",
     "pack": "build",
     "dist": "build",
-    "test": "eslint .",
-    "app": "electron ./app",
+    "app": "electron .",
     "mas": "build --mac mas",
     "mac": "build --mac dir",
     "dmg": "build --mac dmg",
-    "win": "build --win nsis-web --ia32 --x64"
+    "win": "build --win nsis-web --ia32 --x64",
+    "test": "eslint . && snyk test"
   },
   "devDependencies": {
-    "electron-builder": "^13.9.0",
-    "electron": "^1.4.15",
-    "eslint": "^3.15.0",
-    "devtron": "^1.4.0"
+    "devtron": "^1.4.0",
+    "electron": "^1.7.8",
+    "electron-builder": "^19.31.1",
+    "eslint": "^4.7.2",
+    "snyk": "^1.41.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "electron-config": "^1.0.0",
+    "electron-dl": "^1.10.0",
+    "electron-is": "^2.4.0",
+    "electron-log": "^2.2.9",
+    "electron-spell-check-provider": "^1.1.0",
+    "electron-updater": "^2.10.1",
+    "lodash": "^4.17.4",
+    "open": "0.0.5",
+    "unused-filename": "^1.0.0"
+  }
 }

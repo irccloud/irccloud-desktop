@@ -10,7 +10,6 @@ const dialog = electron.dialog;
 const path = require('path');
 const FS = require('fs');
 
-const ConfigStore = require('configstore');
 const Config = require('electron-config');
 const ContextMenu = require('./context_menu');
 const Menu = require('./menu');
@@ -18,7 +17,6 @@ const Tray = electron.Tray;
 
 const _ = require('lodash');
 const is = require('electron-is');
-const mime = require('mime-types');
 const unusedFilename = require('unused-filename');
 require('electron-dl')();
 const log = require('electron-log');
@@ -44,19 +42,6 @@ function setupConfig () {
     'userStylePath': path.join(app.getPath('userData'), 'user-style.css'),
     'userScriptPath': path.join(app.getPath('userData'), 'user-script.js')
   };
-
-  // Migrate from old config, remove this in time
-  let oldConfig = new ConfigStore(app.getName());
-  try {
-    Object.keys(defaults).concat('x', 'y').forEach(key => {
-      if (oldConfig.has(key)) {
-        defaults[key] = oldConfig.get(key);
-      }
-    });
-    FS.unlinkSync(oldConfig.path);
-  } catch (exc) {
-    // noop
-  }
 
   return new Config({
     defaults: defaults
@@ -489,7 +474,7 @@ function handleProtocolUrls () {
   var isHandler = (
     app.isDefaultProtocolClient('irc') &&
     app.isDefaultProtocolClient('ircs')
-    );
+  );
   
   if (!isHandler && !config.get('neverPromptIrcUrls')) {
     dialog.showMessageBox({

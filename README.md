@@ -27,15 +27,14 @@ documentation](http://electron.atom.io/docs/v0.37.8/).
 
 ### Build Requirements
 * Node JS version 5.3 or higher
-* NPM
+* yarn (recommended upstream) or NPM (works fine)
 
 On Linux, you also need the `icnsutils`, `graphicsmagick`, and
 `xz-utils` packages.
 
 ### Running
 
-Run `npm install` in the root of the repository. `make dev` will run the
-app quickly (without icons).
+Run `make dev` in the root of the repository to run the app quickly (without icons).
 
 To build a full version, `make dist`.
 

@@ -1,5 +1,6 @@
 {
   "mac": {
+    "category": "public.app-category.productivity",
     "target": [
       "dmg",
       "zip"
@@ -18,7 +19,6 @@
     "icon": null
   },
   "appId": "com.irccloud.desktop",
-  "category": "public.app-category.productivity",
   "protocols": [
     {
       "name": "IRC server URL",
