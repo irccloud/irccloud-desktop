@@ -20,7 +20,8 @@
     "mac": "build --mac dir",
     "dmg": "build --mac dmg",
     "win": "build --win nsis-web --ia32 --x64",
-    "test": "eslint . && snyk test"
+    "snyk": "snyk test",
+    "test": "eslint ."
   },
   "devDependencies": {
     "devtron": "^1.4.0",
