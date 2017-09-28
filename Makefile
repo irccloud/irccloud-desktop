@@ -10,7 +10,7 @@ clean:
 	rm -Rf ./dist
 
 distclean: clean
-	rm -Rf ./node_modules ./.nvm
+	rm -Rf ./node_modules
 
 dev: node_modules
 	${PKG} run app
