@@ -9,7 +9,7 @@ compiler:
 - clang
 env:
   global:
-  - NODE_VERSION=5
+  - NODE_VERSION=8
 addons:
   apt:
     packages:
@@ -37,11 +37,9 @@ before_install:
 - source ./.nvm/nvm.sh
 - nvm install $NODE_VERSION
 - nvm use --delete-prefix $NODE_VERSION
-- npm install -g npm
 - node --version
-- npm --version
+- yarn --version
 install:
-- npm prune
-- npm install
+- yarn install
 script:
 - make ci

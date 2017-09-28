@@ -16,17 +16,15 @@ init:
   - git config --global core.autocrlf input
 
 install:
-  - ps: Install-Product node 5 x64
+  - ps: Install-Product node 8 x64
   - git reset --hard HEAD
-  - npm install npm -g
   - node --version
-  - npm --version
+  - yarn --version
   - python --version
-  - npm install
-  - npm prune
+  - yarn install
 
 build_script:
-  - npm run win
+  - yarn run win
 
 test_script:
-  - npm run test
+  - yarn run test
