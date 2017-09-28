@@ -33,9 +33,9 @@ module.exports = {
       }
     };
     var show_config = {
-      label: 'Reveal Config File…',
+      label: 'Edit Config File…',
       click: function (item, focusedWindow, event) {
-        Shell.showItemInFolder(app.config.path);
+        app.config.openInEditor();
       }
     };
     var show_log = {

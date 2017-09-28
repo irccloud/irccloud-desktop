@@ -10,7 +10,7 @@ const dialog = electron.dialog;
 const path = require('path');
 const FS = require('fs');
 
-const Config = require('electron-config');
+const Config = require('electron-store');
 const ContextMenu = require('./context_menu');
 const Menu = require('./menu');
 const Tray = electron.Tray;
