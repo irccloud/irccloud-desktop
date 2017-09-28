@@ -11,6 +11,7 @@ module.exports = {
   setup: function (menu) {
     autoUpdater = require("electron-updater").autoUpdater;
     autoUpdater.logger = log;
+    autoUpdater.allowPrerelease = true;
     
     try {
       autoUpdater.checkForUpdates();
@@ -19,7 +20,6 @@ module.exports = {
     }
     
     autoUpdater.on('error', function (error, errorMessage) {
-      log.error('autoUpdater error', error);
       setUpdateCheckMenuEnabled(menu, true);
     });
     autoUpdater.on('checking-for-update', function (event) {

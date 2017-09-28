@@ -21,7 +21,7 @@ install:
   - node --version
   - yarn --version
   - python --version
-  - yarn install
+  - yarn
 
 build_script:
   - yarn run win

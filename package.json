@@ -17,8 +17,7 @@
     "dist": "build",
     "app": "electron .",
     "mas": "build --mac mas",
-    "mac": "build --mac dir",
-    "dmg": "build --mac dmg",
+    "mac": "build --mac",
     "win": "build --win nsis-web --ia32 --x64",
     "snyk": "snyk test",
     "test": "eslint ."
