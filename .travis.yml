@@ -38,10 +38,13 @@ before_install:
   -out .travis.env
   -d;
   source .travis.env;
-  yarn run snyk
   fi
+
 install:
 - yarn install
 script:
 - yarn run test
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  yarn run snyk;
+  fi
 - yarn run dist
