@@ -97,6 +97,7 @@ module.exports = {
     });
     var file_menu = {
       label: 'File',
+	  id: 'app',
       submenu: [
         {
           role: 'close'
