@@ -1,4 +1,4 @@
-PKG := $(shell command -v yarn 2> /dev/null || command -v npm 2> /dev/null)
+PKG := "$(shell command -v yarn 2> /dev/null || command -v npm 2> /dev/null)"
 
 node_modules: package.json
 	${PKG} install
