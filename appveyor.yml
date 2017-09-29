@@ -22,6 +22,7 @@ install:
   - yarn --version
   - python --version
   - yarn
+  - yarn list
 
 build_script:
   - yarn run win

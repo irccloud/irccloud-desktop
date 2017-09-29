@@ -26,6 +26,7 @@ before_install:
 - yarn --version
 install:
 - yarn
+- yarn list
 
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
