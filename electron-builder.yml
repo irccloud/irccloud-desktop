@@ -10,7 +10,7 @@
     "publish": null
   },
   "linux": {
-    "category": "IRCClient",
+    "category": "Network;IRCClient",
     "target": [
       "deb",
       "AppImage"
