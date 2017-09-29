@@ -41,7 +41,7 @@ module.exports = {
     var show_log = {
       label: 'Reveal Log File…',
       click: function (item, focusedWindow, event) {
-        Shell.showItemInFolder(log.findLogPath());
+        Shell.showItemInFolder(log.transports.file.findLogPath());
       }
     };
     var show_user_style = {
