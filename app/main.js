@@ -378,6 +378,8 @@ function setupTray() {
   // KDE needs a small icon cos it can't scale
   // Ubuntu uses @2x etc variants (i think?)
   appIcon = new Tray(path.join(__dirname, is.windows() ? 'icon.ico' : 'tray-icon.png'));
+  // This doesn't work on KDE (it uses the app.name instead of productName)
+  // Also can't seem to get it to show on Ubuntu
   appIcon.setToolTip(app.getName());
   // Doesn't work on linux
   appIcon.on('click', function() {
