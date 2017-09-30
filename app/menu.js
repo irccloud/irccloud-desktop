@@ -456,6 +456,12 @@ module.exports = {
     var menu;
     menu = Menu.buildFromTemplate([
       {
+        label: 'Show IRCCloud',
+        click: function() {
+          app.emit('show');
+        }
+      },
+      {
         role: 'quit'
       }
     ]);
