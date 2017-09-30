@@ -454,11 +454,20 @@ module.exports = {
   },
   setup_tray: function(app){
     var menu;
-    menu = Menu.buildFromTemplate([
+    let items = [
+      // Clicking the icon to show the app only works on windows
+      // May as well include this option for all anyway
+      {
+        label: 'Open',
+        click: function (item, focusedWindow, event) {
+          app.emit('activate');
+        }
+      },
       {
         role: 'quit'
       }
-    ]);
+    ];
+    menu = Menu.buildFromTemplate(items);
     return menu;
   }
 };
