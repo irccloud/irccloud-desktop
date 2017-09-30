@@ -60,7 +60,9 @@ function isMainHost () {
   return config.get('host') === defaultHost;
 }
 // https://github.com/electron/electron/issues/6771
-// This always returns true in MAS builds, preventing startup
+// This always returned true in MAS builds, preventing startup
+// Apparently fixed in electron now but can't test until  issue described
+// here is fixed: https://github.com/electron-userland/electron-builder/issues/1967
 if (!is.sandbox()) {
   var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
     openMainWindow();
