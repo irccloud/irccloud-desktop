@@ -28,7 +28,8 @@ install:
 - yarn
 - yarn list
 
-before_script:
+script:
+- yarn run test
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
   openssl aes-256-cbc -K $encrypted_fc666da9e2f5_key
   -iv $encrypted_fc666da9e2f5_iv
@@ -36,10 +37,9 @@ before_script:
   -out .travis.env
   -d;
   source .travis.env;
-  fi
-script:
-- yarn run test
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
   yarn run snyk;
+  yarn run mac
   fi
-- yarn run dist
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  yarn run linux
+  fi
