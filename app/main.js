@@ -510,7 +510,7 @@ app.on('ready', function() {
   handleProtocolUrls();
   
   menu = Menu.setup();
-  if (!is.dev()) {
+  if (!is.dev() && !is.mas()) {
     require('./auto_update.js').setup(menu);
   }
   updateZoomMenu();
