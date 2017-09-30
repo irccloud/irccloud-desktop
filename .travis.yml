@@ -38,8 +38,8 @@ script:
   -d;
   source .travis.env;
   yarn run snyk;
-  yarn run mac
+  yarn run mac;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  yarn run linux
+  yarn run linux;
   fi
