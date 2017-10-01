@@ -17,6 +17,7 @@
     "dist": "electron-builder",
     "app": "electron .",
     "mas": "electron-builder --mac mas",
+    "mac-local": "electron-builder --mac dir",
     "mas-dev": "electron-builder --mac mas-dev",
     "mac": "electron-builder --mac -c.releaseInfo.releaseNotesFile build/release-notes/mac.md",
     "linux": "electron-builder --linux -c.releaseInfo.releaseNotesFile build/release-notes/linux.md",
