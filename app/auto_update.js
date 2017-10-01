@@ -3,11 +3,15 @@ const electron = require('electron');
 const app = electron.app;
 const dialog = electron.dialog;
 const log = require('electron-log');
+const is = require('electron-is');
 
 var autoUpdater;
 var updateAvailable = false;
 
 module.exports = {
+  isSupported: function () {
+    return !is.dev() && !is.mas() && !is.linux();
+  },
   setup: function (menu) {
     autoUpdater = require("electron-updater").autoUpdater;
     autoUpdater.logger = log;

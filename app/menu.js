@@ -10,8 +10,8 @@ const log = require('electron-log');
 
 module.exports = {
   setup: function () {
-    var checkForUpdates = {visible: false, enabled: false};
-    if (!is.dev()) {
+    var checkForUpdates;
+    if (auto_updater.isSupported()) {
       checkForUpdates = {
         label: 'Check for Updates…',
         id: 'updateCheck',
@@ -68,7 +68,9 @@ module.exports = {
     app_menu.submenu.push({
       role: 'about'
     });
-    app_menu.submenu.push(checkForUpdates);
+    if (checkForUpdates) {
+      app_menu.submenu.push(checkForUpdates);
+    }
     app_menu.submenu.push(sep);
     app_menu.submenu.push(prefs);
     app_menu.submenu.push(sep);
