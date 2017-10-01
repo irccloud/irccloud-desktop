@@ -59,19 +59,18 @@ global.config = config;
 function isMainHost () {
   return config.get('host') === defaultHost;
 }
-// https://github.com/electron/electron/issues/6771
-// This always returned true in MAS builds, preventing startup
-// Apparently fixed in electron now but can't test until  issue described
-// here is fixed: https://github.com/electron-userland/electron-builder/issues/1967
+// This always returned true in sanbox builds, preventing startup
+// Fixed but regressed https://github.com/electron/electron/issues/9985
+// This only affects macOS when running multiple copies from the command line
+var shouldQuit = false;
 if (!is.sandbox()) {
-  var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
+  shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
     openMainWindow();
-    return true;
   });
-  if (shouldQuit) {
-    app.quit();
-    process.exit();
-  }
+}
+if (shouldQuit) {
+  app.quit();
+  process.exit();
 }
 
 function enableStreamlinedLogin () {
