@@ -14,7 +14,7 @@ let user = null;
 let Raven = null;
 
 // https://github.com/getsentry/raven-js/pull/637
-const PATH_MATCH_RE = /[^/]+$/;
+const PATH_MATCH_RE = /[^/]+\/[^/]+\/[^/]+$/;
 function normalizePath(path) {
   let match = path.match(PATH_MATCH_RE);
   return match ? match[0] : path;
