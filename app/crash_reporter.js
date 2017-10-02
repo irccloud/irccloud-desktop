@@ -64,7 +64,7 @@ function raven_config() {
         if (os_freemem < 1024) {
           os_freemem = '<1GB';
         } else {
-          Math.round(os_freemem / 1024);
+          os_freemem = Math.round(os_freemem / 1024) + 'GB';
         }
         data.tags.os_freemem = os_freemem;
 
