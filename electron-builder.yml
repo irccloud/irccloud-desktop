@@ -29,5 +29,10 @@
         "ircs"
       ]
     }
+  ],
+  "files": [
+      "!**/{.eslint*,.jshint*,.snyk,.travis.*,Makefile,README.md}",
+      "!scripts${/*}",
+      "!docs${/*}"
   ]
 }
