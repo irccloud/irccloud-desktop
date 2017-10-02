@@ -111,12 +111,13 @@ function uncaughtException (error) {
 
 function setupRaven() {
   if (pkg.irccloud.sentry_dsn) {
-    Raven = require('raven');
-    Raven.on('error', (e) => {
+    const _Raven = require('raven');
+    _Raven.on('error', (e) => {
       log.error('Raven error', e);
     });
     raven_config().then((config) => {
-      Raven.config(pkg.irccloud.sentry_dsn, config);
+      _Raven.config(pkg.irccloud.sentry_dsn, config);
+      Raven = _Raven;
     });
     ipcMain.on('set-user', (event, sessionUser) => {
       user = sessionUser;

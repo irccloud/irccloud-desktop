@@ -442,7 +442,7 @@ module.exports = {
         }
       ]
     };
-    if (!is.macOS()) {
+    if (checkForUpdates && !is.macOS()) {
       help_menu.submenu.push(checkForUpdates);
     }
 
