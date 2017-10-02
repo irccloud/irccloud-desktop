@@ -19,9 +19,9 @@
     "mas": "electron-builder --mac mas",
     "mac-local": "electron-builder --mac dir -c.extraMetadata.irccloud.local_build true",
     "mas-dev": "electron-builder --mac mas-dev",
-    "mac": "electron-builder --mac -c.releaseInfo.releaseNotesFile build/release-notes/mac.md",
-    "linux": "electron-builder --linux -c.releaseInfo.releaseNotesFile build/release-notes/linux.md",
-    "win": "electron-builder --win nsis-web --ia32 --x64 -c.releaseInfo.releaseNotesFile build/release-notes/win.md",
+    "mac": "electron-builder --mac -c.extraMetadata.irccloud.sentry_dsn SENTRY_DSN -c.releaseInfo.releaseNotesFile build/release-notes/mac.md",
+    "linux": "electron-builder --linux -c.extraMetadata.irccloud.sentry_dsn SENTRY_DSN -c.releaseInfo.releaseNotesFile build/release-notes/linux.md",
+    "win": "electron-builder --win nsis-web --ia32 --x64 -c.extraMetadata.irccloud.sentry_dsn SENTRY_DSN -c.releaseInfo.releaseNotesFile build/release-notes/win.md",
     "win-local": "electron-builder --win nsis --x64",
     "snyk": "snyk test",
     "test": "eslint ."
@@ -41,8 +41,11 @@
     "electron-spell-check-provider": "^1.1.0",
     "electron-store": "^1.3.0",
     "electron-updater": "^2.10.1",
+    "getos": "^3.0.1",
     "lodash": "^4.17.4",
     "open": "0.0.5",
+    "os-name": "^2.0.1",
+    "raven": "^2.1.2",
     "unused-filename": "^1.0.0"
   }
 }

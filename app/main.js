@@ -508,6 +508,9 @@ function handleProtocolUrls () {
 }
 
 app.on('ready', function() {
+  const crash_reporter = require('./crash_reporter.js');
+  crash_reporter.setup();
+
   handleProtocolUrls();
   
   menu = Menu.setup();

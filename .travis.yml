@@ -15,7 +15,11 @@ addons:
     - icnsutils
     - graphicsmagick
     - xz-utils
+env:
+- SENTRY_DSN="https://c4def854d3fb48d9a5812a48428913bd:c27b7ee1ee634f8c9916fdd8940d0646@sentry.io/224616"
 before_install:
+- openssl aes-256-cbc -K $encrypted_fc666da9e2f5_key -iv $encrypted_fc666da9e2f5_iv
+  -in .travis.env.enc -out .travis.env -d; source .travis.env;
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   rvm install 2.2.0;
   ruby --version;
@@ -27,16 +31,9 @@ before_install:
 install:
 - yarn
 - yarn list
-
 script:
 - yarn run test
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-  openssl aes-256-cbc -K $encrypted_fc666da9e2f5_key
-  -iv $encrypted_fc666da9e2f5_iv
-  -in .travis.env.enc
-  -out .travis.env
-  -d;
-  source .travis.env;
   yarn run snyk;
   yarn run mac;
   fi
