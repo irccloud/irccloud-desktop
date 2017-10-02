@@ -16,7 +16,10 @@ let Raven = null;
 // https://github.com/getsentry/raven-js/pull/637
 const PATH_MATCH_RE = /[^/]+\/[^/]+\/[^/]+$/;
 function normalizePath(path) {
-  let match = path.match(PATH_MATCH_RE);
+  if (!path) {
+    return path;
+  }
+  let match = path.replace(/\\/g, '/').match(PATH_MATCH_RE);
   return match ? match[0] : path;
 }
 function normalizeStacktrace(data) {
