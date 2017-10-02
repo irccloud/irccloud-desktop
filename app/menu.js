@@ -41,7 +41,6 @@ module.exports = {
     var show_log = {
       label: 'Reveal Log File…',
       click: function (item, focusedWindow, event) {
-        log.crash();
         Shell.showItemInFolder(log.transports.file.findLogPath());
       }
     };
