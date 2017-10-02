@@ -21,7 +21,7 @@
     "mas-dev": "electron-builder --mac mas-dev",
     "mac": "electron-builder --mac -c.extraMetadata.irccloud.sentry_dsn ${SENTRY_DSN} -c.releaseInfo.releaseNotesFile build/release-notes/mac.md",
     "linux": "electron-builder --linux -c.extraMetadata.irccloud.sentry_dsn ${SENTRY_DSN} -c.releaseInfo.releaseNotesFile build/release-notes/linux.md",
-    "win": "electron-builder --win nsis-web --ia32 --x64 -c.extraMetadata.irccloud.sentry_dsn ${SENTRY_DSN} -c.releaseInfo.releaseNotesFile build/release-notes/win.md",
+    "win": "electron-builder --win nsis-web --ia32 --x64 -c.extraMetadata.irccloud.sentry_dsn %SENTRY_DSN% -c.releaseInfo.releaseNotesFile build/release-notes/win.md",
     "win-local": "electron-builder --win nsis --x64",
     "snyk": "snyk test",
     "test": "eslint ."
