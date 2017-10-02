@@ -7,3 +7,4 @@
 * Improve filenames for downloads triggered with alt/option-click.
 * Fixed duplicate separators in context menus.
 * Added a cmd/ctrl-t shortcut to open a new browser tab.
+* Added automatic crash reporting via sentry.io
