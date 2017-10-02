@@ -5,14 +5,21 @@ const dialog = electron.dialog;
 const log = require('electron-log');
 const is = require('electron-is');
 
+const pkg = require('../package.json');
+
 var autoUpdater;
 var updateAvailable = false;
 
+function isSupported () {
+  return !pkg.irccloud.local_build && !is.dev() && !is.mas() && !is.linux();
+}
+
 module.exports = {
-  isSupported: function () {
-    return !is.dev() && !is.mas() && !is.linux();
-  },
+  isSupported: isSupported,
   setup: function (menu) {
+    if (!isSupported()) {
+      return false;
+    }
     autoUpdater = require("electron-updater").autoUpdater;
     autoUpdater.logger = log;
     autoUpdater.allowPrerelease = true;
@@ -41,6 +48,7 @@ module.exports = {
         notes: info.releaseNotes
       };
     });
+    return true;
   },
   check: function () {
     if (autoUpdater) {

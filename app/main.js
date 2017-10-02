@@ -511,15 +511,18 @@ app.on('ready', function() {
   handleProtocolUrls();
   
   menu = Menu.setup();
-  let auto_updater = require('./auto_update.js');
-  if (auto_updater.isSupported()) {
-    auto_updater.setup(menu);
-  }
+
+  const auto_updater = require('./auto_update.js');
+  auto_updater.setup(menu);
+
   updateZoomMenu();
+
   openMainWindow();
+
   if (config.get('tray') && !is.macOS()) {
     setupTray();
   }
+
   if (config.get('menu-bar') === false && !is.macOS()) {
     hideMenuBar(mainWindow);
   }

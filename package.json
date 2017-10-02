@@ -17,7 +17,7 @@
     "dist": "electron-builder",
     "app": "electron .",
     "mas": "electron-builder --mac mas",
-    "mac-local": "electron-builder --mac dir",
+    "mac-local": "electron-builder --mac dir -c.extraMetadata.irccloud.local_build true",
     "mas-dev": "electron-builder --mac mas-dev",
     "mac": "electron-builder --mac -c.releaseInfo.releaseNotesFile build/release-notes/mac.md",
     "linux": "electron-builder --linux -c.releaseInfo.releaseNotesFile build/release-notes/linux.md",
@@ -26,6 +26,7 @@
     "snyk": "snyk test",
     "test": "eslint ."
   },
+  "irccloud": {},
   "devDependencies": {
     "devtron": "^1.4.0",
     "electron": "^1.7.8",
