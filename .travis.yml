@@ -31,4 +31,4 @@ install:
 before_script:
 - yarn list
 script:
-- ./scripts/travis.sh
+- "./scripts/travis.sh"
