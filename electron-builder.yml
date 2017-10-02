@@ -31,8 +31,9 @@
     }
   ],
   "files": [
-      "!**/{.eslint*,.jshint*,.snyk,.travis.*,Makefile,README.md}",
+      "!**/{.eslint*,.jshint*,.snyk,.travis.*,Makefile,README.md,*.provisionprofile}",
       "!scripts${/*}",
-      "!docs${/*}"
+      "!docs${/*}",
+      "!codesign${/*}"
   ]
 }
