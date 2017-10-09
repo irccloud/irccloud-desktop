@@ -1,5 +1,6 @@
 {
   "appId": "com.irccloud.desktop",
+  "forceCodeSigning": true,
   "mac": {
     "category": "public.app-category.productivity",
     "target": [
