@@ -207,8 +207,7 @@ function openMainWindow(opts) {
     'webPreferences': {
       'allowDisplayingInsecureContent': true,
       'preload': path.join(__dirname, 'render', 'preload.js'),
-      'nodeIntegration': false,
-      'nativeWindowOpen': true
+      'nodeIntegration': false
     },
     'title': app.getName()
   };

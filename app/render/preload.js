@@ -2,7 +2,7 @@
 (function () {
 
   var remote = require('electron').remote;
-  if (document.domain !== remote.getGlobal('config').get('host')) {
+  if (window.location.origin !== remote.getGlobal('config').get('host')) {
     return;
   }
 
