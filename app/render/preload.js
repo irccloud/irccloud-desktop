@@ -1,21 +1,29 @@
 /* Javascript injected into the page on-load */
-var remote = require('electron').remote;
-var is = require('electron-is');
+(function () {
 
-window.IRCCLOUD_DESKTOP_VERSION = remote.app.getVersion();
+  var remote = require('electron').remote;
+  if (document.domain !== remote.getGlobal('config').get('host')) {
+    return;
+  }
 
-window.addEventListener('wheel', function (e) {
-  // console.log('onwheel');
-});
+  var is = require('electron-is');
 
-if (is.dev()) {
-  window.__devtron = {require: require, process: process};
-  require('devtron').install();
-}
+  window.IRCCLOUD_DESKTOP_VERSION = remote.app.getVersion();
 
-require('./focus')();
-require('./zoom')();
-require('./spellcheck')();
-require('./irc-url')();
-require('./notification')();
-require('./user')();
+  window.addEventListener('wheel', function (e) {
+    // console.log('onwheel');
+  });
+
+  if (is.dev()) {
+    window.__devtron = {require: require, process: process};
+    require('devtron').install();
+  }
+
+  require('./focus')();
+  require('./zoom')();
+  require('./spellcheck')();
+  require('./irc-url')();
+  require('./notification')();
+  require('./user')();
+
+})();

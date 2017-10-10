@@ -207,7 +207,8 @@ function openMainWindow(opts) {
     'webPreferences': {
       'allowDisplayingInsecureContent': true,
       'preload': path.join(__dirname, 'render', 'preload.js'),
-      'nodeIntegration': false
+      'nodeIntegration': false,
+      'nativeWindowOpen': true
     },
     'title': app.getName()
   };
@@ -322,11 +323,13 @@ function openMainWindow(opts) {
   });
 
   mainWindow.webContents.on('new-window', function(event, url, frameName, disposition) {
-    event.preventDefault();
-    var activate = disposition != 'background-tab';
-    Shell.openExternal(url, {
-      activate: activate
-    });
+    if (!frameName.match(/popup:/)) {
+      event.preventDefault();
+      var activate = disposition != 'background-tab';
+      Shell.openExternal(url, {
+        activate: activate
+      });
+    }
   });
   mainWindow.on('close', function (ev) {
     var size = mainWindow.getSize();
