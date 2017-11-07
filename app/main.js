@@ -128,16 +128,19 @@ function checkUserMods (type, reload) {
     return;
   }
 
-  FS.readFile(config.get(opts.pathConfKey), 'utf8', function (err, data) {
-    if (!err) {
-      if (!config.get(opts.acceptConfKey)) {
-        confirmUserMods(data);
+  let path = config.get(opts.pathConfKey);
+  if (path && _.isString(path)) {
+    FS.readFile(path, 'utf8', function (err, data) {
+      if (!err) {
+        if (!config.get(opts.acceptConfKey)) {
+          confirmUserMods(data);
+        }
+        if (config.get(opts.acceptConfKey)) {
+          opts.callback(data);
+        }
       }
-      if (config.get(opts.acceptConfKey)) {
-        opts.callback(data);
-      }
-    }
-  });
+    });
+  }
 
   function confirmUserMods (data) {
     var revealText = '&Open File Location';
