@@ -429,7 +429,9 @@ module.exports = {
           label: 'Keyboard Shortcuts',
           accelerator: 'CmdOrCtrl+/',
           click: function (item, focusedWindow, event) {
-            focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.navigate("?/shortcuts", {trigger: true}); }', true);
+            if (focusedWindow) {
+              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.navigate("?/shortcuts", {trigger: true}); }', true);
+            }
           }
         },
         sep,
