@@ -88,7 +88,7 @@ function enableStreamlinedLogin () {
         log.error('set invite cookie error', error);
       }
     });
-  } else {
+  } else if (url) {
     mainWindow.webContents.session.cookies.remove(url, name, function (error) {
       if (error) {
         log.error('remove invite cookie error', error);
