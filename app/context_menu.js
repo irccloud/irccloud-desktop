@@ -107,11 +107,10 @@ module.exports = (win) => {
       }, {
         label: 'Copy Link Address',
         click (item, focusedWindow, e) {
-          if (is.linux() || !props.linkText) {
-            electron.clipboard.writeText(props.linkURL);
-          } else {
-            electron.clipboard.writeBookmark(props.linkText, props.linkURL);
-          }
+          electron.clipboard.write({
+            text: props.linkURL,
+            bookmark: props.linkText
+          });
         }
       }, {
         type: 'separator'
