@@ -325,7 +325,7 @@ function openMainWindow(opts) {
   });
 
   mainWindow.webContents.on('new-window', function(event, url, frameName, disposition) {
-    if (!frameName.match(/popup:/)) {
+    if (!/popup:/.test(frameName)) {
       event.preventDefault();
       var activate = disposition != 'background-tab';
       Shell.openExternal(url, {
