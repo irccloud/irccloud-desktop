@@ -480,6 +480,9 @@ app.toggleMenuBar = function (window) {
 var ircUrlOnOpen;
 function handleProtocolUrls () {
   // https://github.com/electron/electron/blob/master/docs/api/app.md#appsetasdefaultprotocolclientprotocol-macos-windows
+  // TODO: Linux support added in electron 1.8.2
+  // Add it to the support list when we upgrade to the next stable release
+  // https://github.com/irccloud/irccloud-desktop/issues/105
   var supported = (is.macOS() || is.windows()) && !is.sandbox();
   if (!supported) {
     return;
