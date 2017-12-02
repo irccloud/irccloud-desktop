@@ -35,6 +35,7 @@ module.exports = {
     autoUpdater = require("electron-updater").autoUpdater;
     autoUpdater.logger = log;
     autoUpdater.allowPrerelease = true;
+    autoUpdater.fullChangelog = true;
     
     try {
       autoUpdater.checkForUpdates();
@@ -94,10 +95,13 @@ function showUpdateDialog() {
   
   var message = app.getName() + ' ' + updateAvailable.version + ' is now available. It will be installed the next time you restart the application.';
   if (updateAvailable.notes) {
-    let splitNotes = updateAvailable.notes.split(/[^\r]\n/);
     message += '\n\nRelease notes:\n';
-    splitNotes.forEach(function (notes) {
-      message += notes + '\n\n';
+    updateAvailable.notes.forEach(function (release) {
+      message += release.version + ':\n\n';
+      let noteLines = release.note.split(/[^\r]\n/);
+      noteLines.forEach(function (noteLine) {
+        message += noteLine + '\n\n';
+      });
     });
   }
   var ret = dialog.showMessageBox({
