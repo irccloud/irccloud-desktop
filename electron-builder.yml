@@ -6,7 +6,8 @@
     "target": [
       "dmg",
       "zip"
-    ]
+    ],
+    "electronUpdaterCompatibility": ">=2.15.0"
   },
   "mas": {
     "publish": null

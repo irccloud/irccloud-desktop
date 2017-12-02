@@ -11,7 +11,19 @@ var autoUpdater;
 var updateAvailable = false;
 
 function isSupported () {
-  return !pkg.irccloud.local_build && !is.dev() && !is.mas() && !is.linux();
+  if (pkg.irccloud.local_build) {
+    return false;
+  }
+  if (is.dev()) {
+    return false;
+  }
+  if (is.linux() && !process.env.APPIMAGE) {
+    return false;
+  }
+  if (is.mas()) {
+    return false;
+  }
+  return true;
 }
 
 module.exports = {
