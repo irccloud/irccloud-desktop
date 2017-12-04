@@ -22,7 +22,7 @@
     "mac": "electron-builder --mac -c.extraMetadata.irccloud.sentry_dsn ${SENTRY_DSN}",
     "linux": "electron-builder --linux -c.extraMetadata.irccloud.sentry_dsn ${SENTRY_DSN}",
     "win": "electron-builder --win nsis-web --ia32 --x64 -c.extraMetadata.irccloud.sentry_dsn %SENTRY_DSN%",
-    "win-local": "electron-builder --win nsis --x64",
+    "win-local": "electron-builder --win nsis-web --x64 -c.forceCodeSigning=false",
     "snyk": "snyk test",
     "test": "eslint ."
   },
