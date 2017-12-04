@@ -9,7 +9,7 @@
   },
   "repository": "https://github.com/irccloud/irccloud-desktop",
   "license": "Apache-2.0",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "main": "app/main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
