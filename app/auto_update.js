@@ -54,7 +54,7 @@ module.exports = {
     autoUpdater.on('update-not-available', function (event) {
       setUpdateCheckMenuEnabled(menu, true);
     });
-    autoUpdater.on('update-downloaded', function (event, info) {
+    autoUpdater.on('update-downloaded', function (info) {
       setUpdateCheckMenuEnabled(menu, true);
       updateAvailable = {
         version: info.releaseName,
@@ -117,7 +117,7 @@ function showUpdateDialog() {
   }
 }
 
-function onUpdateDownloaded (event, info) {
+function onUpdateDownloaded (info) {
   updateAvailable = {
     version: info.releaseName,
     notes: info.releaseNotes
