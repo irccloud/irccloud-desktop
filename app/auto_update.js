@@ -96,11 +96,18 @@ function showUpdateDialog() {
   var message = app.getName() + ' ' + updateAvailable.version + ' is now available. It will be installed the next time you restart the application.';
   if (updateAvailable.notes) {
     message += '\n\nRelease notes:\n';
+    log.info('updateAvailable', updateAvailable);
+    if (!Array.isArray(updateAvailable.notes)) {
+      updateAvailable.notes = [{
+        version: updateAvailable.version,
+        note: updateAvailable.notes
+      }];
+    }
     updateAvailable.notes.forEach(function (release) {
       message += release.version + ':\n\n';
-      let noteLines = release.note.split(/[^\r]\n/);
+      let noteLines = release.note.split(/[\r\n]/);
       noteLines.forEach(function (noteLine) {
-        message += noteLine + '\n\n';
+        message += noteLine + '\n';
       });
     });
   }
@@ -142,6 +149,7 @@ function onUpdateNotAvailable (event) {
   autoUpdater.removeListener('update-downloaded', onUpdateDownloaded);
 }
 function onUpdateError (error, errorMessage) {
+  log.error('updateError', errorMessage, error);
   dialog.showMessageBox({
     type: 'error',
     message: 'Error checking for updates',
