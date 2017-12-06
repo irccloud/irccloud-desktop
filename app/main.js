@@ -20,7 +20,7 @@ const is = require('electron-is');
 const unusedFilename = require('unused-filename');
 require('electron-dl')();
 const log = require('electron-log');
-log.transports.file.level = 'silly';
+log.transports.file.level = 'info';
 
 var mainWindow = null;
 var menu = null;
@@ -32,6 +32,7 @@ const defaultHost = 'https://www.irccloud.com';
 app.setAppUserModelId('com.irccloud.desktop');
 
 function setupConfig () {
+  log.debug('setupConfig');
   let defaults = {
     'host': defaultHost,
     'width': 1024,
@@ -69,6 +70,7 @@ if (!is.sandbox()) {
   });
 }
 if (shouldQuit) {
+  log.debug('makeSingleInstance quit');
   app.quit();
   process.exit();
 }
@@ -108,6 +110,7 @@ function checkUserMods (type, reload) {
       pathConfKey: 'userScriptPath',
       menuId: 'show_user_script',
       callback: function (data) {
+        log.debug('injecting js');
         mainWindow.webContents.executeJavaScript(data);
       }
     };
@@ -120,6 +123,7 @@ function checkUserMods (type, reload) {
       pathConfKey: 'userStylePath',
       menuId: 'show_user_style',
       callback: function (data) {
+        log.debug('injecting css');
         mainWindow.webContents.insertCSS(data);
       }
     };
@@ -188,6 +192,7 @@ function checkUserMods (type, reload) {
 }
 
 function openMainWindow(opts) {
+  log.debug('openMainWindow');
   opts = opts || {};
   var reload;
   // Someone tried to run a second instance, we should focus our window
@@ -236,6 +241,7 @@ function openMainWindow(opts) {
   mainWindow.loadURL(initialUrl);
 
   mainWindow.on('closed', function() {
+    log.debug('closed');
     mainWindow = null;
   });
   
@@ -289,12 +295,14 @@ function openMainWindow(opts) {
   ContextMenu(mainWindow);
 
   mainWindow.webContents.on('dom-ready', function(event) {
+    log.debug('dom-ready');
     checkUserMods('style');
     checkUserMods('script');
   });
 
   mainWindow.webContents.on('will-navigate', function (e, url) {
     // Make sure the invite cookie persists over logout
+    log.debug('will-navigate');
     enableStreamlinedLogin();
   });
   mainWindow.webContents.session.on('will-download', function (e, item, webContents) {
@@ -325,6 +333,7 @@ function openMainWindow(opts) {
   });
 
   mainWindow.webContents.on('new-window', function(event, url, frameName, disposition) {
+    log.debug('new-window', frameName, url);
     if (!/popup:/.test(frameName)) {
       event.preventDefault();
       var activate = disposition != 'background-tab';
@@ -334,6 +343,7 @@ function openMainWindow(opts) {
     }
   });
   mainWindow.on('close', function (ev) {
+    log.debug('close', 'quitting?', quitting);
     var size = mainWindow.getSize();
     var position = mainWindow.getPosition();
     var props = {
@@ -355,16 +365,19 @@ function openMainWindow(opts) {
 var quitting = false;
 app.on('activate', openMainWindow);
 app.on('before-quit', function () {
+  log.debug('before-quit');
   quitting = true;
 });
 if (!is.macOS()) {
   app.on('window-all-closed', function() {
+    log.debug('window-all-closed');
     app.quit();
   });
 }
 
 // Handles urls from app.isDefaultProtocolClient
 app.on('open-url', function (event, url) {
+  log.debug('open-url');
   if (mainWindow) {
     mainWindow.webContents.send('set-irc-url', url);
   } else {
@@ -374,11 +387,13 @@ app.on('open-url', function (event, url) {
 
 function destroyTray() {
   if (appIcon) {
+    log.debug('destroyTray');
     appIcon.destroy();
   }
 }
 
 function setupTray() {
+  log.debug('setupTray');
   // Windows uses ico
   // Linux uses png
   // KDE needs a small icon cos it can't scale
@@ -389,6 +404,7 @@ function setupTray() {
   appIcon.setToolTip(app.getName());
   // Doesn't work on linux
   appIcon.on('click', function() {
+    log.debug('tray click');
     openMainWindow();
   });
   var tray_menu = Menu.setup_tray(app);
@@ -459,11 +475,13 @@ app.resetZoom = function () {
 };
 
 function hideMenuBar(window) {
+  log.debug('menu hide');
   window.setAutoHideMenuBar(true);
   window.setMenuBarVisibility(false);
 }
 
 function showMenuBar(window) {
+  log.debug('menu show');
   window.setAutoHideMenuBar(false);
   window.setMenuBarVisibility(true);
 }
@@ -516,6 +534,7 @@ function handleProtocolUrls () {
 }
 
 app.on('ready', function() {
+  log.debug('ready');
   const crash_reporter = require('./crash_reporter.js');
   crash_reporter.setup();
 

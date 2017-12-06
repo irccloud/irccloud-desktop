@@ -1,10 +1,13 @@
 /* Javascript injected into the page on-load */
 (function () {
-
+  var log = require('electron-log');
   var remote = require('electron').remote;
   if (window.location.origin !== remote.getGlobal('config').get('host')) {
+    log.debug('skipping preload', window.location.origin);
     return;
   }
+
+  log.debug('preload');
 
   var is = require('electron-is');
 

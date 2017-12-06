@@ -50,7 +50,9 @@ function raven_config() {
         os_totalmem: os_totalmem_gb + 'GB',
         hostname: app.config.get('host'),
         user_style: app.config.get('acceptUserStyles'),
-        user_script: app.config.get('acceptUserScripts')
+        user_script: app.config.get('acceptUserScripts'),
+        tray: app.config.get('tray'),
+        menu_bar: app.config.get('menu-bar')
       },
       dataCallback: (data) => {
         if (user) {
