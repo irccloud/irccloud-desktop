@@ -18,8 +18,11 @@ ipcMain.on('set-spelling-suggestions', (event, suggestions) => {
 module.exports = (win) => {
   win.webContents.on('context-menu', (e, props) => {
     const editFlags = props.editFlags;
-    const hasText = props.selectionText.trim().length > 0;
-    const can = type => editFlags[`can${type}`] && hasText;
+    // selectionText trims whitespace, so this might be wrong for whitespace-only selections
+    const hasText = props.selectionText.length > 0;
+    const can = (type, checkHasText) => {
+      return editFlags[`can${type}`] && (!checkHasText || hasText);
+    };
     const cmdOrCtrl = e => {
       if (is.macOS()) {
         return e.metaKey;
@@ -74,20 +77,20 @@ module.exports = (win) => {
       type: 'separator'
     }, {
       label: 'Cut',
-      // needed because of macOS limitation:
+      // need to set an empty role when disabled due to macOS limitation:
       // https://github.com/electron/electron/issues/5860
-      role: can('Cut') ? 'cut' : '',
-      enabled: can('Cut'),
+      role: can('Cut', true) ? 'cut' : '',
+      enabled: can('Cut', true),
       visible: props.isEditable
     }, {
       label: 'Copy',
-      role: can('Copy') ? 'copy' : '',
-      enabled: can('Copy'),
+      role: can('Copy', true) ? 'copy' : '',
+      enabled: can('Copy', true),
       visible: props.isEditable || hasText
     }, {
       label: 'Paste',
-      role: editFlags.canPaste ? 'paste' : '',
-      enabled: editFlags.canPaste,
+      role: can('Paste') ? 'paste' : '',
+      enabled: can('Paste'),
       visible: props.isEditable
     }, {
       type: 'separator'
