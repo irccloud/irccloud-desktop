@@ -1,1 +1,1 @@
-* Fixed various auto update issues
+* Updated dependencies including electron@1.7.11
