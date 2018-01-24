@@ -13,7 +13,6 @@ addons:
   apt:
     packages:
     - icnsutils
-    - graphicsmagick
     - xz-utils
 before_install:
 - openssl aes-256-cbc -K $encrypted_fc666da9e2f5_key -iv $encrypted_fc666da9e2f5_iv
