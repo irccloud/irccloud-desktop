@@ -29,7 +29,7 @@ documentation](http://electron.atom.io/docs/v0.37.8/).
 * Node JS version 5.3 or higher
 * yarn (recommended upstream) or NPM (works fine)
 
-On Linux, you also need the `icnsutils`, `graphicsmagick`, and
+On Linux, you also need the `icnsutils`, and
 `xz-utils` packages.
 
 ### Running
