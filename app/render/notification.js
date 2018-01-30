@@ -1,6 +1,6 @@
 var remote = require('electron').remote;
 
-function setupNotifiationHandlder() {
+function setupNotificationHandler() {
   document.addEventListener("DOMContentLoaded", function (event) {
     if (window.SESSION) {
       window.SESSION.on('notificationClick', function () {
@@ -10,4 +10,4 @@ function setupNotifiationHandlder() {
   });
 }
 
-module.exports = setupNotifiationHandlder;
+module.exports = setupNotificationHandler;
