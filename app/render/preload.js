@@ -28,5 +28,6 @@
   require('./irc-url')();
   require('./notification')();
   require('./user')();
+  require('./current_buffer')();
 
 })();

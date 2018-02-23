@@ -6,6 +6,7 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const Shell = electron.shell;
 const dialog = electron.dialog;
+const ipcMain = electron.ipcMain;
 
 const path = require('path');
 const FS = require('fs');
@@ -25,6 +26,7 @@ log.transports.file.level = 'info';
 var mainWindow = null;
 var menu = null;
 var appIcon = null;
+var currentBuffer = null;
 
 const defaultHost = 'https://www.irccloud.com';
 
@@ -556,4 +558,8 @@ app.on('ready', function() {
   if (config.get('menu-bar') === false && !is.macOS()) {
     hideMenuBar(mainWindow);
   }
+});
+
+ipcMain.on('set-current-buffer', (event, bufferInfo) => {
+  currentBuffer = bufferInfo;
 });
