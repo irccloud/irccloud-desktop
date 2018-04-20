@@ -75,7 +75,11 @@ function isMainHost () {
 var shouldQuit = false;
 if (!is.sandbox()) {
   shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
+    log.info('makeSingleInstance', commandLine[1]);
     openMainWindow();
+    if (commandLine[1]) {
+      openUrl(commandLine[1]);
+    }
   });
 }
 if (shouldQuit) {
@@ -384,14 +388,18 @@ if (!is.macOS()) {
   });
 }
 
-// Handles urls from app.setAsDefaultProtocolClient for mac only
-app.on('open-url', function (event, url) {
-  log.debug('open-url');
+function openUrl (url) {
   if (mainWindow) {
     mainWindow.webContents.send('set-irc-url', url);
   } else {
     ircUrlOnOpen = url;
   }
+}
+
+// Handles urls from app.setAsDefaultProtocolClient for mac only
+app.on('open-url', function (event, url) {
+  log.info('open-url', url);
+  openUrl(url);
 });
 
 function destroyTray() {
@@ -577,7 +585,10 @@ function handleProtocolUrls () {
 }
 
 app.on('ready', function() {
-  log.debug('ready');
+  log.info('ready', process.argv[1]);
+  if (process.argv[1]) {
+    openUrl(process.argv[1]);
+  }
   const crash_reporter = require('./crash_reporter.js');
   crash_reporter.setup();
 
