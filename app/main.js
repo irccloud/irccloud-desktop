@@ -384,7 +384,7 @@ if (!is.macOS()) {
   });
 }
 
-// Handles urls from app.isDefaultProtocolClient
+// Handles urls from app.setAsDefaultProtocolClient for mac only
 app.on('open-url', function (event, url) {
   log.debug('open-url');
   if (mainWindow) {
@@ -538,40 +538,42 @@ function checkInApplications () {
 // Handle irc URLs
 var ircUrlOnOpen;
 function handleProtocolUrls () {
-  // https://github.com/electron/electron/blob/master/docs/api/app.md#appsetasdefaultprotocolclientprotocol-macos-windows
-  // TODO: Linux support added in electron 1.8.2
-  // Add it to the support list when we upgrade to the next stable release
-  // https://github.com/irccloud/irccloud-desktop/issues/105
-  var supported = (is.macOS() || is.windows()) && !is.sandbox();
-  if (!supported) {
+  // https://github.com/electron/electron/blob/master/docs/api/app.md#appsetasdefaultprotocolclientprotocol-path-args
+  // TODO handle windows (and linux?) opening the app with the url as an argument
+  // https://github.com/irccloud/irccloud-desktop/issues/115
+  if (is.sandbox()) {
+    return;
+  }
+  if (config.get('neverPromptIrcUrls')) {
     return;
   }
   var isHandler = (
     app.isDefaultProtocolClient('irc') &&
     app.isDefaultProtocolClient('ircs')
   );
-  
-  if (!isHandler && !config.get('neverPromptIrcUrls')) {
-    dialog.showMessageBox({
-      type: 'info',
-      message: 'Would you like to set ' + app.getName() + ' as your default IRC client?',
-      buttons: ['&Set Default', '&Not Now', '&Don’t Ask Again'],
-      cancelId: 1,
-      defaultId: 0,
-      normalizeAccessKeys: true
-    }, function (ret) {
-      switch (ret) {
-      case 0:
-        app.setAsDefaultProtocolClient('irc');
-        app.setAsDefaultProtocolClient('ircs');
-        handleProtocolUrls();
-        break;
-      case 2:
-        config.set('neverPromptIrcUrls', true);
-        break;
-      }
-    });
+  if (isHandler) {
+    return;
   }
+  
+  dialog.showMessageBox({
+    type: 'info',
+    message: 'Would you like to set ' + app.getName() + ' as your default IRC client?',
+    buttons: ['&Set Default', '&Not Now', '&Don’t Ask Again'],
+    cancelId: 1,
+    defaultId: 0,
+    normalizeAccessKeys: true
+  }, function (ret) {
+    switch (ret) {
+    case 0:
+      app.setAsDefaultProtocolClient('irc');
+      app.setAsDefaultProtocolClient('ircs');
+      handleProtocolUrls();
+      break;
+    case 2:
+      config.set('neverPromptIrcUrls', true);
+      break;
+    }
+  });
 }
 
 app.on('ready', function() {
