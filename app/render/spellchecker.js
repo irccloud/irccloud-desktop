@@ -1,15 +1,3 @@
-// Unused at the moment. This was written as an attempt to solve
-// https://github.com/irccloud/irccloud-desktop/issues/107
-// But it doesn't help or appear to provide any added benefit yet
-// 
-// This was written for electron-spellchecker@1.1.2
-// 
-// If we want to switch to this method in future, make sure to install the
-// electron-spellchecker package, and check the changelog for anything
-// relevant. Also, require this from the preload script and see note below
-// about disabling app/context_menu.js for misspellings to avoid conflicting
-// with this checker's context menu
-
 var remote = require('electron').remote;
 var ipcRenderer = require('electron').ipcRenderer;
 
