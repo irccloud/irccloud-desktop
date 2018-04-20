@@ -497,6 +497,38 @@ app.toggleMenuBar = function (window) {
   }
 };
 
+function checkInApplications () {
+  if (is.dev()) {
+    return;
+  }
+  if (!is.macOS()) {
+    return;
+  }
+  if (app.isInApplicationsFolder()) {
+    return;
+  }
+  if (config.get('neverPromptMoveToApplicationsFolder')) {
+    return;
+  }
+
+  var ret = dialog.showMessageBox({
+    type: 'info',
+    message: 'Would you like to move ' + app.getName() + ' to your Applications folder?',
+    buttons: ['&OK', '&Not Now', '&Don’t Ask Again'],
+    cancelId: 1,
+    defaultId: 0,
+    normalizeAccessKeys: true
+  });
+  switch (ret) {
+  case 0:
+    app.moveToApplicationsFolder();
+    return true;
+  case 2:
+    config.set('neverPromptMoveToApplicationsFolder', true);
+    return false;
+  }
+}
+
 // Handle irc URLs
 var ircUrlOnOpen;
 function handleProtocolUrls () {
@@ -540,6 +572,10 @@ app.on('ready', function() {
   log.debug('ready');
   const crash_reporter = require('./crash_reporter.js');
   crash_reporter.setup();
+
+  if (checkInApplications()) {
+    return;
+  }
 
   handleProtocolUrls();
   
