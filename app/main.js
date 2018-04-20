@@ -23,6 +23,8 @@ require('electron-dl')();
 const log = require('electron-log');
 log.transports.file.level = 'info';
 
+const buildConf = require('../electron-builder.json');
+
 var mainWindow = null;
 var menu = null;
 var appIcon = null;
@@ -30,8 +32,7 @@ var currentBuffer = null;
 
 const defaultHost = 'https://www.irccloud.com';
 
-// TODO pull this from the outermost package.json
-app.setAppUserModelId('com.irccloud.desktop');
+app.setAppUserModelId(buildConf.appId);
 
 function setupConfig () {
   log.debug('setupConfig');
