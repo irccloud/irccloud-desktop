@@ -23,8 +23,6 @@ require('electron-dl')();
 const log = require('electron-log');
 log.transports.file.level = 'info';
 
-const buildConf = require('../electron-builder.json');
-
 var mainWindow = null;
 var menu = null;
 var appIcon = null;
@@ -32,7 +30,15 @@ var currentBuffer = null;
 
 const defaultHost = 'https://www.irccloud.com';
 
-app.setAppUserModelId(buildConf.appId);
+// TODO figure out how to dedupe this from electron-builder.json
+// We could set this in package.json and then access it at runtime with:
+// require(path.resolve(app.getAppPath(), 'package.json'));
+// but it needs to be a top level build config item, either in
+// package.json -> build or electron-builder.json
+// We use electron-builder.json to keep things tidy, but it doesn't
+// get packaged in the dist asar so we can't include it.
+// Annoying
+app.setAppUserModelId("com.irccloud.desktop");
 
 function setupConfig () {
   log.debug('setupConfig');
