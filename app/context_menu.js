@@ -179,24 +179,9 @@ module.exports = (win) => {
       });
     }
 
-
-    template = delUnusedElements(template);
-
     const menu = Menu.buildFromTemplate(template);
     setTimeout(() => {
       menu.popup(win);
     }, 20);
   });
 };
-
-// copied from https://github.com/sindresorhus/electron-context-menu/blob/master/index.js
-// filter out leading/trailing/duplicate separators
-// TODO: https://github.com/electron/electron/issues/5869
-function delUnusedElements(menuTpl) {
-  let notDeletedPrevEl;
-  return menuTpl.filter(el => el.visible !== false).filter((el, i, arr) => {
-    const toDelete = el.type === 'separator' && (!notDeletedPrevEl || i === arr.length - 1 || arr[i + 1].type === 'separator');
-    notDeletedPrevEl = toDelete ? notDeletedPrevEl : el;
-    return !toDelete;
-  });
-}
