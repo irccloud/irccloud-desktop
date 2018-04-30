@@ -6,6 +6,9 @@ node_modules: package.json
 dist: node_modules
 	${PKG} run dist
 
+yarn-upgrade-deps:
+	yarn upgrade-interactive --latest
+
 clean:
 	rm -Rf ./dist
 
