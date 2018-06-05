@@ -1,1 +1,2 @@
-* Updated dependencies including electron@1.7.11
+* Updated dependencies including electron@2.0.2
+* Prompt to move to Applications folder on launch
