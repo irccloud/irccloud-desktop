@@ -585,9 +585,10 @@ function handleProtocolUrls () {
 }
 
 app.on('ready', function() {
-  log.info('ready', process.argv[1]);
-  if (process.argv[1]) {
-    openUrl(process.argv[1]);
+  let arg = process.argv[1];
+  log.info('ready', process.argv.slice(1));
+  if (arg && arg != '.') {
+    openUrl(arg);
   }
   const crash_reporter = require('./crash_reporter.js');
   crash_reporter.setup();
