@@ -547,8 +547,6 @@ function checkInApplications () {
 var ircUrlOnOpen;
 function handleProtocolUrls () {
   // https://github.com/electron/electron/blob/master/docs/api/app.md#appsetasdefaultprotocolclientprotocol-path-args
-  // TODO handle windows (and linux?) opening the app with the url as an argument
-  // https://github.com/irccloud/irccloud-desktop/issues/115
   if (is.sandbox()) {
     return;
   }
