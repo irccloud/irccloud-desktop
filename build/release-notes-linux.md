@@ -1,2 +1,1 @@
-* Updated dependencies including electron@2.0.2
-* Improve support for handling irc:// links
+* Updated dependencies including a fix for AppImage builds (#121)
