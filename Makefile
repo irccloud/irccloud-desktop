@@ -21,6 +21,9 @@ dev: node_modules
 test: node_modules
 	${PKG} run test
 
+snyk: node_modules
+	${PKG} run snyk
+
 mac: node_modules
 	${PKG} run mac
 
