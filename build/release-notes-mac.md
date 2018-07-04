@@ -1,1 +1,1 @@
-* Updated dependencies
+* Updated dependencies including a fix for a crash on macOS Yosemite

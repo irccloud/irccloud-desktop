@@ -1,1 +1,1 @@
-* Updated dependencies including a fix for AppImage builds (#121)
+* Updated dependencies
