@@ -13,7 +13,7 @@ Tracker](https://github.com/irccloud/irccloud-desktop/issues).
 
 ## Downloading
 
-The latest official build can be [downloaded here](http://desktop.irccloud.com).
+The latest official build can be [downloaded here](https://desktop.irccloud.com).
 The appropriate version should be detected based on your OS.
 
 ## Development
