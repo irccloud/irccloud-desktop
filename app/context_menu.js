@@ -99,29 +99,58 @@ module.exports = (win) => {
     }, {
       type: 'separator'
     });
-
     if (props.linkURL) {
-      template.push({
-        type: 'separator'
-      }, {
-        label: 'Save Link As…',
-        click (item, focusedWindow, e) {
-          app.doDownload(win, props.linkURL, {
-            saveAs: !e.altKey
-          });
+      if (props.linkURL.match(/^mailto:/)) {
+        template.push({
+          type: 'separator'
+        }, {
+          label: 'Copy Email Address',
+          click (item, focusedWindow, e) {
+            electron.clipboard.write({
+              text: props.linkURL.replace(/^mailto:/, ''),
+              bookmark: props.linkText
+            });
+          }
+        }, {
+          type: 'separator'
+        });
+      } else if (props.linkURL.match(/^https?:/)) {
+        template.push({
+          type: 'separator'
+        }, {
+          label: 'Save Link As…',
+          click (item, focusedWindow, e) {
+            app.doDownload(win, props.linkURL, {
+              saveAs: !e.altKey
+            });
 
-        }
-      }, {
-        label: 'Copy Link Address',
-        click (item, focusedWindow, e) {
-          electron.clipboard.write({
-            text: props.linkURL,
-            bookmark: props.linkText
-          });
-        }
-      }, {
-        type: 'separator'
-      });
+          }
+        }, {
+          label: 'Copy Link Address',
+          click (item, focusedWindow, e) {
+            electron.clipboard.write({
+              text: props.linkURL,
+              bookmark: props.linkText
+            });
+          }
+        }, {
+          type: 'separator'
+        });
+      } else {
+        template.push({
+          type: 'separator'
+        }, {
+          label: 'Copy Link Address',
+          click (item, focusedWindow, e) {
+            electron.clipboard.write({
+              text: props.linkURL,
+              bookmark: props.linkText
+            });
+          }
+        }, {
+          type: 'separator'
+        });
+      }
     }
 
     if (props.mediaType === 'image') {
