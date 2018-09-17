@@ -16,6 +16,7 @@
     "category": "Network;IRCClient",
     "target": [
       "deb",
+      "rpm",
       "AppImage"
     ]
   },
