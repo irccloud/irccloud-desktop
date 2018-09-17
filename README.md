@@ -32,6 +32,8 @@ documentation](http://electron.atom.io/docs/v0.37.8/).
 On Linux, you also need the `icnsutils`, and
 `xz-utils` packages.
 
+On Fedora Linux, you can install all required packages with the following command `sudo dnf install gcc-c++ libicns-utils libxkbfile-devel libX11-devel rpm-build`
+
 ### Running
 
 Run `make dev` in the root of the repository to run the app quickly (without icons).
