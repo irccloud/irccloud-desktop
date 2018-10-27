@@ -1,1 +1,2 @@
-* Updated dependencies including a fix for a crash on macOS Yosemite
+* Updated dependencies including electron@3.0.6
+* Improve context menu options for copying and downloading links
