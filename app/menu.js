@@ -80,8 +80,7 @@ module.exports = {
     app_menu.submenu.push(show_user_script);
     app_menu.submenu.push(sep);
     app_menu.submenu.push({
-      role: 'services',
-      submenu: []
+      role: 'services'
     });
     app_menu.submenu.push(sep);
     app_menu.submenu.push({
