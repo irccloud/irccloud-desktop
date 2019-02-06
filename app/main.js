@@ -237,6 +237,7 @@ function openMainWindow(opts) {
     'webPreferences': {
       'allowDisplayingInsecureContent': true,
       'preload': path.join(__dirname, 'render', 'preload.js'),
+      'contextIsolation': true,
       'nodeIntegration': false
     },
     'title': app.getName()
