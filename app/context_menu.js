@@ -210,7 +210,7 @@ module.exports = (win) => {
 
     const menu = Menu.buildFromTemplate(template);
     setTimeout(() => {
-      menu.popup(win);
+      menu.popup({window: win});
     }, 20);
   });
 };
