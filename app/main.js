@@ -69,24 +69,33 @@ global.config = config;
 function isMainHost () {
   return config.get('host') === defaultHost;
 }
-// This always returned true in sanbox builds, preventing startup
-// Fixed but regressed https://github.com/electron/electron/issues/9985
-// This only affects macOS when running multiple copies from the command line
-var shouldQuit = false;
-if (!is.sandbox()) {
-  shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
-    log.info('makeSingleInstance', commandLine[1]);
-    openMainWindow();
-    if (commandLine[1]) {
-      openUrl(commandLine[1]);
+function singleInstance () {
+  // This always returned true in sanbox builds, preventing startup
+  // Fixed but regressed https://github.com/electron/electron/issues/9985
+  // This only affects macOS when running multiple copies from the command line
+  let shouldQuit = false;
+  if (!is.sandbox()) {
+    const gotTheLock = app.requestSingleInstanceLock();
+
+    app.on('second-instance', function (commandLine, workingDirectory) {
+      log.info('singleInstance', commandLine[1]);
+      openMainWindow();
+      if (commandLine[1]) {
+        openUrl(commandLine[1]);
+      }
+    });
+
+    if (!gotTheLock) {
+      shouldQuit = true;
     }
-  });
+  }
+  if (shouldQuit) {
+    log.debug('singleInstance quit');
+    app.quit();
+    process.exit();
+  }
 }
-if (shouldQuit) {
-  log.debug('makeSingleInstance quit');
-  app.quit();
-  process.exit();
-}
+singleInstance();
 
 function enableStreamlinedLogin () {
   // Enable the streamlined login page
