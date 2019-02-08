@@ -1,6 +1,5 @@
 var remote = require('electron').remote;
 var ipcRenderer = require('electron').ipcRenderer;
-var log = require('electron-log');
 
 function setupCurrentBuffer() {
   document.addEventListener("DOMContentLoaded", function (event) {
