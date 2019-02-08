@@ -391,6 +391,10 @@ app.on('before-quit', function () {
   log.debug('before-quit');
   quitting = true;
 });
+electron.autoUpdater.on('before-quit-for-update', function () {
+  log.debug('before-quit-for-update');
+  quitting = true;
+});
 if (!is.macOS()) {
   app.on('window-all-closed', function() {
     log.debug('window-all-closed');
