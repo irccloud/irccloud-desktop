@@ -30,23 +30,23 @@
   "irccloud": {},
   "devDependencies": {
     "devtron": "^1.4.0",
-    "electron": "^4.0.4",
-    "electron-builder": "^20.38.5",
-    "eslint": "^5.13.0",
-    "snyk": "^1.125.0"
+    "electron": "^4.1.4",
+    "electron-builder": "^20.40.2",
+    "eslint": "^5.16.0",
+    "snyk": "^1.149.0"
   },
   "dependencies": {
-    "electron-dl": "^1.13.0",
+    "electron-dl": "^1.14.0",
     "electron-is": "^3.0.0",
-    "electron-log": "^3.0.1",
-    "electron-spellchecker": "^1.1.2",
-    "electron-store": "^2.0.0",
-    "electron-updater": "^4.0.6",
-    "getos": "3.1.1",
-    "lodash": "4.17.11",
-    "open": "0.0.5",
-    "os-name": "^3.0.0",
+    "electron-log": "^3.0.5",
+    "electron-spellchecker": "^2.0.0",
+    "electron-store": "^3.1.0",
+    "electron-updater": "^4.0.9",
+    "getos": "^3.1.1",
+    "lodash": "^4.17.11",
+    "open": "^6.1.0",
+    "os-name": "^3.1.0",
     "raven": "^2.6.4",
-    "unused-filename": "^1.0.0"
+    "unused-filename": "^2.1.0"
   }
 }
