@@ -1,1 +1,1 @@
-* Updated dependencies including electron@4.0.4
+* Updated dependencies including electron@4.1.4
