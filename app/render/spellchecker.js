@@ -43,7 +43,7 @@ function setupSpellcheck () {
   // No support for multiple languages at the moment
   // https://github.com/electron-userland/electron-spellchecker/issues/74
   // https://github.com/irccloud/irccloud-desktop/issues/97#issuecomment-350684063
-  spellCheckHandler.switchLanguage(remote.app.getLocale());
+  spellCheckHandler.switchLanguage(remote.getBuiltin('app').getLocale());
   spellCheckHandler.autoUnloadDictionariesOnBlur();
 
   var contextMenuBuilder = new spellchecker.ContextMenuBuilder(spellCheckHandler);

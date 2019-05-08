@@ -8,7 +8,7 @@ const ipcMain = electron.ipcMain;
 
 const is = require('electron-is');
 
-var spellingSuggestions = [];
+var spellingSuggestions = {};
 ipcMain.on('set-spelling-suggestions', (event, suggestions) => {
   spellingSuggestions = suggestions;
 });
@@ -17,10 +17,11 @@ ipcMain.on('set-spelling-suggestions', (event, suggestions) => {
 // But modified beyond the limits of its prepend/append abilities
 module.exports = (win) => {
   win.webContents.on('context-menu', (e, props) => {
-    // This is handled in spellchecker.js
-    if (props.misspelledWord) {
-      return;
-    }
+    // If using spellchecker.js, uncomment these lines to bypass
+    // our context menu and use the one provided there
+    // if (props.misspelledWord) {
+    //   return;
+    // }
     const editFlags = props.editFlags;
     // selectionText trims whitespace, so this might be wrong for whitespace-only selections
     const hasText = props.selectionText.length > 0;
@@ -36,14 +37,18 @@ module.exports = (win) => {
     };
 
     let template = [];
-    spellingSuggestions.forEach(suggestion => {
-      template.push({
-        label: suggestion,
-        click (item, focusedWindow, e) {
-          win.webContents.replaceMisspelling(suggestion);
-        }
-      });
-    });
+    for (var word in spellingSuggestions) {
+      if (props.selectionText == word) {
+        spellingSuggestions[word].forEach(suggestion => {
+          template.push({
+            label: suggestion,
+            click (item, focusedWindow, e) {
+              win.webContents.replaceMisspelling(suggestion);
+            }
+          });
+        });
+      }
+    }
 
     if (props.linkURL) {
       template.push({
