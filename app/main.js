@@ -132,7 +132,7 @@ function checkUserMods (type, reload) {
       menuId: 'show_user_script',
       callback: function (data) {
         log.debug('injecting js');
-        mainWindow.webContents.executeJavaScript(data);
+        mainWindow.webContents.executeJavaScript(data + '\n0;', true);
       }
     };
     break;

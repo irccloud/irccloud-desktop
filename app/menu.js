@@ -28,7 +28,9 @@ module.exports = {
       accelerator: 'CmdOrCtrl+,',
       click: function (item, focusedWindow, event) {
         if (focusedWindow) {
-          focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.openSettings(); }', true);
+          focusedWindow.webContents.executeJavaScript(
+            'if (SESSIONVIEW) { SESSIONVIEW.openSettings(); } 0;'
+          );
         }
       }
     };
@@ -124,7 +126,9 @@ module.exports = {
           label: 'Add a Network…',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.addNetwork(); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSIONVIEW) { SESSIONVIEW.addNetwork(); } 0;'
+              );
             }
           }
         },
@@ -134,7 +138,9 @@ module.exports = {
           accelerator: 'CmdOrCtrl+K',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.channelSwitcher.toggle(); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSIONVIEW) { SESSIONVIEW.channelSwitcher.toggle(); } 0;'
+              );
             }
           }
         }, {
@@ -142,7 +148,9 @@ module.exports = {
           accelerator: 'Alt+Down',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextBuffer(); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextBuffer(); } 0;'
+              );
             }
           }
         }, {
@@ -150,7 +158,9 @@ module.exports = {
           accelerator: 'Alt+Up',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousBuffer(); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousBuffer(); } 0;'
+              );
             }
           }
         }, {
@@ -158,7 +168,9 @@ module.exports = {
           accelerator: 'Alt+Shift+Down',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextUnreadBuffer(); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectNextUnreadBuffer(); } 0;'
+              );
             }
           }
         }, {
@@ -166,7 +178,9 @@ module.exports = {
           accelerator: 'Alt+Shift+Up',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousUnreadBuffer(); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousUnreadBuffer(); } 0;'
+                );
             }
           }
         },
@@ -176,7 +190,9 @@ module.exports = {
           accelerator: 'Esc',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.read(); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.read(); } 0;'
+              );
             }
           }
         }, {
@@ -184,7 +200,9 @@ module.exports = {
           accelerator: 'Shift+Esc',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSION) { SESSION.markAllAsRead(); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSION) { SESSION.markAllAsRead(); } 0;'
+              );
             }
           }
         },
@@ -193,14 +211,19 @@ module.exports = {
           label: 'Upload a File…',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("uploadPrompt"); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("uploadPrompt"); } 0;',
+                true // useGesture (required for simulating upload click)
+              );
             }
           }
         }, {
           label: 'Start a Pastebin…',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("pastePrompt"); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSION && SESSION.currentBuffer) { SESSION.currentBuffer.trigger("pastePrompt"); } 0;'
+              );
             }
           }
         }
@@ -385,14 +408,18 @@ module.exports = {
           label: 'File Uploads',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.files.show(); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSIONVIEW) { SESSIONVIEW.files.show(); } 0;'
+              );
             }
           }
         }, {
           label: 'Pastebins',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.pastebins.show(); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSIONVIEW) { SESSIONVIEW.pastebins.show(); } 0;'
+              );
             }
           }
         }
@@ -429,7 +456,9 @@ module.exports = {
           accelerator: 'CmdOrCtrl+/',
           click: function (item, focusedWindow, event) {
             if (focusedWindow) {
-              focusedWindow.webContents.executeJavaScript('if (SESSIONVIEW) { SESSIONVIEW.navigate("?/shortcuts", {trigger: true}); }', true);
+              focusedWindow.webContents.executeJavaScript(
+                'if (SESSIONVIEW) { SESSIONVIEW.navigate("?/shortcuts", {trigger: true}); } 0;'
+              );
             }
           }
         },
