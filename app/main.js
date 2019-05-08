@@ -316,7 +316,11 @@ function openMainWindow(opts) {
 
   ContextMenu(mainWindow);
 
-  mainWindow.webContents.on('dom-ready', function(event) {
+  mainWindow.webContents.on('preload-error', function (event, preloadPath, error) {
+    log.error('preload-error', preloadPath, error);
+  });
+
+  mainWindow.webContents.on('dom-ready', function (event) {
     log.debug('dom-ready');
     checkUserMods('style');
     checkUserMods('script');
