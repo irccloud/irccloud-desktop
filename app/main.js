@@ -26,7 +26,6 @@ log.transports.file.level = 'info';
 var mainWindow = null;
 var menu = null;
 var appIcon = null;
-var currentBuffer = null;
 
 const defaultHost = 'https://www.irccloud.com';
 
@@ -627,8 +626,4 @@ app.on('ready', function() {
   if (config.get('menu-bar') === false && !is.macOS()) {
     hideMenuBar(mainWindow);
   }
-});
-
-ipcMain.on('set-current-buffer', (event, bufferInfo) => {
-  currentBuffer = bufferInfo;
 });
