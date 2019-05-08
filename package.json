@@ -33,7 +33,7 @@
     "electron": "^5.0.1",
     "electron-builder": "^20.40.2",
     "eslint": "^5.16.0",
-    "snyk": "^1.162.0"
+    "snyk": "^1.162.1"
   },
   "dependencies": {
     "electron-dl": "^1.14.0",
