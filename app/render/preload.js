@@ -11,12 +11,10 @@
   log.debug('preload');
 
   var is = require('electron-is');
-
-  window.IRCCLOUD_DESKTOP_VERSION = remote.app.getVersion();
-
-  window.addEventListener('wheel', function (e) {
-    // console.log('onwheel');
-  });
+  var version = remote.getBuiltin('app').getVersion();
+  remote.getCurrentWindow().webContents.executeJavaScript(
+    'window.IRCCLOUD_DESKTOP_VERSION = "' + version + '"; 0;'
+  );
 
   if (is.dev()) {
     window.__devtron = {require: require, process: process};
