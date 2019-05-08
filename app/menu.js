@@ -112,7 +112,7 @@ module.exports = {
             var url = focusedWindow ?
               focusedWindow.webContents.getURL() :
               app.config.get('host');
-            require('electron').shell.openExternal(url);
+            Shell.openExternal(url);
           }
         }, {
           label: 'Open Browser Tab…',
@@ -466,7 +466,7 @@ module.exports = {
         {
           label: 'Known Issues',
           click: function(item, focusedWindow, event) {
-            require('electron').shell.openExternal('https://github.com/irccloud/irccloud-desktop/issues');
+            Shell.openExternal('https://github.com/irccloud/irccloud-desktop/issues');
           }
         }
       ]
