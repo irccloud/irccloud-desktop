@@ -62,8 +62,6 @@ const minZoom = -8;
 const maxZoom = 9;
 
 app.config = config;
-global.config = config;
-
 
 function isMainHost () {
   return config.get('host') === defaultHost;
@@ -418,6 +416,47 @@ app.on('open-url', function (event, url) {
   log.info('open-url', url);
   openUrl(url);
 });
+
+// Limits what remote calls can do from the render process
+// Custom values can be returned by setting `event.returnValue
+app.on('remote-get-global', function (event, webContents, globalName) {
+  switch (globalName) {
+  case 'config':
+    event.returnValue = config;
+    break;
+  default:
+    break;
+  }
+  event.preventDefault();
+});
+
+
+app.on('remote-get-builtin', function (event, webContents, moduleName) {
+  switch (moduleName) {
+  case 'app':
+    // Used for:
+    // * app.emit
+    // * app.getVersion()
+    // * app.getLocale()
+    event.returnValue = app;
+    break;
+  case 'BrowserWindow':
+    // Used by devtron
+    if (is.dev()) {
+      event.returnValue = electron.BrowserWindow;
+    }
+    break;
+  default:
+    break;
+  }
+  event.preventDefault();
+});
+
+app.on('remote-get-current-window', function (event, webContents) {
+  event.returnValue = mainWindow;
+  event.preventDefault();
+});
+
 
 function destroyTray() {
   if (appIcon) {
