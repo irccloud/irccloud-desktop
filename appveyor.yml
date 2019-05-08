@@ -24,9 +24,7 @@ install:
   - python --version
   - yarn
   - yarn list
+  - yarn run test
 
 build_script:
   - yarn run win
-
-test_script:
-  - yarn run test
