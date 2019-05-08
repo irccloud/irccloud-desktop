@@ -180,7 +180,7 @@ module.exports = {
             if (focusedWindow) {
               focusedWindow.webContents.executeJavaScript(
                 'if (SESSIONVIEW) { SESSIONVIEW.sidebar.bufferList.selectPreviousUnreadBuffer(); } 0;'
-                );
+              );
             }
           }
         },
