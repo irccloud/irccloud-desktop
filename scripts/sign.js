@@ -38,6 +38,7 @@ async function sign (vm, args) {
     try {
         await vm.exec(signTool, args, {timeout, env: process.env})
     } catch (e) {
+        throw new Error('signing failed');
         if (e.message.includes("The file is being used by another process") || e.message.includes("The specified timestamp server either could not be reached")) {
             console.warn(`First attempt to code sign failed, another attempt will be made in 2 seconds: ${e.message}`)
             await new Promise((resolve, reject) => {
