@@ -20,18 +20,24 @@ exports.default = async function (configuration) {
     const vm = new _vm.VmManager();
     const tempDirManager = new tempFile.TmpDir('packager');
     
-    // let argsOld1 = computeSignToolArgs(configuration, vm, "sha1", false, await getCert(tempDirManager, OLD_CERTIFICATE_B64), OLD_TOKEN_PASSWORD);
-    // console.log(`signing old sha1 ${configuration.path}`);
-    // await sign(vm, argsOld1);
+    // Appending each sig puts it after the top one, so the order here is a bit odd
 
-    let argsNew1 = computeSignToolArgs(configuration, vm, "sha1", false, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
-    console.log(`signing new sha1 ${configuration.path}`);
-    await sign(vm, argsNew1);
+    // 1
+    let argsOld1 = computeSignToolArgs(configuration, vm, "sha1", false, await getCert(tempDirManager, OLD_CERTIFICATE_B64), OLD_TOKEN_PASSWORD);
+    console.log(`signing old sha1 ${configuration.path}`);
+    await sign(vm, argsOld1);
 
-    let argsNew256 = computeSignToolArgs(configuration, vm, "sha256", true, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
-    console.log(`signing new sha256 ${configuration.path}`);
-    await sign(vm, argsNew256);
+    // 4
+    // let argsNew256 = computeSignToolArgs(configuration, vm, "sha256", true, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
+    // console.log(`signing new sha256 ${configuration.path}`);
+    // await sign(vm, argsNew256);
+
+    // // 3
+    // let argsNew1 = computeSignToolArgs(configuration, vm, "sha1", true, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
+    // console.log(`signing new sha1 ${configuration.path}`);
+    // await sign(vm, argsNew1);
     
+    // 2
     let argsOld256 = computeSignToolArgs(configuration, vm, "sha256", true, await getCert(tempDirManager, OLD_CERTIFICATE_B64), OLD_TOKEN_PASSWORD);
     console.log(`signing old sha256 ${configuration.path}`);
     await sign(vm, argsOld256);
