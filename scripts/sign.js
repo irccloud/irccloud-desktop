@@ -17,12 +17,14 @@ exports.default = async function (configuration) {
     const tempDirManager = new tempFile.TmpDir('packager');
 
     let argsOld = computeSignToolArgs(configuration, vm, await getCert(tempDirManager, OLD_CERTIFICATE_B64), OLD_TOKEN_PASSWORD);
-    sign(vm, argsOld);
+    console.log('signing old');
+    await sign(vm, argsOld);
     
     // configuration.isNest // gets set to true for sha256, false for sha1, we set it to true for any additional certs
     configuration.isNest = true;
     let argsNew = computeSignToolArgs(configuration, vm, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
-    sign(vm, argsNew);
+    console.log('signing new');
+    await sign(vm, argsNew);
 
     tempDirManager.cleanup();
 };
@@ -51,7 +53,7 @@ async function sign (vm, args) {
 }
 
 async function getCert(tempDirManager, base64) {
-    return codeSign.downloadCertificate(base64, tempDirManager, process.cwd()).then(path => {
+    return await codeSign.downloadCertificate(base64, tempDirManager, process.cwd()).then(path => {
         return path;
     });
 }
