@@ -28,9 +28,9 @@ exports.default = async function (configuration) {
     await sign(vm, argsOld1);
 
     // 4
-    // let argsNew256 = computeSignToolArgs(configuration, vm, "sha256", true, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
-    // console.log(`signing new sha256 ${configuration.path}`);
-    // await sign(vm, argsNew256);
+    let argsNew256 = computeSignToolArgs(configuration, vm, "sha256", true, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
+    console.log(`signing new sha256 ${configuration.path}`);
+    await sign(vm, argsNew256);
 
     // // 3
     // let argsNew1 = computeSignToolArgs(configuration, vm, "sha1", true, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
