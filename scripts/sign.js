@@ -17,13 +17,13 @@ exports.default = async function (configuration) {
     const tempDirManager = new tempFile.TmpDir('packager');
 
     let argsOld = computeSignToolArgs(configuration, vm, await getCert(tempDirManager, OLD_CERTIFICATE_B64), OLD_TOKEN_PASSWORD);
-    console.log('signing old');
+    console.log(`signing old ${configuration.hash} ${configuration.path}`);
     await sign(vm, argsOld);
     
     // configuration.isNest // gets set to true for sha256, false for sha1, we set it to true for any additional certs
     configuration.isNest = true;
     let argsNew = computeSignToolArgs(configuration, vm, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
-    console.log('signing new');
+    console.log(`signing new ${configuration.hash} ${configuration.path}`);
     await sign(vm, argsNew);
 
     tempDirManager.cleanup();
