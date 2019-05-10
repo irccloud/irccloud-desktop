@@ -21,6 +21,9 @@
       "AppImage"
     ]
   },
+  "win": {
+    "sign": "./scripts/sign.js"
+  },
   "nsisWeb": {
     "artifactName": "${productName}.${ext}"
   },
