@@ -13,18 +13,28 @@ const timeout = parseInt(process.env.SIGNTOOL_TIMEOUT, 10) || 10 * 60 * 1000;
 
 exports.default = async function (configuration) {
     // console.log(configuration);
+    // Only process on one hash, we set hashes manually to control the order
+    if (configuration.hash === 'sha1') {
+        return;
+    }
     const vm = new _vm.VmManager();
     const tempDirManager = new tempFile.TmpDir('packager');
-
-    let argsNew = computeSignToolArgs(configuration, vm, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
-    console.log(`signing new ${configuration.hash} ${configuration.path}`);
-    await sign(vm, argsNew);
     
-    // configuration.isNest // gets set to true for sha256, false for sha1, we set it to true for any additional certs
-    configuration.isNest = true;
-    let argsOld = computeSignToolArgs(configuration, vm, await getCert(tempDirManager, OLD_CERTIFICATE_B64), OLD_TOKEN_PASSWORD);
-    console.log(`signing old ${configuration.hash} ${configuration.path}`);
-    await sign(vm, argsOld);
+    // let argsOld1 = computeSignToolArgs(configuration, vm, "sha1", false, await getCert(tempDirManager, OLD_CERTIFICATE_B64), OLD_TOKEN_PASSWORD);
+    // console.log(`signing old sha1 ${configuration.path}`);
+    // await sign(vm, argsOld1);
+
+    let argsNew1 = computeSignToolArgs(configuration, vm, "sha1", false, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
+    console.log(`signing new sha1 ${configuration.path}`);
+    await sign(vm, argsNew1);
+
+    let argsNew256 = computeSignToolArgs(configuration, vm, "sha256", true, await getCert(tempDirManager, NEW_CERTIFICATE_B64), NEW_TOKEN_PASSWORD);
+    console.log(`signing new sha256 ${configuration.path}`);
+    await sign(vm, argsNew256);
+    
+    let argsOld256 = computeSignToolArgs(configuration, vm, "sha256", true, await getCert(tempDirManager, OLD_CERTIFICATE_B64), OLD_TOKEN_PASSWORD);
+    console.log(`signing old sha256 ${configuration.path}`);
+    await sign(vm, argsOld256);
 
     tempDirManager.cleanup();
 };
@@ -61,13 +71,14 @@ async function getCert(tempDirManager, base64) {
 
 // Yoinked and adapted from:
 // https://github.com/electron-userland/electron-builder/blob/d6c9d8fa704d0fe9bf3ed419c5dd4d59118695a8/packages/app-builder-lib/src/codeSign/windowsCodeSign.ts#L191
-function computeSignToolArgs(options, vm, certificateFile, password) {
+function computeSignToolArgs(options, vm, hash, append, certificateFile, password) {
     const inputFile = vm.toVmFile(options.path)
     const args = ["sign"];
   
     if (process.env.ELECTRON_BUILDER_OFFLINE !== "true") {
-        const timestampingServiceUrl = options.hash === "sha256" ? "http://timestamp.comodoca.com/rfc3161" :  "http://timestamp.verisign.com/scripts/timstamp.dll";
-        args.push("/tr", timestampingServiceUrl);
+        const timestampingServiceUrl = hash === "sha256" ? "http://timestamp.comodoca.com/rfc3161" :  "http://timestamp.verisign.com/scripts/timstamp.dll";
+        const timestampArg = hash === "sha256" ? "/tr" : "/t";
+        args.push(timestampArg, timestampingServiceUrl);
     }
   
     const certExtension = path.extname(certificateFile)
@@ -78,9 +89,11 @@ function computeSignToolArgs(options, vm, certificateFile, password) {
         throw new Error(`Please specify pkcs12 (.p12/.pfx) file, ${certificateFile} is not correct`)
     }
   
-    args.push("/fd", options.hash)
-    if (process.env.ELECTRON_BUILDER_OFFLINE !== "true") {
-        args.push("/td", options.hash)
+    args.push("/fd", hash)
+    if (hash === "sha256") {
+        if (process.env.ELECTRON_BUILDER_OFFLINE !== "true") {
+            args.push("/td", hash)
+        }
     }
   
     if (options.name) {
@@ -92,7 +105,7 @@ function computeSignToolArgs(options, vm, certificateFile, password) {
     }
   
     // msi does not support dual-signing
-    if (options.isNest) {
+    if (append) {
       args.push("/as")
     }
   
