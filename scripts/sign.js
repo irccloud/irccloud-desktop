@@ -67,7 +67,9 @@ function computeSignToolArgs(options, vm, certificateFile, password) {
   
     if (process.env.ELECTRON_BUILDER_OFFLINE !== "true") {
       const timestampingServiceUrl = options.options.timeStampServer || "http://timestamp.verisign.com/scripts/timstamp.dll"
-      args.push(options.isNest || options.hash === "sha256" ? "/tr" : "/t", options.isNest || options.hash === "sha256" ? (options.options.rfc3161TimeStampServer || "http://timestamp.comodoca.com/rfc3161") : timestampingServiceUrl)
+      args.push(
+          options.hash === "sha256" ? "/tr" : "/t",
+          options.hash === "sha256" ? (options.options.rfc3161TimeStampServer || "http://timestamp.comodoca.com/rfc3161") : timestampingServiceUrl)
     }
   
     const certExtension = path.extname(certificateFile)
