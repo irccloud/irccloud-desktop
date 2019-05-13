@@ -444,13 +444,19 @@ app.on('remote-get-builtin', function (event, webContents, moduleName) {
       event.returnValue = electron.BrowserWindow;
     }
     break;
+  case 'Menu':
+  case 'MenuItem':
+  case 'webContents':
+    // Used by electron-spellcheck
+    event.returnValue = electron[moduleName];
+    break;
   default:
     break;
   }
   event.preventDefault();
 });
 
-app.on('remote-get-current-window', function (event, webContents) {
+app.on('remote-get-current-window', function (event) {
   event.returnValue = mainWindow;
   event.preventDefault();
 });

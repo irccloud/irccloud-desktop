@@ -1,18 +1,8 @@
-// No longer used, using spellchecker.js instead for better performance
-// To switch back to this method in future, make sure to install the
-// electron-spell-check-provider package, and check the changelog for anything
-// relevant. Also, require this from the preload script and remove below lines
-// from app/context_menu.js
-// if (props.misspelledWord) {
-//   return;
-// }
-
-
 var remote = require('electron').remote;
 var webFrame = require('electron').webFrame;
 var ipcRenderer = require('electron').ipcRenderer;
 
-var spellchecker = require('spellchecker');
+var electronSpellcheck = require('electron-spellchecker');
 
 var config = remote.getGlobal('config');
 
@@ -31,17 +21,29 @@ function disableSpellcheck () {
   spellCheckWhileTyping = false;
 }
 
-function setupSpellcheck () {
-  resetSuggestions();
-
+function handleSpellcheckToggle () {
   ipcRenderer.on('disable-spellcheck', function (event) {
     disableSpellcheck();
   });
   ipcRenderer.on('enable-spellcheck', function (event) {
     enableSpellcheck();
   });
+}
+
+function setupSpellcheck () {
+  resetSuggestions();
+  handleSpellcheckToggle();
 
   var locale = remote.getBuiltin('app').getLocale();
+
+  // Only using this to check misspellings
+  var electronSpellCheckHandler = new electronSpellcheck.SpellCheckHandler();
+  // No support for multiple languages at the moment
+  // https://github.com/electron-userland/electron-spellchecker/issues/74
+  // https://github.com/irccloud/irccloud-desktop/issues/97#issuecomment-350684063
+  electronSpellCheckHandler.switchLanguage(locale);
+  electronSpellCheckHandler.autoUnloadDictionariesOnBlur();
+
   var provider = {
     spellCheck: function (words, callback) {
       if (!spellCheckWhileTyping) {
@@ -51,10 +53,10 @@ function setupSpellcheck () {
         var misspellings = [];
         var suggestions = {};
         words.forEach(function (x) {
-          if (spellchecker.isMisspelled(x)) {
+          if (electronSpellCheckHandler.currentSpellchecker.isMisspelled(x)) {
             misspellings.push(x);
             if (!suggestions[x]) {
-              suggestions[x] = spellchecker.getCorrectionsForMisspelling(x).slice(0,3);
+              suggestions[x] = electronSpellCheckHandler.currentSpellchecker.getCorrectionsForMisspelling(x).slice(0,3);
             }
           }
         });

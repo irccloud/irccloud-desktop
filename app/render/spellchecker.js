@@ -1,3 +1,13 @@
+// Not currently used, using spellcheck.js instead for compatibility with electron 5
+// breaking API change:
+// https://github.com/electron-userland/electron-spellchecker/issues/144
+// To switch back to this method in future, check the changelog for anything
+// relevant. Also, require this from the preload script and uncomment below lines
+// from app/context_menu.js
+// if (props.misspelledWord) {
+//   return;
+// }
+
 var remote = require('electron').remote;
 var ipcRenderer = require('electron').ipcRenderer;
 
