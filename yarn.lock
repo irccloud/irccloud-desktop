@@ -2572,11 +2572,6 @@ path-exists@^3.0.0:
   resolved "https://registry.yarnpkg.com/path-exists/-/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
   integrity sha1-zg6+ql94yxiSXqfYENe1mwEP1RU=
 
-path-exists@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/path-exists/-/path-exists-4.0.0.tgz#513bdbe2d3b95d7762e8c1137efa195c6c61b5b3"
-  integrity sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==
-
 path-is-absolute@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
@@ -3745,14 +3740,6 @@ unused-filename@^1.0.0:
   dependencies:
     modify-filename "^1.1.0"
     path-exists "^3.0.0"
-
-unused-filename@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/unused-filename/-/unused-filename-2.1.0.tgz#33719c4e8d9644f32d2dec1bc8525c6aaeb4ba51"
-  integrity sha512-BMiNwJbuWmqCpAM1FqxCTD7lXF97AvfQC8Kr/DIeA6VtvhJaMDupZ82+inbjl5yVP44PcxOuCSxye1QMS0wZyg==
-  dependencies:
-    modify-filename "^1.1.0"
-    path-exists "^4.0.0"
 
 unzip-response@^2.0.1:
   version "2.0.1"

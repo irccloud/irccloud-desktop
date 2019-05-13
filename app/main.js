@@ -6,7 +6,6 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const Shell = electron.shell;
 const dialog = electron.dialog;
-const ipcMain = electron.ipcMain;
 
 const path = require('path');
 const FS = require('fs');
@@ -18,7 +17,6 @@ const Tray = electron.Tray;
 
 const _ = require('lodash');
 const is = require('electron-is');
-const unusedFilename = require('unused-filename');
 require('electron-dl')();
 const log = require('electron-log');
 log.transports.file.level = 'info';
