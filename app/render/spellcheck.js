@@ -52,8 +52,12 @@ function setupSpellcheck () {
     "would've", "wouldn't", "wouldn't've", "y'all", "y'all'd've", "you'd", "you'd've", "you'll", "you're", "you've"
   ];
 
+  // The words we get passed are split on both sides of an apostrophe
   const contractionMap = contractions.reduce((acc, word) => {
-    acc[word.replace(/'.*/, '')] = true;
+    let parts = word.toLocaleLowerCase().split("'");
+    parts.forEach((part) => {
+      acc[part] = true;
+    });
     return acc;
   }, {});
 
