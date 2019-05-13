@@ -40,7 +40,7 @@
     "electron": "^5.0.1",
     "electron-builder": "^20.40.2",
     "eslint": "^5.16.0",
-    "snyk": "^1.162.2"
+    "snyk": "^1.163.3"
   },
   "dependencies": {
     "electron-dl": "^1.14.0",
@@ -48,10 +48,10 @@
     "electron-log": "^3.0.5",
     "electron-spellchecker": "^2.0.2",
     "electron-store": "^3.2.0",
-    "electron-updater": "^4.0.9",
+    "electron-updater": "^4.0.6",
     "getos": "^3.1.1",
     "lodash": "^4.17.11",
-    "open": "^6.2.0",
+    "open": "^6.3.0",
     "os-name": "^3.1.0",
     "raven": "^2.6.4"
   }
