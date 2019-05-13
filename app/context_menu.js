@@ -17,11 +17,6 @@ ipcMain.on('set-spelling-suggestions', (event, suggestions) => {
 // But modified beyond the limits of its prepend/append abilities
 module.exports = (win) => {
   win.webContents.on('context-menu', (e, props) => {
-    // If using spellchecker.js, uncomment these lines to bypass
-    // our context menu and use the one provided there
-    // if (props.misspelledWord) {
-    //   return;
-    // }
     const editFlags = props.editFlags;
     // selectionText trims whitespace, so this might be wrong for whitespace-only selections
     const hasText = props.selectionText.length > 0;
