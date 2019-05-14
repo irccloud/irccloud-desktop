@@ -27,8 +27,8 @@ GitHub's Atom editor. For more information, check out the [Electron
 documentation](http://electron.atom.io/docs/v0.37.8/).
 
 ### Build Requirements
-* Node JS version 5.3 or higher
-* yarn (recommended upstream) or NPM (works fine)
+* Node JS version >= 8.12.0
+* yarn (recommended) or NPM (should also work fine)
 
 On Linux, you also need the `icnsutils`, and
 `xz-utils` packages.
