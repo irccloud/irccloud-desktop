@@ -10,6 +10,8 @@ to be set.
 
 These are encrypted using CI server tools.
 
+### macOS
+
 `CSC_LINK` is base64 encoded data of the .p12 file, e.g.
 
 ```
@@ -17,8 +19,6 @@ base64 -i cert.p12 -o cert.p12.b64
 ```
 
 `CSC_KEY_PASSWORD` is the passphrase used to export the .p12 and can't be empty.
-
-### macOS
 
 On macOS, the .p12 file is exported from Keychain Access. Make sure to expand the
 Developer ID Application cert and select it along with its key before exporting.
@@ -46,18 +46,34 @@ will be set automatically.
 
 ### Windows
 
-On windows, the .p12 file is constructed manually from a Code Signing Identity and
-chain like so:
+For windows we use Azure Key Vault and define credentials with the following env vars:
 
 ```
-openssl pkcs12 -export -in ourcert.pem -certfile chain.pem \
-    -inkey ourkey.key -out codesign.p12
+AZURE_KEY_VAULT_URL
+AZURE_KEY_CLIENT_ID
+AZURE_KEY_CLIENT_SECRET
+AZURE_KEY_VAULT_CERTIFICATE
 ```
 
-`chain.pem` is a concatenation of all the intermediaries in PEM format (make sure there
-are no added new lines, some CAs are sloppy). The order should start with the issuer of
-`ourcert.pem` and end with a CA cert issued by the [Microsoft Code Verification Root](http://www.microsoft.com/pki/certs/MicrosoftCodeVerifRoot.crt)
-but that root itself isn't included in the chain.
+IMPORTANT: For local dev, put these in an env file in codesign and source it to avoid ever commiting secrets, e.g.
+```
+# codesign/codesign.env contents
+export AZURE_KEY_VAULT_URL="blah..."
+...
+
+# source it when running local signed builds
+. codesign/codesign.env
+```
+
+The signing procedure is scripted in scripts/sign.js
+
+Our setup for key vault is as described here https://natemcmaster.com/blog/2018/07/02/code-signing/
+
+The AzureSignTool can be installed with the following command after installing .NET Core SDK https://dotnet.microsoft.com/download
+
+```
+dotnet tool install --global AzureSignTool --version 2.0.17
+```
 
 Environment variables are encrypted via the [AppVeyor web interface](https://ci.appveyor.com/tools/encrypt)
 and set in [appveyor.yml](../appveyor.yml)
