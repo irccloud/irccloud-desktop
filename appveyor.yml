@@ -23,7 +23,7 @@ init:
   - git config --global core.autocrlf input
 
 install:
-  - ps: Install-Product node 8 x64
+  - ps: Install-Product node 10 x64
   - ps: irm ipinfo.io/ip
   - dotnet tool install --global AzureSignTool --version 2.0.17
   - git reset --hard HEAD
