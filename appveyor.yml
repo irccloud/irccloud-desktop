@@ -1,7 +1,7 @@
 version: build{build}
 platform:
   - x64
-os: Previous Visual Studio 2015
+os: Visual Studio 2017
 
 environment:
   GYP_MSVS_VERSION: 2015
