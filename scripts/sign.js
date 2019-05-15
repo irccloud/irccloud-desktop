@@ -4,11 +4,21 @@ const isCi = require('is-ci');
 const codeSign = require("app-builder-lib/out/codeSign/codeSign");
 const _vm = require("app-builder-lib/out/vm/vm");
 const log = require("builder-util/out/log").log;
+const chalk = require("chalk");
+const execFile = require('child_process').execFile;
+const crypto = require('crypto');
 
 const AZURE_KEY_VAULT_URL = process.env.AZURE_KEY_VAULT_URL;
 const AZURE_KEY_CLIENT_ID  = process.env.AZURE_KEY_CLIENT_ID;
 const AZURE_KEY_CLIENT_SECRET = process.env.AZURE_KEY_CLIENT_SECRET;
 const AZURE_KEY_VAULT_CERTIFICATE  = process.env.AZURE_KEY_VAULT_CERTIFICATE;
+
+const SECRETS = [
+    AZURE_KEY_VAULT_URL,
+    AZURE_KEY_CLIENT_ID,
+    AZURE_KEY_CLIENT_SECRET,
+    AZURE_KEY_VAULT_CERTIFICATE
+];
 
 exports.default = async function (configuration) {
     // log.info(configuration, 'sign config');
@@ -34,23 +44,14 @@ exports.default = async function (configuration) {
     // 1
     let argsSha256 = computeAzureSignToolArgs(configuration, vm, false);
     log.info({hash: 'sha256', path: configuration.path, tool: signTool}, 'signing');
-    await sign(vm, signTool, argsSha256);
+    await sign(signTool, argsSha256);
 
     tempDirManager.cleanup();
 };
 
-async function sign (vm, signTool, args) {
+async function sign (signTool, args) {
     const timeout = 10 * 60 * 1000;
-
-    try {
-        await vm.exec(signTool, args, {timeout, env: process.env})
-    } catch (e) {
-        if (isCi) {
-            log.info('running in CI');
-        }
-        throw new Error('signing failed');
-        // throw e;
-    }
+    await exec(signTool, args, {timeout})
 }
 
 async function getCert(tempDirManager, base64) {
@@ -120,6 +121,9 @@ function computeSignToolArgs(options, vm, hash, append, certificateFile, passwor
     const d = '-';
     const hash = 'sha256';
 
+    if (!AZURE_KEY_VAULT_URL || !AZURE_KEY_CLIENT_ID || !AZURE_KEY_CLIENT_SECRET || !AZURE_KEY_VAULT_CERTIFICATE) {
+        throw new Error('Missing key vault params');
+    }
     args.push('--azure-key-vault-url', AZURE_KEY_VAULT_URL);
     args.push('--azure-key-vault-client-id', AZURE_KEY_CLIENT_ID);
     args.push('--azure-key-vault-client-secret', AZURE_KEY_CLIENT_SECRET);
@@ -156,3 +160,42 @@ function computeSignToolArgs(options, vm, hash, append, certificateFile, passwor
   
     return args
   }
+
+  function exec(file, args, options) {
+    return new Promise((resolve, reject) => {
+      execFile(file, args, {
+      ...options,
+      maxBuffer: 1000 * 1024 * 1024,
+      env: process.env
+    }, (error, stdout, stderr) => {
+        if (error == null) {
+          resolve(stdout.toString())
+        }
+        else {
+          let message = chalk.red(removePassword(`Exit code: ${error.code}. ${error.message}`))
+          if (stdout.length !== 0) {
+            message += `\n${chalk.yellow(removePassword(stdout.toString()))}`
+          }
+          if (stderr.length !== 0) {
+            message += `\n${chalk.red(removePassword(stderr.toString()))}`
+          }
+  
+          reject(new Error(message))
+        }
+      })
+    })
+  }
+
+  function removePassword(input) {
+    return SECRETS.reduce((acc, secret) => {
+        return acc.replace(new RegExp(escapeRegExp(secret), 'g'), () => {
+            return '****';
+            return `${crypto.createHash("sha256").update(secret).digest("hex")} (sha256 hash)`;
+        });
+    }, input);
+  }
+
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
+  
