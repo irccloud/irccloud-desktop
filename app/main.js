@@ -294,15 +294,18 @@ function openMainWindow(opts) {
     switch (cmd) {
     case 'browser-backward':
       if (mainWindow.webContents.canGoBack()) {
+        e.preventDefault();
         mainWindow.webContents.goBack();
       }
       break;
     case 'browser-forward':
       if (mainWindow.webContents.canGoForward()) {
+        e.preventDefault();
         mainWindow.webContents.goForward();
       }
       break;
     case 'browser-refresh':
+      e.preventDefault();
       mainWindow.webContents.reloadIgnoringCache();
       break;
     default:
