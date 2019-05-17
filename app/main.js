@@ -262,6 +262,18 @@ function openMainWindow(opts) {
     log.debug('closed');
     mainWindow = null;
   });
+
+  mainWindow.on('page-title-updated', function(event) {
+    var title = mainWindow.getTitle();
+    if (title && is.macOS()) {
+      var unread = "";
+      var matches = title.match(/^\((\d+)\)/);
+      if (matches) {
+        unread = matches[1];
+      }
+      app.dock.setBadge(unread);
+    }
+  });
   
   mainWindow.on('swipe', function (e, direction) {
     switch (direction) {
@@ -278,40 +290,32 @@ function openMainWindow(opts) {
     }
   });
 
-  mainWindow.on('page-title-updated', function(event) {
-    var title = mainWindow.getTitle();
-    if (title && is.macOS()) {
-      var unread = "";
-      var matches = title.match(/^\((\d+)\)/);
-      if (matches) {
-        unread = matches[1];
+  // This is apparently not needed on linux, and results in double actions
+  // despite the documentation
+  // https://github.com/electron/electron/issues/18322
+  // https://github.com/irccloud/irccloud-desktop/issues/86
+  // macOS doesn't use app-command
+  if (is.windows()) {
+    mainWindow.on('app-command', function (e, cmd) {
+      switch (cmd) {
+      case 'browser-backward':
+        if (mainWindow.webContents.canGoBack()) {
+          mainWindow.webContents.goBack();
+        }
+        break;
+      case 'browser-forward':
+        if (mainWindow.webContents.canGoForward()) {
+          mainWindow.webContents.goForward();
+        }
+        break;
+      case 'browser-refresh':
+        mainWindow.webContents.reloadIgnoringCache();
+        break;
+      default:
+        break;
       }
-      app.dock.setBadge(unread);
-    }
-  });
-
-  mainWindow.on('app-command', function (e, cmd) {
-    switch (cmd) {
-    case 'browser-backward':
-      if (mainWindow.webContents.canGoBack()) {
-        e.preventDefault();
-        mainWindow.webContents.goBack();
-      }
-      break;
-    case 'browser-forward':
-      if (mainWindow.webContents.canGoForward()) {
-        e.preventDefault();
-        mainWindow.webContents.goForward();
-      }
-      break;
-    case 'browser-refresh':
-      e.preventDefault();
-      mainWindow.webContents.reloadIgnoringCache();
-      break;
-    default:
-      break;
-    }
-  });
+    });
+  }
 
   ContextMenu(mainWindow);
 
