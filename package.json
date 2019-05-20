@@ -40,7 +40,7 @@
     "electron": "^5.0.1",
     "electron-builder": "^20.41.0",
     "eslint": "^5.16.0",
-    "snyk": "^1.163.3"
+    "snyk": "^1.165.1"
   },
   "dependencies": {
     "electron-dl": "^1.14.0",
