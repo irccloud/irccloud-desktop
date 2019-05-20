@@ -23,8 +23,7 @@
     ]
   },
   "win": {
-    "sign": "./scripts/sign.js",
-    "publish": ["github"]
+    "sign": "./scripts/sign.js"
   },
   "nsisWeb": {
     "artifactName": "${productName}.${ext}"
