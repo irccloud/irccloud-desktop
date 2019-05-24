@@ -37,11 +37,9 @@ module.exports = {
     autoUpdater.allowPrerelease = true;
     autoUpdater.fullChangelog = true;
     
-    try {
-      autoUpdater.checkForUpdates();
-    } catch (exc) {
-      // This will error if running with code signing
-    }
+    autoUpdater.checkForUpdates().catch(function (exc) {
+      // pass
+    });
     
     autoUpdater.on('error', function (error, errorMessage) {
       setUpdateCheckMenuEnabled(menu, true);
@@ -66,7 +64,9 @@ module.exports = {
   check: function () {
     if (autoUpdater) {
       // TODO show progress dialog
-      autoUpdater.checkForUpdates();
+      autoUpdater.checkForUpdates().catch(function (exc) {
+        // pass
+      });
       autoUpdater.once('error', onUpdateError);
       autoUpdater.once('update-downloaded', onUpdateDownloaded);
       autoUpdater.once('update-not-available', onUpdateNotAvailable);
@@ -149,7 +149,6 @@ function onUpdateNotAvailable (event) {
   autoUpdater.removeListener('update-downloaded', onUpdateDownloaded);
 }
 function onUpdateError (error, errorMessage) {
-  log.error('updateError', errorMessage, error);
   dialog.showMessageBox({
     type: 'error',
     message: 'Error checking for updates',
