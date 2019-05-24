@@ -5,3 +5,4 @@ npm-debug.log*
 .travis.env
 codesign
 *.provisionprofile
+dev-app-update.yml
