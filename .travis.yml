@@ -6,7 +6,7 @@ os:
 - linux
 sudo: required
 dist: trusty
-osx_image: xcode9
+osx_image: xcode11
 compiler:
 - clang
 addons:
