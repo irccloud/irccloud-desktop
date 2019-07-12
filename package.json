@@ -32,15 +32,16 @@
     "win": "electron-builder --win nsis-web --ia32 --x64 -c.extraMetadata.irccloud.sentry_dsn %SENTRY_DSN%",
     "win-local": "electron-builder --win nsis-web --x64 -c.forceCodeSigning=false -c.extraMetadata.irccloud.local_build",
     "snyk": "snyk test",
-    "test": "eslint app"
+    "test": "eslint app",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "irccloud": {},
   "devDependencies": {
     "devtron": "^1.4.0",
     "electron": "^5.0.6",
     "electron-builder": "^21.0.15",
-    "eslint": "^6.0.1",
-    "snyk": "^1.193.0"
+    "eslint": "^6.0.1"
   },
   "dependencies": {
     "electron-dl": "^1.14.0",
@@ -53,6 +54,8 @@
     "open": "^6.4.0",
     "os-name": "^3.1.0",
     "raven": "^2.6.4",
+    "snyk": "^1.193.0",
     "spellchecker": "^3.6.1"
-  }
+  },
+  "snyk": true
 }
