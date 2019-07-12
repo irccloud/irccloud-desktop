@@ -8,8 +8,7 @@
       "zip"
     ],
     "darkModeSupport": true,
-    "electronUpdaterCompatibility": ">=2.15.0",
-    "hardenedRuntime": true
+    "electronUpdaterCompatibility": ">=2.15.0"
   },
   "mas": {
     "publish": null

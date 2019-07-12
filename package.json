@@ -37,22 +37,22 @@
   "irccloud": {},
   "devDependencies": {
     "devtron": "^1.4.0",
-    "electron": "^5.0.1",
-    "electron-builder": "^20.41.0",
-    "eslint": "^5.16.0",
-    "snyk": "^1.165.1"
+    "electron": "^5.0.6",
+    "electron-builder": "^21.0.15",
+    "eslint": "^6.0.1",
+    "snyk": "^1.193.0"
   },
   "dependencies": {
     "electron-dl": "^1.14.0",
     "electron-is": "^3.0.0",
-    "electron-log": "^3.0.5",
-    "electron-store": "^3.2.0",
-    "electron-updater": "^4.0.6",
+    "electron-log": "^3.0.6",
+    "electron-store": "^4.0.0",
+    "electron-updater": "^4.1.2",
     "getos": "^3.1.1",
-    "lodash": "^4.17.11",
-    "open": "^6.3.0",
+    "lodash": "^4.17.14",
+    "open": "^6.4.0",
     "os-name": "^3.1.0",
     "raven": "^2.6.4",
-    "spellchecker": "^3.5.3"
+    "spellchecker": "^3.6.1"
   }
 }
