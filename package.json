@@ -54,7 +54,7 @@
     "open": "^6.4.0",
     "os-name": "^3.1.0",
     "raven": "^2.6.4",
-    "snyk": "^1.193.0",
+    "snyk": "^1.193.2",
     "spellchecker": "^3.6.1"
   },
   "snyk": true
