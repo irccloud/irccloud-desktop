@@ -8,7 +8,12 @@
       "zip"
     ],
     "darkModeSupport": true,
-    "electronUpdaterCompatibility": ">=2.15.0"
+    "electronUpdaterCompatibility": ">=2.15.0",
+
+    "hardenedRuntime" : true,
+    "gatekeeperAssess": false,
+    "entitlements": "build/entitlements.mac.plist",
+    "entitlementsInherit": "build/entitlements.mac.plist"
   },
   "mas": {
     "publish": null
@@ -28,7 +33,8 @@
     "artifactName": "${productName}.${ext}"
   },
   "dmg": {
-    "icon": null
+    "icon": null,
+    "sign": false
   },
   "protocols": [
     {
