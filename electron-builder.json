@@ -23,8 +23,12 @@
     "category": "Network;IRCClient",
     "target": [
       "deb",
-      "AppImage"
+      "AppImage",
+      "snap"
     ]
+  },
+  "snap": {
+    "grade": "devel"
   },
   "win": {
     "sign": "./scripts/sign.js"
