@@ -36,3 +36,5 @@ deploy:
   snap: dist/*.snap
   channel: edge
   skip_cleanup: true
+  on:
+    condition: $TRAVIS_OS_NAME = "linux"
