@@ -5,7 +5,7 @@ os:
 - osx
 - linux
 sudo: required
-dist: trusty
+dist: xenial
 osx_image: xcode11
 compiler:
 - clang
@@ -31,3 +31,8 @@ before_script:
 - yarn list
 script:
 - "./scripts/travis.sh"
+deploy:
+  provider: snap
+  snap: dist/*.snap
+  channel: edge
+  skip_cleanup: true
