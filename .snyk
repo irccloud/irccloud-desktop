@@ -5,21 +5,5 @@ ignore:
   SNYK-JS-PUPA-174563:
     - electron-dl > pupa:
         reason: None given
-        expires: '2019-08-11T09:34:45.729Z'
-  'npm:deep-extend:20180409':
-    - snyk > update-notifier > latest-version > package-json > registry-auth-token > rc > deep-extend:
-        reason: None given
-        expires: '2019-08-11T09:34:45.729Z'
-# patches apply the minimum changes required to fix a vulnerability
-patch:
-  SNYK-JS-LODASH-450202:
-    - getos > async > lodash:
-        patched: '2019-07-12T09:34:12.257Z'
-    - snyk > inquirer > lodash:
-        patched: '2019-07-12T09:34:12.257Z'
-    - snyk > snyk-config > lodash:
-        patched: '2019-07-12T09:34:12.257Z'
-    - snyk > snyk-nodejs-lockfile-parser > lodash:
-        patched: '2019-07-12T09:34:12.257Z'
-    - snyk > snyk-nuget-plugin > lodash:
-        patched: '2019-07-12T09:34:12.257Z'
+        expires: '2019-08-18T12:25:12.953Z'
+patch: {}
