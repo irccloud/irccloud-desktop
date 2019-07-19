@@ -614,11 +614,11 @@ function handleProtocolUrls () {
   if (config.get('neverPromptIrcUrls')) {
     return;
   }
-  var isHandler = (
-    app.isDefaultProtocolClient('irc') &&
-    app.isDefaultProtocolClient('ircs')
-  );
-  if (isHandler) {
+  var handlesIrc = app.isDefaultProtocolClient('irc');
+  var handlesIrcs = app.isDefaultProtocolClient('ircs');
+  log.debug('isDefaultProtocolClient: irc', handlesIrc);
+  log.debug('isDefaultProtocolClient: ircs', handlesIrcs);
+  if (handlesIrc && handlesIrcs) {
     return;
   }
   
@@ -632,9 +632,10 @@ function handleProtocolUrls () {
   }, function (ret) {
     switch (ret) {
     case 0:
-      app.setAsDefaultProtocolClient('irc');
-      app.setAsDefaultProtocolClient('ircs');
-      handleProtocolUrls();
+      var setIrc = app.setAsDefaultProtocolClient('irc');
+      var setIrcs = app.setAsDefaultProtocolClient('ircs');
+      log.debug('setAsDefaultProtocolClient: irc', setIrc);
+      log.debug('setAsDefaultProtocolClient: ircs', setIrcs);
       break;
     case 2:
       config.set('neverPromptIrcUrls', true);
