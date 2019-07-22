@@ -611,6 +611,9 @@ function handleProtocolUrls () {
   if (is.sandbox()) {
     return;
   }
+  if (is.linux() && process.env.SNAP) {
+    return;
+  }
   if (config.get('neverPromptIrcUrls')) {
     return;
   }
