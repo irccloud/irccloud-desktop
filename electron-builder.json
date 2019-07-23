@@ -28,7 +28,8 @@
     ]
   },
   "snap": {
-    "grade": "devel"
+    "grade": "devel",
+    "publish": null
   },
   "win": {
     "sign": "./scripts/sign.js"
