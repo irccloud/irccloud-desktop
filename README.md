@@ -24,14 +24,14 @@ Status](https://travis-ci.org/irccloud/irccloud-desktop.svg?branch=master)](http
 
 IRCCloud Desktop is built on the Electron app framework, as used by
 GitHub's Atom editor. For more information, check out the [Electron
-documentation](http://electron.atom.io/docs/v0.37.8/).
+documentation](https://electronjs.org/docs). Build and packaging is handled by the excellent [electron-builder](https://www.electron.build/) project.
 
 ### Build Requirements
+
 * Node JS version >= 8.12.0
 * yarn (recommended) or NPM (should also work fine)
 
-On Linux, you also need the `icnsutils`, and
-`xz-utils` packages.
+On Linux, you also need the `libopenjp2-tools` package.
 
 ### Running
 
