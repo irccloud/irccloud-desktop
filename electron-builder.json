@@ -27,7 +27,14 @@
       "snap"
     ]
   },
+  "appImage": {
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}"
+  },
+  "deb": {
+    "artifactName": "${name}_${version}_${os}_${arch}.${ext}"
+  },
   "snap": {
+    "artifactName": "${name}_${version}_${os}_${arch}.${ext}",
     "grade": "devel",
     "publish": null
   },
