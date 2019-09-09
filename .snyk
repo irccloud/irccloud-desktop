@@ -5,5 +5,5 @@ ignore:
   SNYK-JS-PUPA-174563:
     - electron-dl > pupa:
         reason: None given
-        expires: '2019-08-18T12:25:12.953Z'
+        expires: '2019-10-09T14:37:56.572Z'
 patch: {}
