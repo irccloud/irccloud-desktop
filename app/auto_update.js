@@ -111,7 +111,7 @@ function showUpdateDialog() {
       });
     });
   }
-  var ret = dialog.showMessageBox({
+  var ret = dialog.showMessageBoxSync({
     type: 'info',
     message: 'A new version of ' + app.getName() + ' has been downloaded',
     detail: message,

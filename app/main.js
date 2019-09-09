@@ -102,13 +102,13 @@ function enableStreamlinedLogin () {
       name : name,
       value : "1"
     };
-    mainWindow.webContents.session.cookies.set(inviteCookie, function (error) {
+    mainWindow.webContents.session.cookies.set(inviteCookie).catch(function (error) {
       if (error) {
         log.error('set invite cookie error', error);
       }
     });
   } else if (url) {
-    mainWindow.webContents.session.cookies.remove(url, name, function (error) {
+    mainWindow.webContents.session.cookies.remove(url, name).catch(function (error) {
       if (error) {
         log.error('remove invite cookie error', error);
       }
@@ -176,7 +176,7 @@ function checkUserMods (type, reload) {
     if (extract.length < data.length) {
       extract += '\n...';
     }
-    var buttonId = dialog.showMessageBox({
+    var buttonId = dialog.showMessageBoxSync({
       browserWindow: mainWindow,
       type: 'info',
       message: opts.message,
@@ -586,7 +586,7 @@ function checkInApplications () {
     return;
   }
 
-  var ret = dialog.showMessageBox({
+  var ret = dialog.showMessageBoxSync({
     type: 'info',
     message: 'Would you like to move ' + app.getName() + ' to your Applications folder?',
     buttons: ['&OK', '&Not Now', '&Don’t Ask Again'],
@@ -632,7 +632,7 @@ function handleProtocolUrls () {
     cancelId: 1,
     defaultId: 0,
     normalizeAccessKeys: true
-  }, function (ret) {
+  }).then(function (ret) {
     switch (ret) {
     case 0:
       var setIrc = app.setAsDefaultProtocolClient('irc');
