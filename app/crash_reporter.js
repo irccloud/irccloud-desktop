@@ -46,6 +46,7 @@ function raven_config() {
         os_arch: os.arch(),
         os_platform: os.platform(),
         os_release: os.release(),
+        os_version: process.getSystemVersion(),
         os_type: os.type(),
         os_totalmem: os_totalmem_gb + 'GB',
         hostname: app.config.get('host'),
@@ -77,13 +78,13 @@ function raven_config() {
     };
     if (is.linux()) {
       const getLinuxOs = require('getos');
-      getLinuxOs((error, os) => {
+      getLinuxOs((error, linuxOs) => {
         if (error) {
           log.warn('failed to get linux os');
         } else {
-          config.tags.linux_dist = os.dist;
-          config.tags.linux_codename = os.codename;
-          config.tags.linux_release = os.release;
+          config.tags.linux_dist = linuxOs.dist;
+          config.tags.linux_codename = linuxOs.codename;
+          config.tags.linux_release = linuxOs.release;
         }
         resolve(config);
       });
