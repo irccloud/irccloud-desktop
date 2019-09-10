@@ -1,5 +1,6 @@
 var remote = require('electron').remote;
 
+// TODO fixed in electron 7.x, test removing this then
 function setupFocus () {
   // https://github.com/electron/electron/issues/7125
   // If we load/refresh while the window is hidden or blurred, document.hasFocus is wrong
