@@ -13,6 +13,8 @@ addons:
   apt:
     packages:
     - libopenjp2-tools
+cache:
+  npm: false
 before_install:
 - openssl aes-256-cbc -K $encrypted_fc666da9e2f5_key -iv $encrypted_fc666da9e2f5_iv
   -in .travis.env.enc -out .travis.env -d; source .travis.env;
