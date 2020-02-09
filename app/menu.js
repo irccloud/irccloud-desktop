@@ -257,8 +257,8 @@ module.exports = {
       id: 'spellingItem',
       checked: app.config.get('spellcheck'),
       click: function(item, focusedWindow, event) {
-        app.config.set('spellcheck', item.checked);
-        app.toggleSpellcheck();
+        //app.config.set('spellcheck', item.checked);
+        //app.toggleSpellcheck();
       }
     };
     if (is.macOS()) {

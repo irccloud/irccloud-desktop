@@ -23,7 +23,7 @@
 
   require('./focus')();
   require('./zoom')();
-  require('./spellcheck')();
+  //require('./spellcheck')();
   require('./notification')();
   require('./irc-url')();
   require('./user')();
