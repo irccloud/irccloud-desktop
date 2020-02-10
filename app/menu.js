@@ -63,7 +63,7 @@ module.exports = {
       visible: !!app.config.get('acceptUserScripts')
     };
     var app_menu = {
-      label: app.getName(),
+      label: app.name,
       id: 'app',
       submenu: []
     };

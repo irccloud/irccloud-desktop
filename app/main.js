@@ -235,7 +235,7 @@ function openMainWindow(opts) {
       'contextIsolation': true,
       'nodeIntegration': false
     },
-    'title': app.getName()
+    'title': app.name
   };
   if (config.has('x') && config.has('y')) {
     windowOpts.x = config.get('x');
@@ -479,7 +479,7 @@ function setupTray() {
   appIcon = new Tray(path.join(__dirname, is.windows() ? 'icon.ico' : 'tray-icon.png'));
   // This doesn't work on KDE (it uses the app.name instead of productName)
   // Also can't seem to get it to show on Ubuntu
-  appIcon.setToolTip(app.getName());
+  appIcon.setToolTip(app.name);
   // Doesn't work on linux
   appIcon.on('click', function() {
     log.debug('tray click');
@@ -588,7 +588,7 @@ function checkInApplications () {
 
   var ret = dialog.showMessageBoxSync({
     type: 'info',
-    message: 'Would you like to move ' + app.getName() + ' to your Applications folder?',
+    message: 'Would you like to move ' + app.name + ' to your Applications folder?',
     buttons: ['&OK', '&Not Now', '&Don’t Ask Again'],
     cancelId: 1,
     defaultId: 0,
@@ -627,7 +627,7 @@ function handleProtocolUrls () {
   
   dialog.showMessageBox({
     type: 'info',
-    message: 'Would you like to set ' + app.getName() + ' as your default IRC client?',
+    message: 'Would you like to set ' + app.name + ' as your default IRC client?',
     buttons: ['&Set Default', '&Not Now', '&Don’t Ask Again'],
     cancelId: 1,
     defaultId: 0,

@@ -93,7 +93,7 @@ function showUpdateDialog() {
     return;
   }
   
-  var message = app.getName() + ' ' + updateAvailable.version + ' is now available. It will be installed the next time you restart the application.';
+  var message = app.name + ' ' + updateAvailable.version + ' is now available. It will be installed the next time you restart the application.';
   if (updateAvailable.notes) {
     message += '\n\nRelease notes:\n';
     log.info('updateAvailable', updateAvailable);
@@ -113,7 +113,7 @@ function showUpdateDialog() {
   }
   var ret = dialog.showMessageBoxSync({
     type: 'info',
-    message: 'A new version of ' + app.getName() + ' has been downloaded',
+    message: 'A new version of ' + app.name + ' has been downloaded',
     detail: message,
     buttons: ['OK', 'Install and Relaunch'],
     cancelId: 0,
@@ -140,7 +140,7 @@ function onUpdateNotAvailable (event) {
     dialog.showMessageBox({
       type: 'info',
       message: 'You’re up to date!',
-      detail: app.getName() + ' ' + app.getVersion() + ' is currently the newest version available.',
+      detail: app.name + ' ' + app.getVersion() + ' is currently the newest version available.',
       buttons: ['OK'],
       defaultId: 0
     });
