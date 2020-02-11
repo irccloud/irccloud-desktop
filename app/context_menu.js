@@ -27,7 +27,6 @@ module.exports = (win) => {
 
     let template = [];
 
-    log.info(props.misspelledWord, props.dictionarySuggestions);
     props.dictionarySuggestions.forEach(suggestion => {
       template.push({
         label: suggestion,
