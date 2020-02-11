@@ -233,6 +233,7 @@ function openMainWindow(opts) {
       'allowDisplayingInsecureContent': true,
       'preload': path.join(__dirname, 'render', 'preload.js'),
       'contextIsolation': true,
+      'spellcheck': true,
       'nodeIntegration': false
     },
     'title': app.name

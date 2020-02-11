@@ -253,6 +253,8 @@ module.exports = {
     
     var spellingItem;
     var spellingSubItem = {
+      // Not possible atm https://github.com/electron/electron/issues/22143
+      visible: false,
       type: 'checkbox',
       id: 'spellingItem',
       checked: app.config.get('spellcheck'),

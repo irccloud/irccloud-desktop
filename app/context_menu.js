@@ -4,14 +4,8 @@ const app = electron.app;
 const Shell = electron.shell;
 const Menu = electron.Menu;
 const MenuItem = electron.MenuItem;
-const ipcMain = electron.ipcMain;
 
 const is = require('electron-is');
-
-var spellingSuggestions = {};
-ipcMain.on('set-spelling-suggestions', (event, suggestions) => {
-  spellingSuggestions = suggestions;
-});
 
 // Some of this is lifted from https://github.com/sindresorhus/electron-context-menu
 // But modified beyond the limits of its prepend/append abilities
@@ -32,18 +26,16 @@ module.exports = (win) => {
     };
 
     let template = [];
-    for (var word in spellingSuggestions) {
-      if (props.selectionText == word) {
-        spellingSuggestions[word].forEach(suggestion => {
-          template.push({
-            label: suggestion,
-            click (item, focusedWindow, e) {
-              win.webContents.replaceMisspelling(suggestion);
-            }
-          });
-        });
-      }
-    }
+
+    log.info(props.misspelledWord, props.dictionarySuggestions);
+    props.dictionarySuggestions.forEach(suggestion => {
+      template.push({
+        label: suggestion,
+        click (item, focusedWindow, e) {
+          win.webContents.replaceMisspelling(suggestion);
+        }
+      });
+    });
 
     if (props.linkURL) {
       template.push({
