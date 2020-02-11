@@ -15,6 +15,11 @@
     "entitlements": "build/entitlements.mac.plist",
     "entitlementsInherit": "build/entitlements.mac.plist"
   },
+  "afterSign": "./scripts/notarize.js",
+  "dmg": {
+    "icon": null,
+    "sign": false
+  },
   "mas": {
     "publish": null
   },
@@ -43,10 +48,6 @@
   },
   "nsisWeb": {
     "artifactName": "${productName}.${ext}"
-  },
-  "dmg": {
-    "icon": null,
-    "sign": false
   },
   "protocols": [
     {

@@ -1,9 +1,6 @@
 Signing on macOS is a bit in flux atm. 
 
 https://github.com/electron-userland/electron-builder/issues/3870
-https://github.com/electron-userland/electron-builder/issues/3940
-https://github.com/electron-userland/electron-builder/issues/3828
-https://github.com/electron-userland/electron-builder/issues/3908
 https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
 
 Config settings related to this are in electron-builder.json
@@ -12,11 +9,10 @@ Config settings related to this are in electron-builder.json
     "mac": {
         "hardenedRuntime" : true,
         "gatekeeperAssess": false,
-        "entitlements": {
-          "entitlements": "build/entitlements.mac.plist",
-          "entitlementsInherit": "build/entitlements.mac.plist"
-        }
+        "entitlements": "build/entitlements.mac.plist",
+        "entitlementsInherit": "build/entitlements.mac.plist"
     },
+    "afterSign": "./scripts/notarize.js",
     "dmg": {
         "sign": false
     }
