@@ -634,7 +634,7 @@ function handleProtocolUrls () {
     defaultId: 0,
     normalizeAccessKeys: true
   }).then(function (ret) {
-    switch (ret) {
+    switch (ret.response) {
     case 0:
       var setIrc = app.setAsDefaultProtocolClient('irc');
       var setIrcs = app.setAsDefaultProtocolClient('ircs');
