@@ -1,4 +1,5 @@
 const { notarize } = require('electron-notarize');
+const log = require("builder-util/out/log").log;
 
 exports.default = async function notarizing(context) {
   const { electronPlatformName, appOutDir } = context;  
@@ -8,9 +9,14 @@ exports.default = async function notarizing(context) {
 
   const appName = context.packager.appInfo.productFilename;
 
+  const appPath = `${appOutDir}/${appName}.app`;
+  const appBundleId = 'com.irccloud.desktop';
+
+  log.info({appBundleId: appBundleId, appPath: appPath}, 'notarizing');
+
   return await notarize({
-    appBundleId: 'com.irccloud.desktop',
-    appPath: `${appOutDir}/${appName}.app`,
+    appBundleId: appBundleId,
+    appPath: appPath,
     appleId: process.env.APPLEID,
     appleIdPassword: process.env.APPLEIDPASS,
   });
