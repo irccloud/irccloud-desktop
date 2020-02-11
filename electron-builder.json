@@ -25,6 +25,9 @@
   },
   "linux": {
     "executableName": "irccloud",
+    "executableArgs": [
+      "--no-sandbox"
+    ],
     "category": "Network;IRCClient",
     "target": [
       "deb",
