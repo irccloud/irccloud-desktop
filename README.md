@@ -28,7 +28,7 @@ documentation](https://electronjs.org/docs). Build and packaging is handled by t
 
 ### Build Requirements
 
-* Node JS version >= 8.12.0
+* Node JS version >= 12.13.1
 * yarn (recommended) or NPM (should also work fine)
 
 On Linux, you also need the `libopenjp2-tools` package.

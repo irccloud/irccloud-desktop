@@ -1,3 +1,2 @@
-* Updated dependencies including electron@5.0.7
-* Added an edge channel snap build https://snapcraft.io/irccloud
+* Updated dependencies including electron@8.0.0
 * Various performance and security improvements

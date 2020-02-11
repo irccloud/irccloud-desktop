@@ -1,3 +1,2 @@
-* Updated dependencies including electron@5.0.7
-* Fixed code signing issue that broke spell checking
+* Updated dependencies including electron@8.0.0
 * Various performance and security improvements
