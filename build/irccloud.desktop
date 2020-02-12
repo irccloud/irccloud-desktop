@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=IRCCloud
+Exec=/opt/IRCCloud/irccloud --no-sandbox %U
+Terminal=false
+Type=Application
+Icon=irccloud
+StartupWMClass=IRCCloud
+Comment=IRCCloud Desktop Client
+MimeType=x-scheme-handler/irc;x-scheme-handler/ircs;
+Categories=Network;IRCClient;
