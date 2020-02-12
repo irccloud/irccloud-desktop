@@ -63,7 +63,7 @@
     }
   ],
   "files": [
-      "!**/{.eslint*,.jshint*,.snyk,.travis.*,Makefile,README.md,*.provisionprofile}",
+      "!**/{.DS_Store,.editorconfig,.eslint*,.jshint*,.snyk,.travis.*,appveyor.yml,Makefile,README.md,SECURITY.md,*.provisionprofile}",
       "!scripts${/*}",
       "!docs${/*}",
       "!codesign${/*}"
