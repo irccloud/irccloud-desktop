@@ -44,7 +44,9 @@
   "snap": {
     "artifactName": "${name}_${version}_${os}_${arch}.${ext}",
     "grade": "stable",
-    "publish": null
+    "publish": {
+      "channels": ["edge"]
+    }
   },
   "win": {
     "sign": "./scripts/sign.js"
