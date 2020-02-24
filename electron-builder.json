@@ -45,6 +45,7 @@
     "artifactName": "${name}_${version}_${os}_${arch}.${ext}",
     "grade": "stable",
     "publish": {
+      "provider": "snapStore",
       "channels": ["edge"]
     }
   },
