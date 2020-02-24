@@ -43,7 +43,7 @@
   },
   "snap": {
     "artifactName": "${name}_${version}_${os}_${arch}.${ext}",
-    "grade": "devel",
+    "grade": "stable",
     "publish": null
   },
   "win": {
