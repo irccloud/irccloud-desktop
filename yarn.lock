@@ -983,10 +983,10 @@ dmg-builder@22.3.5:
     js-yaml "^3.13.1"
     sanitize-filename "^1.6.3"
 
-dockerfile-ast@0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/dockerfile-ast/-/dockerfile-ast-0.0.18.tgz#94a0ba84eb9b3e9fb7bd6beae0ea7eb6dcbca75a"
-  integrity sha512-SEp95qCox1KAzf8BBtjHoBDD0a7/eNlZJ6fgDf9RxqeSEDwLuEN9YjdZ/tRlkrYLxXR4i+kqZzS4eDRSqs8VKQ==
+dockerfile-ast@0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/dockerfile-ast/-/dockerfile-ast-0.0.19.tgz#b1e21138eba995d7bf5576dc30ba1130c15995c3"
+  integrity sha512-iDRNFeAB2j4rh/Ecc2gh3fjciVifCMsszfCfHlYF5Wv8yybjZLiRDZUBt/pS3xrAz8uWT8fCHLq4pOQMmwCDwA==
   dependencies:
     vscode-languageserver-types "^3.5.0"
 
@@ -1077,10 +1077,10 @@ electron-is@^3.0.0:
     electron-is-dev "^0.3.0"
     semver "^5.5.0"
 
-electron-log@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-4.0.6.tgz#7d4244082a6f5ae3838f3fa4cd7271f8dd610bf1"
-  integrity sha512-inoIFKld98aRAp/l5IzLFx8Oc9sp+SKlTCrVgZKWK+qcI92rT574Ybgcah5dU8G3485vc7ClFIEfCf/IERyBJA==
+electron-log@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-4.0.7.tgz#39b010d2dbd7b1c43e6fa1ae8c6be2b536a215c1"
+  integrity sha512-39h44ciUSeM9bX8+/rY7ct16QqZG2O43jG0yxyfv1DG6bLoEdmboUZ4xNQ9hyGe6R5mMrVfSu6OMee0pNOiZPQ==
 
 electron-notarize@^0.2.1:
   version "0.2.1"
@@ -1126,10 +1126,10 @@ electron-updater@^4.2.4:
     pako "^1.0.11"
     semver "^7.1.3"
 
-electron@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-8.0.1.tgz#7f5070a1625f423cddcece25a1eb9e6d2f1339fb"
-  integrity sha512-kLZAQkbrAFNjQVpcHJUnjRYQNafuuWKnsdxzag5do1ewMqN0J4Pi/hPE27+5/1YAFMcbvCrPqhWIpcMsi8mKXQ==
+electron@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-8.0.2.tgz#8dfd62fd42529fed94040b643660f2a82b4f8e95"
+  integrity sha512-hiQaFtFhd9X2Vjs01l3GXb8hPWSCa31o/kXydo+RC7vwcx9AGuzG7jWIq8vidzAWsF/YPM0LFVjFRZrfkqi03Q==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
@@ -3058,13 +3058,13 @@ snyk-config@^2.2.1:
     lodash "^4.17.15"
     nconf "^0.10.0"
 
-snyk-docker-plugin@1.38.0:
-  version "1.38.0"
-  resolved "https://registry.yarnpkg.com/snyk-docker-plugin/-/snyk-docker-plugin-1.38.0.tgz#afe0ac316e461b200bcd0063295a3f8bd3655e93"
-  integrity sha512-43HbJj6QatuL2BNG+Uq2Taa73wdfSQSID8FJWW4q5/LYgd9D+RtdiE4lAMwxqYYbvThU9uuza4epuF/B1CAlYw==
+snyk-docker-plugin@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/snyk-docker-plugin/-/snyk-docker-plugin-2.2.0.tgz#eb15f4854c53d96f591b99b8c8574fbf7ba6014b"
+  integrity sha512-adoerkNsYNNZFKnvtjJLJeEgjUf2js0hnG32aUJSRtbDN1Ejgbj88a0UYc90C+s2xZJaulJgImy9/5IsG5/omg==
   dependencies:
     debug "^4.1.1"
-    dockerfile-ast "0.0.18"
+    dockerfile-ast "0.0.19"
     event-loop-spinner "^1.1.0"
     semver "^6.1.0"
     tar-stream "^2.1.0"
@@ -3245,10 +3245,10 @@ snyk-try-require@1.3.1, snyk-try-require@^1.1.1, snyk-try-require@^1.3.1:
     lru-cache "^4.0.0"
     then-fs "^2.0.0"
 
-snyk@^1.296.0:
-  version "1.296.0"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.296.0.tgz#6143bdbc0a7864151a0812a13f6d034f59287553"
-  integrity sha512-WJo2lkeBkH6ihL8hTewAdbxIJgdyH2j4nx8WDo3xu9lUqZO7coVndAnV86MAYGwdtXN7YYm0DeuRnngAbC7vYA==
+snyk@^1.297.1:
+  version "1.297.1"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.297.1.tgz#06b5e5892bb280088fde5b7ca1b298845b9387bb"
+  integrity sha512-o+BfGFrgEdko8TWbZUPc6LZXB6Ma0frL7A82uz0SoE5/dMHYNj8ko9cJ8AUf3kDZ9JoMuuQDVn4UPHAfffUkNA==
   dependencies:
     "@snyk/cli-interface" "2.3.2"
     "@snyk/configstore" "^3.2.0-rc1"
@@ -3275,7 +3275,7 @@ snyk@^1.296.0:
     proxy-from-env "^1.0.0"
     semver "^6.0.0"
     snyk-config "^2.2.1"
-    snyk-docker-plugin "1.38.0"
+    snyk-docker-plugin "2.2.0"
     snyk-go-plugin "1.13.0"
     snyk-gradle-plugin "3.2.5"
     snyk-module "1.9.1"

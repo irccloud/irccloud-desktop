@@ -41,14 +41,14 @@
   "irccloud": {},
   "devDependencies": {
     "devtron": "^1.4.0",
-    "electron": "^8.0.1",
+    "electron": "^8.0.2",
     "electron-builder": "^22.3.5",
     "eslint": "^6.8.0"
   },
   "dependencies": {
     "electron-dl": "^3.0.0",
     "electron-is": "^3.0.0",
-    "electron-log": "^4.0.6",
+    "electron-log": "^4.0.7",
     "electron-notarize": "^0.2.1",
     "electron-store": "^5.1.1",
     "electron-updater": "^4.2.4",
@@ -57,7 +57,7 @@
     "open": "^7.0.2",
     "os-name": "^3.1.0",
     "raven": "^2.6.4",
-    "snyk": "^1.296.0"
+    "snyk": "^1.297.1"
   },
   "snyk": true
 }
