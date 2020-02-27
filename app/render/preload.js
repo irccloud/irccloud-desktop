@@ -25,6 +25,7 @@
   require('./zoom')();
   require('./notification')();
   require('./irc-url')();
+  require('./spellcheck')();
   require('./user')();
 
 })();

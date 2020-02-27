@@ -326,6 +326,7 @@ function openMainWindow(opts) {
 
   mainWindow.webContents.on('dom-ready', function (event) {
     log.debug('dom-ready');
+    app.toggleSpellcheck();
     checkUserMods('style');
     checkUserMods('script');
   });
