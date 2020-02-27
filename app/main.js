@@ -19,7 +19,14 @@ const _ = require('lodash');
 const is = require('electron-is');
 require('electron-dl')();
 const log = require('electron-log');
-log.transports.file.level = 'info';
+
+const pkg = require('../package.json');
+
+if (is.dev() || pkg.irccloud.local_build) {
+  log.transports.file.level = 'debug';
+} else {
+  log.transports.file.level = 'info';
+}
 
 var mainWindow = null;
 var menu = null;
