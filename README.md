@@ -1,20 +1,22 @@
 # IRCCloud Desktop
 
-This is a prototype of an IRCCloud desktop app for Windows, Linux
-(Debian/Ubuntu), and macOS. The app wraps the IRCCloud website
-in a native window.
+This is a prototype of an IRCCloud desktop app for Windows, Linux, and macOS. The app wraps the IRCCloud website in a native window.
 
-This app is currently experimental and is not officially supported,
-however it should provide equivalent or better functionality to other
-IRCCloud desktop wrapper apps.
+This app is currently experimental and is not officially supported, however it should provide equivalent or better functionality to other IRCCloud desktop wrapper apps.
 
-If you have any issues, please file them in the [GitHub Issue
-Tracker](https://github.com/irccloud/irccloud-desktop/issues).
+If you have any issues, please file them in the [GitHub Issue Tracker](https://github.com/irccloud/irccloud-desktop/issues).
 
 ## Downloading
 
-The latest official build can be [downloaded here](https://desktop.irccloud.com).
-The appropriate version should be detected based on your OS.
+The latest official build can be [downloaded here](https://desktop.irccloud.com). The appropriate version should be detected based on your OS.
+
+* Mac: DMG
+* Windows: Installer
+* Linux: AppImage
+
+On Linux, the app is also available on [Snapcraft](https://snapcraft.io/irccloud)
+
+You can also browse the [Releases](https://github.com/irccloud/irccloud-desktop/releases) list for other artifacts, e.g. (Mac ZIP, deb, source tarball)
 
 ## Development
 [![Build
@@ -43,7 +45,4 @@ Instructions for building packages and signed binaries on CI are at [docs/Offici
 
 ## Feedback
 
-If you have any questions, get in touch on [#feedback at
-irc.irccloud.com](https://www.irccloud.com/invite?channel=%23feedback&amp;hostname=irc.irccloud.com&amp;port=6697&amp;ssl=1).
-
-
+If you have any questions, get in touch on [#feedback at irc.irccloud.com](https://www.irccloud.com/invite?channel=%23feedback&amp;hostname=irc.irccloud.com&amp;port=6697&amp;ssl=1).
