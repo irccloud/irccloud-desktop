@@ -2,8 +2,13 @@ const { notarize } = require('electron-notarize');
 const log = require("builder-util/out/log").log;
 
 exports.default = async function notarizing(context) {
-  const { electronPlatformName, appOutDir } = context;  
+  const { electronPlatformName, appOutDir } = context;
+
   if (electronPlatformName !== 'darwin') {
+    return;
+  }
+
+  if (context.packager.config.extraMetadata.irccloud.local_build) {
     return;
   }
 
