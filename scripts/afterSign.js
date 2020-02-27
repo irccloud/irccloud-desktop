@@ -1,21 +1,20 @@
 const { notarize } = require('electron-notarize');
 const log = require("builder-util/out/log").log;
 
-exports.default = async function notarizing(context) {
-  const { electronPlatformName, appOutDir } = context;
+exports.default = async function afterSign(context) {
+  const { electronPlatformName, appOutDir, outDir, packager } = context;
 
   if (electronPlatformName !== 'darwin') {
     return;
   }
 
-  if (context.packager.config.extraMetadata.irccloud.local_build) {
+  if (packager.config.extraMetadata.irccloud.local_build) {
     return;
   }
 
-  const appName = context.packager.appInfo.productFilename;
-
+  const appName = packager.appInfo.productFilename;
   const appPath = `${appOutDir}/${appName}.app`;
-  const appBundleId = 'com.irccloud.desktop';
+  const appBundleId = packager.config.appId;
 
   log.info({appBundleId: appBundleId, appPath: appPath}, 'notarizing');
 
