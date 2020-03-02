@@ -118,6 +118,7 @@ function uncaughtException (error) {
 function setupRaven() {
   if (is.dev() || pkg.irccloud.local_build) {
     return;
+  }
   if (!pkg.irccloud.sentry_dsn) {
     return;
   }
