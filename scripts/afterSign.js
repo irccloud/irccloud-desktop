@@ -8,7 +8,11 @@ exports.default = async function afterSign(context) {
     return;
   }
 
-  if (packager.config.extraMetadata.irccloud.local_build) {
+  if (
+      packager.config.extraMetadata &&
+      packager.config.extraMetadata.irccloud &&
+      packager.config.extraMetadata.irccloud.local_build
+  ) {
     return;
   }
 
