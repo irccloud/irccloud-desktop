@@ -116,19 +116,22 @@ function uncaughtException (error) {
 }
 
 function setupRaven() {
-  if (pkg.irccloud.sentry_dsn) {
-    const _Raven = require('raven');
-    _Raven.on('error', (e) => {
-      log.error('Raven error', e);
-    });
-    raven_config().then((config) => {
-      _Raven.config(pkg.irccloud.sentry_dsn, config);
-      Raven = _Raven;
-    });
-    ipcMain.on('set-user', (event, sessionUser) => {
-      user = sessionUser;
-    });
+  if (is.dev() || pkg.irccloud.local_build) {
+    return;
+  if (!pkg.irccloud.sentry_dsn) {
+    return;
   }
+  const _Raven = require('raven');
+  _Raven.on('error', (e) => {
+    log.error('Raven error', e);
+  });
+  raven_config().then((config) => {
+    _Raven.config(pkg.irccloud.sentry_dsn, config);
+    Raven = _Raven;
+  });
+  ipcMain.on('set-user', (event, sessionUser) => {
+    user = sessionUser;
+  });
 }
 
 module.exports = {

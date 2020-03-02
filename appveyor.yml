@@ -17,8 +17,6 @@ environment:
   AZURE_KEY_VAULT_CERTIFICATE:
     secure: VDfW/dOV7r5qSsjeafl7NpD/hnyHJQL/NZmuAub59No5Bu02oPIhDO23zqs7To2z
 
-  SENTRY_DSN: https://33cd6b2300f14ece9b7e6b6234a0b5fd:ee2f464c5562430da9a8fa08a945316a@sentry.io/224616
-
 init:
   - git config --global core.autocrlf input
 
