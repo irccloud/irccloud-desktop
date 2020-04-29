@@ -15,7 +15,7 @@ environment:
   AZURE_KEY_CLIENT_SECRET:
     secure: 2LoLviUUNk5knt3Sq5NIbCvKNhx2Szs93pEyCgYErLJFPf2pgxgO1CWeDHF0U2VU
   AZURE_KEY_VAULT_CERTIFICATE:
-    secure: VDfW/dOV7r5qSsjeafl7NpD/hnyHJQL/NZmuAub59No5Bu02oPIhDO23zqs7To2z
+    secure: VDfW/dOV7r5qSsjeafl7NpD/hnyHJQL/NZmuAub59NrVxRiSRq3DYAeVksNAi4TW
 
 init:
   - git config --global core.autocrlf input
