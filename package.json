@@ -44,23 +44,23 @@
   },
   "devDependencies": {
     "devtron": "^1.4.0",
-    "electron": "^8.0.2",
-    "electron-builder": "^22.3.5",
+    "electron": "^8.2.4",
+    "electron-builder": "^22.6.0",
     "eslint": "^6.8.0"
   },
   "dependencies": {
     "electron-dl": "^3.0.0",
     "electron-is": "^3.0.0",
-    "electron-log": "^4.0.7",
-    "electron-notarize": "^0.2.1",
+    "electron-log": "^4.1.1",
+    "electron-notarize": "^0.3.0",
     "electron-store": "^5.1.1",
-    "electron-updater": "^4.2.4",
-    "getos": "^3.1.4",
+    "electron-updater": "^4.3.1",
+    "getos": "^3.2.0",
     "lodash": "^4.17.15",
-    "open": "^7.0.2",
+    "open": "^7.0.3",
     "os-name": "^3.1.0",
     "raven": "^2.6.4",
-    "snyk": "^1.297.3"
+    "snyk": "^1.315.1"
   },
   "snyk": true
 }
