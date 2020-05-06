@@ -27,5 +27,6 @@
   require('./irc-url')();
   require('./spellcheck')();
   require('./user')();
+  require('./pinned')();
 
 })();

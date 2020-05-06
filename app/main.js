@@ -13,6 +13,7 @@ const FS = require('fs');
 const Config = require('electron-store');
 const ContextMenu = require('./context_menu');
 const Menu = require('./menu');
+const Touchbar = require('./touchbar');
 const Tray = electron.Tray;
 
 const _ = require('lodash');
@@ -30,6 +31,7 @@ if (is.dev() || pkg.irccloud.local_build) {
 
 var mainWindow = null;
 var menu = null;
+var touchbar = null;
 var appIcon = null;
 
 const defaultHost = 'https://www.irccloud.com';
@@ -679,6 +681,8 @@ app.on('ready', function() {
   updateZoomMenu();
 
   openMainWindow();
+
+  touchbar = Touchbar.setup(mainWindow);
 
   if (config.get('tray') && !is.macOS()) {
     setupTray();
