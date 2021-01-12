@@ -37,30 +37,31 @@
     "test": "eslint app",
     "snyk-protect": "snyk protect",
     "prepare": "yarn run snyk-protect",
-    "desktop-file": "node ./scripts/desktop-file.js"
+    "desktop-file": "node ./scripts/desktop-file.js",
+    "fix-mac-zip": "node ./scripts/fix-mac-zip.js"
   },
   "irccloud": {
     "sentry_dsn": "https://33cd6b2300f14ece9b7e6b6234a0b5fd:ee2f464c5562430da9a8fa08a945316a@sentry.io/224616"
   },
   "devDependencies": {
     "devtron": "^1.4.0",
-    "electron": "^8.2.5",
-    "electron-builder": "^22.6.0",
-    "eslint": "^6.8.0"
+    "electron": "^11.1.1",
+    "electron-builder": "22.10.4",
+    "eslint": "^7.17.0"
   },
   "dependencies": {
-    "electron-dl": "^3.0.0",
+    "electron-dl": "^3.0.2",
     "electron-is": "^3.0.0",
-    "electron-log": "^4.1.2",
-    "electron-notarize": "^0.3.0",
-    "electron-store": "^5.1.1",
-    "electron-updater": "^4.3.1",
-    "getos": "^3.2.0",
-    "lodash": "^4.17.15",
-    "open": "^7.0.3",
-    "os-name": "^3.1.0",
+    "electron-log": "^4.3.1",
+    "electron-notarize": "^1.0.0",
+    "electron-store": "^6.0.1",
+    "electron-updater": "^4.3.5",
+    "getos": "^3.2.1",
+    "lodash": "^4.17.20",
+    "open": "^7.3.1",
+    "os-name": "^4.0.0",
     "raven": "^2.6.4",
-    "snyk": "^1.319.0"
+    "snyk": "^1.437.3"
   },
   "snyk": true
 }
