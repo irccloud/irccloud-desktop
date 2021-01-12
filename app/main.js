@@ -240,6 +240,11 @@ function openMainWindow(opts) {
     'height': config.get('height'),
     'webPreferences': {
       'allowDisplayingInsecureContent': true,
+      // The remote module will be deprecated in Electron 12, and will be removed in Electron 14. It is replaced by the @electron/remote module.
+      // https://github.com/electron/remote
+      // https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
+      // See if we can use e.g. ipcRenderer.invoke instead
+      'enableRemoteModule': true,
       'preload': path.join(__dirname, 'render', 'preload.js'),
       'contextIsolation': true,
       'spellcheck': true,
