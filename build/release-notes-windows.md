@@ -1,2 +1,2 @@
-* Updated dependencies including electron@8.2.5
+* Updated dependencies including electron@11.1.1
 * Various performance and security improvements
