@@ -247,6 +247,9 @@ function openMainWindow(opts) {
       'enableRemoteModule': true,
       'preload': path.join(__dirname, 'render', 'preload.js'),
       'contextIsolation': true,
+      // Migration flag. this will be on by default in Electron 12
+      // https://github.com/electron/electron/pull/24114
+      'worldSafeExecuteJavaScript': true,
       'spellcheck': true,
       'nodeIntegration': false
     },
