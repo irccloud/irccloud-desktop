@@ -437,8 +437,8 @@ app.on('open-url', function (event, url) {
   openUrl(url);
 });
 
-ipcMain.on('preload-channel-async', function (event, arg) {
-  switch (arg) {
+ipcMain.on('preload-channel-async', function (event, key) {
+  switch (key) {
   case 'activate':
     openMainWindow();
     break;

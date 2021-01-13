@@ -21,7 +21,6 @@
       ipcRenderer.send('set-user', result);
     },
     notificationClick: function () {
-      log.debug('preload notificationClick');
       ipcRenderer.send('preload-channel-async', 'activate');
     },
     setPinned: function (result) {
