@@ -26,7 +26,7 @@
     "app": "electron .",
     "mac": "electron-builder --mac --universal",
     "mas": "electron-builder --mac --universal mas -c.mac.provisioningProfile ${MAS_PROVISIONING_PROFILE-0}",
-    "mac-local": "electron-builder --mac --universal dir -c.extraMetadata.irccloud.local_build",
+    "mac-local": "electron-builder --mac --universal --dir -c.extraMetadata.irccloud.local_build",
     "mas-dev": "electron-builder --mac mas-dev -c.mac.provisioningProfile ${MAS_PROVISIONING_PROFILE-0}",
     "linux": "electron-builder --linux",
     "linux-dir": "electron-builder --linux dir",
