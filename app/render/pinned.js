@@ -1,24 +1,21 @@
-var remote = require('electron').remote;
-var ipcRenderer = require('electron').ipcRenderer;
-
-function listenPinned() {
-  remote.getCurrentWindow().webContents.executeJavaScript(
-    'new Promise((resolve, reject) => { SESSION.pinnedBuffers.once("fullChange", function () { resolve(SESSION.pinnedBuffers.map(function (b) { return [b.bid(), b.getDisambiguatedDisplayName(), b.url()]; })); } ); });'
-  ).then((result) => {
-    ipcRenderer.send('set-pinned', result);
-    listenPinned();
-  });
-}
+var webFrame = require('electron').webFrame;
 
 function setupPinnedHandler() {
-  document.addEventListener("DOMContentLoaded", function (event) {
-    remote.getCurrentWindow().webContents.executeJavaScript(
-      'new Promise((resolve, reject) => { resolve(SESSION.pinnedBuffers.map(function (b) { return [b.bid(), b.getDisambiguatedDisplayName(), b.url()]; })); } );'
-    ).then((result) => {
-      ipcRenderer.send('set-pinned', result);
+  webFrame.executeJavaScript(`
+    document.addEventListener("DOMContentLoaded", function (event) {
+      if (SESSION) {
+        function setPinned () {
+          IRCCLOUD_ELECTRON.setPinned(SESSION.pinnedBuffers.map(function (b) {
+            return [b.bid(), b.getDisambiguatedDisplayName(), b.url()];
+          }));
+        }
+        setPinned();
+        SESSION.pinnedBuffers.on("fullChange", function () {
+          setPinned();
+        });
+      }
     });
-    listenPinned();
-  });
+  `);
 }
 
 module.exports = setupPinnedHandler;

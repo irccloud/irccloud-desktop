@@ -6,6 +6,7 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const Shell = electron.shell;
 const dialog = electron.dialog;
+const ipcMain = electron.ipcMain;
 
 const path = require('path');
 const FS = require('fs');
@@ -240,11 +241,6 @@ function openMainWindow(opts) {
     'height': config.get('height'),
     'webPreferences': {
       'allowDisplayingInsecureContent': true,
-      // The remote module will be deprecated in Electron 12, and will be removed in Electron 14. It is replaced by the @electron/remote module.
-      // https://github.com/electron/remote
-      // https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
-      // See if we can use e.g. ipcRenderer.invoke instead
-      'enableRemoteModule': true,
       'preload': path.join(__dirname, 'render', 'preload.js'),
       'contextIsolation': true,
       // Migration flag. this will be on by default in Electron 12
@@ -441,46 +437,23 @@ app.on('open-url', function (event, url) {
   openUrl(url);
 });
 
-// Limits what remote calls can do from the render process
-// Custom values can be returned by setting `event.returnValue
-app.on('remote-get-global', function (event, webContents, globalName) {
-  switch (globalName) {
+ipcMain.on('preload-channel-async', function (event, arg) {
+  switch (arg) {
+  case 'activate':
+    openMainWindow();
+    break;
+  }
+});
+ipcMain.on('preload-channel-sync', function (event, key, arg1) {
+  switch (key) {
+  case 'version':
+    event.returnValue = app.getVersion();
+    break;
   case 'config':
-    event.returnValue = config;
-    break;
-  default:
+    event.returnValue = config.get(arg1);
     break;
   }
-  event.preventDefault();
 });
-
-
-app.on('remote-get-builtin', function (event, webContents, moduleName) {
-  switch (moduleName) {
-  case 'app':
-    // Used for:
-    // * app.emit
-    // * app.getVersion()
-    // * app.getLocale()
-    event.returnValue = app;
-    break;
-  case 'BrowserWindow':
-    // Used by devtron
-    if (is.dev()) {
-      event.returnValue = electron.BrowserWindow;
-    }
-    break;
-  default:
-    break;
-  }
-  event.preventDefault();
-});
-
-app.on('remote-get-current-window', function (event) {
-  event.returnValue = mainWindow;
-  event.preventDefault();
-});
-
 
 function destroyTray() {
   if (appIcon) {
@@ -554,7 +527,7 @@ function updateZoomMenu() {
 function updateZoom(zoomLevel) {
   config.set('zoom', zoomLevel);
   if (mainWindow) {
-    mainWindow.webContents.send('update-zoom-level');
+    mainWindow.webContents.send('update-zoom-level', zoomLevel);
   }
   updateZoomMenu();
 }

@@ -1,18 +1,15 @@
-var remote = require('electron').remote;
-
-function listenNotification() {
-  remote.getCurrentWindow().webContents.executeJavaScript(
-    'new Promise((resolve, reject) => { if (SESSION) { SESSION.once("notificationClick", function () { resolve(); }); } });'
-  ).then(() => {
-    remote.app.emit('activate');
-    listenNotification();
-  });
-}
+var webFrame = require('electron').webFrame;
 
 function setupNotificationHandler() {
-  document.addEventListener("DOMContentLoaded", function (event) {
-    listenNotification();
-  });
+  webFrame.executeJavaScript(`
+    document.addEventListener("DOMContentLoaded", function (event) {
+      if (SESSION) {
+        SESSION.on("notificationClick", () => {
+          IRCCLOUD_ELECTRON.notificationClick();
+        });
+      }
+    });
+  `);
 }
 
 module.exports = setupNotificationHandler;

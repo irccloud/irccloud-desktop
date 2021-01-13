@@ -116,6 +116,10 @@ function uncaughtException (error) {
 }
 
 function setupRaven() {
+  ipcMain.on('set-user', (event, sessionUser) => {
+    user = sessionUser;
+  });
+
   if (is.dev() || pkg.irccloud.local_build) {
     return;
   }
@@ -129,9 +133,6 @@ function setupRaven() {
   raven_config().then((config) => {
     _Raven.config(pkg.irccloud.sentry_dsn, config);
     Raven = _Raven;
-  });
-  ipcMain.on('set-user', (event, sessionUser) => {
-    user = sessionUser;
   });
 }
 
