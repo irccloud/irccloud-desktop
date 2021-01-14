@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=IRCCloud
-Exec=/opt/IRCCloud/irccloud --no-sandbox %U
+Exec=/opt/IRCCloud/irccloud %U
 Terminal=false
 Type=Application
 Icon=irccloud
