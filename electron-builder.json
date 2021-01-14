@@ -46,7 +46,10 @@
   "snap": {
     "artifactName": "${name}_${version}_${os}_${arch}.${ext}",
     "grade": "stable",
-    "publish": null
+    "publish": {
+      "provider": "snapStore",
+      "channels": ["edge"]
+    }
   },
   "win": {
     "target": [
