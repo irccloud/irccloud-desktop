@@ -6,7 +6,7 @@ exports.default = async function afterSign(context) {
 
   // Don't notarize on pull requests
   if (
-    process.env.GITHUB.EVENT_NAME == 'pull_request' ||
+    process.env.GITHUB_EVENT_NAME == 'pull_request' ||
     process.env.TRAVIS_EVENT_TYPE == 'pull_request' ||
     process.env.APPVEYOR_PULL_REQUEST_NUMBER > 0
   ) {
