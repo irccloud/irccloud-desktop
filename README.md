@@ -19,9 +19,7 @@ On Linux, the app is also available on [Snapcraft](https://snapcraft.io/irccloud
 You can also browse the [Releases](https://github.com/irccloud/irccloud-desktop/releases) list for other artifacts, e.g. (Mac ZIP, deb, source tarball)
 
 ## Development
-[![Build
-Status](https://travis-ci.org/irccloud/irccloud-desktop.svg?branch=master)](https://travis-ci.org/irccloud/irccloud-desktop)
-[![Build status](https://ci.appveyor.com/api/projects/status/gx0f02q8w4hqwdt0?svg=true)](https://ci.appveyor.com/project/russss/irccloud-desktop)
+[![Build status](https://github.com/irccloud/irccloud-desktop/workflows/Build/badge.svg)](https://github.com/irccloud/irccloud-desktop/actions?query=workflow%3ABuild)
 [![IRC #feedback](https://img.shields.io/badge/IRC-%23feedback-1e72ff.svg?style=flat)](https://www.irccloud.com/invite?channel=%23feedback&amp;hostname=irc.irccloud.com&amp;port=6697&amp;ssl=1)
 
 IRCCloud Desktop is built on the Electron app framework, as used by
