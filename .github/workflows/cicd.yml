@@ -44,8 +44,8 @@ jobs:
           AZURE_KEY_CLIENT_SECRET: ${{ secrets.azure_key_client_secret }}
           AZURE_KEY_VAULT_CERTIFICATE: ${{ secrets.azure_key_vault_certificate }}
           # macOS code signing certificate
-          CSC_LINK: ${{ secrets.mac_c2c_link }}
-          CSC_KEY_PASSWORD: ${{ secrets.mac_c2c_key_password }}
+          CSC_LINK: ${{ secrets.mac_csc_link }}
+          CSC_KEY_PASSWORD: ${{ secrets.mac_csc_key_password }}
           # macOS notarization API key
           APPLEID: ${{ secrets.appleid }}
           APPLEIDPASS: ${{ secrets.appleidpass }}
