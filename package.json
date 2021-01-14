@@ -32,7 +32,7 @@
     "linux-dir": "electron-builder --linux dir",
     "linux-local": "electron-builder --linux dir -c.extraMetadata.irccloud.local_build",
     "win": "electron-builder --win",
-    "win-local": "electron-builder --win nsis-web --x64 -c.forceCodeSigning=false -c.extraMetadata.irccloud.local_build",
+    "win-local": "electron-builder --win -c.forceCodeSigning=false -c.extraMetadata.irccloud.local_build",
     "snyk": "snyk test",
     "test": "eslint app",
     "snyk-protect": "snyk protect",

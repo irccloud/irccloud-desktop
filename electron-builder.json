@@ -55,10 +55,7 @@
     "target": [
       {
         "target": "nsis-web",
-        "arch": [
-          "ia32",
-          "x64"
-        ]
+        "arch": "x64"
       }
     ],
     "sign": "./scripts/sign.js"
