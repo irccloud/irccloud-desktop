@@ -4,8 +4,10 @@
   "mac": {
     "category": "public.app-category.productivity",
     "target": [
-      "dmg",
-      "zip"
+      {
+        "target": "default",
+        "arch": "universal"
+      }
     ],
     "darkModeSupport": true,
     "electronUpdaterCompatibility": ">=2.15.0",
@@ -47,6 +49,15 @@
     "publish": null
   },
   "win": {
+    "target": [
+      {
+        "target": "nsis-web",
+        "arch": [
+          "ia32",
+          "x64"
+        ]
+      }
+    ],
     "sign": "./scripts/sign.js"
   },
   "nsisWeb": {
