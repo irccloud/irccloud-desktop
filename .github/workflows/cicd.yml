@@ -55,3 +55,8 @@ jobs:
           # macOS notarization API key
           APPLEID: ${{ secrets.appleid }}
           APPLEIDPASS: ${{ secrets.appleidpass }}
+
+      - name: Build/publish snap
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          yarn run publish-snap

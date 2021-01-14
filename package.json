@@ -30,6 +30,7 @@
     "mas-dev": "electron-builder --mac mas-dev --universal -c.mac.provisioningProfile ${MAS_PROVISIONING_PROFILE-0}",
     "linux": "electron-builder --linux",
     "linux-dir": "electron-builder --linux dir",
+    "publish-snap": "electron-builder --linux snap --publish always",
     "linux-local": "electron-builder --linux dir -c.extraMetadata.irccloud.local_build",
     "win": "electron-builder --win",
     "win-local": "electron-builder --win -c.forceCodeSigning=false -c.extraMetadata.irccloud.local_build",

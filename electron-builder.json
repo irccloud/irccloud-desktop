@@ -30,8 +30,7 @@
     "category": "Network;IRCClient",
     "target": [
       "deb",
-      "AppImage",
-      "snap"
+      "AppImage"
     ]
   },
   "appImage": {
