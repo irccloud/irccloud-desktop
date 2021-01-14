@@ -30,6 +30,4 @@ mac: node_modules
 win: node_modules
 	${PKG} run win
 
-ci: test dist
-
 .PHONY: dist clean distclean dev test mac win ci encryptenv
