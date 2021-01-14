@@ -59,4 +59,5 @@ jobs:
       - name: Build/publish snap
         if: startsWith(matrix.os, 'ubuntu')
         run: |
+          sudo snap install review-tools
           yarn run publish-snap
