@@ -19,6 +19,11 @@ jobs:
         with:
           node-version: 12
 
+      - name: Install linux deps
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt-get install --no-install-recommends -y libopenjp2-tools
+
       - name: Install Snapcraft
         uses: samuelmeuli/action-snapcraft@v1
         # Only install Snapcraft on Ubuntu
