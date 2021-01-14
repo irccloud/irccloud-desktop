@@ -43,10 +43,6 @@ jobs:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.github_token }}
-
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
         env:
           # Windows code signing azure key vault
           AZURE_KEY_VAULT_URL: ${{ secrets.azure_key_vault_url }}
