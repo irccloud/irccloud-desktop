@@ -22,6 +22,7 @@ jobs:
       - name: Test
         if: startsWith(matrix.os, 'macos')
         run: |
+          yarn
           yarn run test
           yarn run snyk
         env:
