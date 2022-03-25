@@ -45,7 +45,7 @@
     "sentry_dsn": "https://33cd6b2300f14ece9b7e6b6234a0b5fd:ee2f464c5562430da9a8fa08a945316a@sentry.io/224616"
   },
   "devDependencies": {
-    "electron": "^11.2.0",
+    "electron": "^13.6.6",
     "electron-builder": "22.10.4",
     "eslint": "^7.17.0"
   },
