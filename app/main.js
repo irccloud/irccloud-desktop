@@ -280,12 +280,23 @@ function openMainWindow(opts) {
   mainWindow.on('page-title-updated', function(event) {
     var title = mainWindow.getTitle();
     if (title && is.macOS()) {
-      var unread = "";
-      var matches = title.match(/^\((\d+)\)/);
+      var matches = title.match(/^(?:\((\d+)\)|([*+]))/);
+      var badge = "";
       if (matches) {
-        unread = matches[1];
+        if (matches[1]) {
+          badge = matches[1];
+        } else {
+          var current = app.dock.getBadge();
+          if (/^\d+$/.test(current)) badge = current;
+
+          // '+' means active channel has a notification
+          if (current === '+') badge = current;
+
+          // '*' means a channel has a notification
+          badge = matches[2];
+        }
       }
-      app.dock.setBadge(unread);
+      app.dock.setBadge(badge);
     }
   });
   
